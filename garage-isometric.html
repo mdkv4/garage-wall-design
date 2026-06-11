@@ -1,0 +1,1038 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Garage 112 — Isometric Massing</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap"
+    rel="stylesheet" />
+  <style>
+    :root {
+      --paper: #ECE3D2;
+      --paper-2: #F5EFE2;
+      --ink: #221F18;
+      --ink-soft: #5C5446;
+      --line: #C7BBA3;
+      --rust: #AE4F2A;
+      --rust-deep: #883C1E;
+      --teal: #2F6B5E;
+      --blue: #3F6E96;
+      --slate: #3A3F43;
+      --metal: #8A9197;
+      --stone: #9aa0a4;
+      --stone-dk: #6f757a;
+      --stone-lt: #b4b8ba;
+      --siding: #9c7b52;
+      --siding-dk: #6f5436;
+      --siding-lt: #b89469;
+      --door: #34373b;
+      --door-dk: #1b1d1f;
+      --door-hi: #4c5156;
+      --glass: #9fb6c4;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: "IBM Plex Sans", system-ui, sans-serif;
+    }
+
+    body {
+      background-image:
+        linear-gradient(rgba(199, 187, 163, .20) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(199, 187, 163, .20) 1px, transparent 1px);
+      background-size: 24px 24px;
+      padding: 28px 20px 56px;
+    }
+
+    .sheet {
+      max-width: 1080px;
+      margin: 0 auto;
+      background: var(--paper-2);
+      border: 1.5px solid var(--ink);
+      box-shadow: 0 18px 50px rgba(34, 31, 24, .18);
+    }
+
+    header.tb {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 16px;
+      padding: 18px 26px 14px;
+      border-bottom: 1.5px solid var(--ink);
+      background:
+        repeating-linear-gradient(45deg, transparent 0 11px, rgba(174, 79, 42, .05) 11px 12px);
+    }
+
+    header.tb h1 {
+      font-family: "Saira Condensed", sans-serif;
+      font-weight: 700;
+      letter-spacing: .02em;
+      font-size: 30px;
+      line-height: .95;
+      margin: 0;
+      text-transform: uppercase;
+    }
+
+    header.tb .sub {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 12px;
+      color: var(--ink-soft);
+      margin-top: 6px;
+      letter-spacing: .03em;
+    }
+
+    header.tb .stamp {
+      text-align: right;
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 11px;
+      color: var(--ink-soft);
+      line-height: 1.5;
+    }
+
+    header.tb .stamp b {
+      color: var(--rust-deep);
+      font-weight: 600;
+    }
+
+    .drawing {
+      padding: 8px 10px 4px;
+    }
+
+    svg {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .lbl {
+      font-family: "IBM Plex Mono", monospace;
+      font-weight: 500;
+    }
+
+    .dimtxt {
+      font-family: "IBM Plex Mono", monospace;
+      font-weight: 600;
+      font-size: 13px;
+      fill: var(--ink);
+    }
+
+    .dimsm {
+      font-family: "IBM Plex Mono", monospace;
+      font-weight: 500;
+      font-size: 10.5px;
+      fill: var(--ink);
+    }
+
+    .facetxt {
+      font-family: "Saira Condensed", sans-serif;
+      font-weight: 700;
+      letter-spacing: .05em;
+    }
+
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 22px;
+      padding: 14px 26px 22px;
+      border-top: 1.5px solid var(--ink);
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 12px;
+      color: var(--ink-soft);
+    }
+
+    .legend .it {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .legend .sw {
+      width: 18px;
+      height: 14px;
+      border: 1px solid var(--ink);
+      display: inline-block;
+    }
+
+    footer.fn {
+      padding: 10px 26px 16px;
+      border-top: 1px dashed var(--line);
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 10.5px;
+      color: var(--ink-soft);
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    @media (prefers-reduced-motion:no-preference) {
+      .anim {
+        opacity: 0;
+        animation: fin .7s ease forwards;
+      }
+
+      .a1 {
+        animation-delay: .05s
+      }
+
+      .a2 {
+        animation-delay: .18s
+      }
+
+      .a3 {
+        animation-delay: .31s
+      }
+
+      .a4 {
+        animation-delay: .44s
+      }
+
+      .a5 {
+        animation-delay: .57s
+      }
+
+      @keyframes fin {
+        to {
+          opacity: 1
+        }
+      }
+    }
+
+    /* ---- material take-off calculators ---- */
+    .calcs {
+      padding: 18px 26px 22px;
+      border-top: 1.5px solid var(--ink);
+    }
+
+    .calcs .ch {
+      font-family: "Saira Condensed", sans-serif;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+      font-size: 18px;
+      margin: 0 0 4px;
+    }
+
+    .calcs .csub {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 11px;
+      color: var(--ink-soft);
+      margin: 0 0 14px;
+    }
+
+    .cgrid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(238px, 1fr));
+      gap: 14px;
+    }
+
+    .card {
+      border: 1.2px solid var(--ink);
+      background: var(--paper);
+      padding: 12px 14px 13px;
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+    }
+
+    .card .ct {
+      font-family: "Saira Condensed", sans-serif;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .03em;
+      font-size: 15px;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 6px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .card .ct .dot {
+      width: 11px;
+      height: 11px;
+      border: 1px solid var(--ink);
+      display: inline-block;
+      flex: none;
+    }
+
+    .brk {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 11.5px;
+      color: var(--ink-soft);
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    .brk td {
+      padding: 1.5px 0;
+      vertical-align: top;
+    }
+
+    .brk td.v {
+      text-align: right;
+      font-variant-numeric: tabular-nums;
+      color: var(--ink);
+      white-space: nowrap;
+      padding-left: 8px;
+    }
+
+    .brk tr.net td {
+      border-top: 1px solid var(--line);
+      padding-top: 4px;
+      font-weight: 600;
+      color: var(--ink);
+    }
+
+    .ctrl {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px 12px;
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 11px;
+      color: var(--ink-soft);
+      margin-top: auto;
+    }
+
+    .ctrl label {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .ctrl input {
+      width: 50px;
+    }
+
+    .ctrl input,
+    .ctrl select {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 11px;
+      border: 1px solid var(--line);
+      background: var(--paper-2);
+      color: var(--ink);
+      padding: 2px 4px;
+    }
+
+    .res {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 12px;
+      background: rgba(174, 79, 42, .07);
+      border-left: 3px solid var(--rust);
+      padding: 7px 9px;
+      line-height: 1.55;
+    }
+
+    .res b {
+      color: var(--rust-deep);
+      font-size: 13.5px;
+    }
+
+    .note {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 10px;
+      color: var(--ink-soft);
+      opacity: .85;
+      line-height: 1.4;
+    }
+
+    @media print {
+      body {
+        background: #fff;
+        padding: 0;
+      }
+
+      .sheet {
+        box-shadow: none;
+        border: 1px solid #000;
+      }
+
+      .ctrl input,
+      .ctrl select {
+        border: none;
+        background: transparent;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="sheet">
+    <header class="tb">
+      <div>
+        <h1>Garage 112 — Isometric Massing</h1>
+        <div class="sub">Carport → enclosed garage · NTS · per Spec Sheet / Section 1</div>
+      </div>
+      <div class="stamp">
+        EXT FOOTPRINT&nbsp; <b>19'-11½" × 17'-6"</b><br />
+        PLATE HT&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>8'-0"</b> &nbsp;·&nbsp; RIDGE <b>≈11'-2"</b><br />
+        GARAGE DOOR&nbsp;&nbsp; <b>16'-2½" W</b><br />
+        BACK DOOR&nbsp;&nbsp;&nbsp;&nbsp; <b>36" × 80"</b><br />
+        SHEET &nbsp;A-0.2 &nbsp;/&nbsp; 2026-06-05
+      </div>
+    </header>
+
+    <div class="drawing">
+      <svg id="iso" viewBox="0 0 1080 780" role="img" aria-label="Isometric massing diagram of Garage 112">
+        <defs>
+          <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7"
+            orient="auto-start-reverse">
+            <path d="M0,0 L10,5 L0,10 z" fill="#221F18" />
+          </marker>
+          <linearGradient id="gStone" x1="0" y1="1" x2="0" y2="0">
+            <stop offset="0" stop-color="#e2ddd0" />
+            <stop offset="1" stop-color="#f3efe6" />
+          </linearGradient>
+          <linearGradient id="gSide" x1="0" y1="1" x2="0" y2="0">
+            <stop offset="0" stop-color="#723f27" />
+            <stop offset="1" stop-color="#965636" />
+          </linearGradient>
+          <linearGradient id="gSideF" x1="0" y1="1" x2="0" y2="0">
+            <stop offset="0" stop-color="#7c452a" />
+            <stop offset="1" stop-color="#a05e3b" />
+          </linearGradient>
+          <linearGradient id="gGable" x1="0" y1="1" x2="0" y2="0">
+            <stop offset="0" stop-color="#17191a" />
+            <stop offset="1" stop-color="#2b2f31" />
+          </linearGradient>
+          <linearGradient id="gRoof" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#42474b" />
+            <stop offset="1" stop-color="#2f3438" />
+          </linearGradient>
+        </defs>
+        <!-- drawn by script -->
+      </svg>
+    </div>
+
+    <div class="legend">
+      <div class="it"><span class="sw" style="background:#eee9de"></span>White stacked-stone (ledgestone) wainscot —
+        lower 4'-6", Street Side</div>
+      <div class="it"><span class="sw" style="background:#965636"></span>6" wood siding, warm red-brown stain — wall
+        bands (Front, Back, upper Street)</div>
+      <div class="it"><span class="sw" style="background:#1f2224"></span>Near-black siding — gable ends</div>
+      <div class="it"><span class="sw" style="background:#34373b"></span>Dark flush sectional garage door — 16'-2½"
+        opening</div>
+      <div class="it"><span class="sw" style="background:#e6edee"></span>36"×80" man-door (frosted slats) — Back wall
+      </div>
+      <div class="it"><span class="sw" style="background:#3A3F43;opacity:.5"></span>Gable roof ≈3:12, ridge ∥ Front/Back
+        (shown see-through)</div>
+      <div class="it"><span class="sw" style="background:#2b2f31"></span>2×8 king-post trusses @ 24" o.c. + 1× plank
+        decking</div>
+      <div class="it"><span class="sw" style="background:#b89469"></span>2×4 sleepers flat @ 24" o.c. — raise ¾" attic
+        plywood 1½" (wiring / taller lights)</div>
+      <div class="it"><span class="sw" style="border-style:dashed;background:rgba(92,84,70,.10)"></span>Existing house —
+        House Side (party wall)</div>
+    </div>
+
+    <section class="calcs">
+      <h2 class="ch">Material Take-off Calculators</h2>
+      <p class="csub">Areas derived from Spec Sheet dims (19'-11½" × 17'-6" × 8'-0"). Edit waste % / coverage to
+        re-estimate. Order quantities — verify on site before purchase.</p>
+      <div class="cgrid">
+
+        <div class="card">
+          <div class="ct"><span class="dot" style="background:#965636"></span>External Siding</div>
+          <table class="brk">
+            <tr>
+              <td>Front + Back walls</td>
+              <td class="v"><span id="s-fb"></span> sf</td>
+            </tr>
+            <tr>
+              <td>Street band (upper 3'-6")</td>
+              <td class="v"><span id="s-band"></span> sf</td>
+            </tr>
+            <tr>
+              <td>Street gable (near-black)</td>
+              <td class="v"><span id="s-gab"></span> sf</td>
+            </tr>
+            <tr>
+              <td>− Garage &amp; man-door</td>
+              <td class="v">−<span id="s-ded"></span> sf</td>
+            </tr>
+            <tr class="net">
+              <td>Net siding area</td>
+              <td class="v"><span id="s-net"></span> sf</td>
+            </tr>
+          </table>
+          <div class="ctrl">
+            <label>Waste % <input id="s-waste" type="number" min="0" value="12"></label>
+            <label>Exposure in <input id="s-exp" type="number" min="1" value="5"></label>
+          </div>
+          <div class="res">Order ≈ <b id="s-area"></b> sf<br>≈ <b id="s-lf"></b> lin ft of 6" siding</div>
+          <div class="note">House Side (party wall) &amp; stone wainscot excluded. Gable in near-black stain.</div>
+        </div>
+
+        <div class="card">
+          <div class="ct"><span class="dot" style="background:#c9a14a"></span>Interior Insulation</div>
+          <table class="brk">
+            <tr>
+              <td>Wall cavities (4 walls − openings)</td>
+              <td class="v"><span id="i-wall"></span> sf</td>
+            </tr>
+            <tr>
+              <td>Ceiling batts (flat @ 8'-0")</td>
+              <td class="v"><span id="i-ceil"></span> sf</td>
+            </tr>
+            <tr class="net">
+              <td>Total area</td>
+              <td class="v"><span id="i-tot"></span> sf</td>
+            </tr>
+          </table>
+          <div class="ctrl">
+            <label>Waste % <input id="i-waste" type="number" min="0" value="8"></label>
+            <label>sf/bag <input id="i-cov" type="number" min="1" value="59.7"></label>
+          </div>
+          <div class="res">Order ≈ <b id="i-area"></b> sf<br>≈ <b id="i-bags"></b> bags</div>
+          <div class="note">Walls mineral-wool R-15 (2×4). Ceiling/attic batts run higher R — adjust sf/bag.</div>
+        </div>
+
+        <div class="card">
+          <div class="ct"><span class="dot" style="background:#e8e3d8"></span>Interior GWB</div>
+          <table class="brk">
+            <tr>
+              <td>Walls (4 walls − openings)</td>
+              <td class="v"><span id="g-wall"></span> sf</td>
+            </tr>
+            <tr>
+              <td>Ceiling (flat @ 8'-0")</td>
+              <td class="v"><span id="g-ceil"></span> sf</td>
+            </tr>
+            <tr class="net">
+              <td>Total area</td>
+              <td class="v"><span id="g-tot"></span> sf</td>
+            </tr>
+          </table>
+          <div class="ctrl">
+            <label>Waste % <input id="g-waste" type="number" min="0" value="12"></label>
+            <label>Sheet
+              <select id="g-cov">
+                <option value="32">4×8 (32 sf)</option>
+                <option value="40">4×10 (40 sf)</option>
+                <option value="48">4×12 (48 sf)</option>
+              </select>
+            </label>
+          </div>
+          <div class="res">Order ≈ <b id="g-area"></b> sf<br><b id="g-sheets"></b> sheets</div>
+          <div class="note">5/8" GWB. Use 5/8" Type X on any assembly under living space.</div>
+        </div>
+
+        <div class="card">
+          <div class="ct"><span class="dot" style="background:#caa46a"></span>8' Ceiling Plywood</div>
+          <table class="brk">
+            <tr class="net">
+              <td>Ceiling area (W × L @ 8'-0")</td>
+              <td class="v"><span id="p-ceil"></span> sf</td>
+            </tr>
+          </table>
+          <div class="ctrl">
+            <label>Waste % <input id="p-waste" type="number" min="0" value="10"></label>
+            <label>Sheet
+              <select id="p-cov">
+                <option value="32">4×8 (32 sf)</option>
+                <option value="48">4×12 (48 sf)</option>
+              </select>
+            </label>
+          </div>
+          <div class="res">Order ≈ <b id="p-area"></b> sf<br><b id="p-sheets"></b> sheets</div>
+          <div class="note">¾" plywood deck, raised 1½" off the bottom chords on flat 2×4 sleepers (attic floor over a
+            wiring/fixture service cavity).</div>
+        </div>
+
+        <div class="card">
+          <div class="ct"><span class="dot" style="background:#b89469"></span>Attic Sleepers (2×4 flat)</div>
+          <table class="brk">
+            <tr>
+              <td>Runs across chords (24" o.c.)</td>
+              <td class="v"><span id="a-runs"></span></td>
+            </tr>
+            <tr>
+              <td>Length each (Street↔House)</td>
+              <td class="v"><span id="a-len"></span> lf</td>
+            </tr>
+            <tr class="net">
+              <td>Total length</td>
+              <td class="v"><span id="a-lf"></span> lf</td>
+            </tr>
+          </table>
+          <div class="ctrl">
+            <label>Waste % <input id="a-waste" type="number" min="0" value="10"></label>
+            <label>Stock
+              <select id="a-stock">
+                <option value="8">8 ft</option>
+                <option value="10">10 ft</option>
+                <option value="12">12 ft</option>
+                <option value="16" selected>16 ft</option>
+                <option value="20">20 ft</option>
+              </select>
+            </label>
+          </div>
+          <div class="res">Order ≈ <b id="a-ord"></b> lf<br><b id="a-pcs"></b> pcs 2×4</div>
+          <div class="note">Flat 2×4 @ 24" o.c. perpendicular to the chords; ¾" plywood over → 1½" service cavity. Each
+            run lands on every chord. Pcs = runs × cuts/run at the chosen stock length.</div>
+        </div>
+
+      </div>
+    </section>
+
+    <footer class="fn">
+      <span>Massing study only — not a structural drawing. Roof pitch &amp; ridge height are scaled estimates per spec;
+        confirm shear/braced-wall, header sizing &amp; framing against the permit set.</span>
+      <span>Iso 30° · 1 sq = 1'-0"</span>
+    </footer>
+  </div>
+
+  <script>
+    (function () {
+      const S = 16, A = Math.PI / 6;
+      const ux = [Math.cos(A) * S, Math.sin(A) * S];   // +X width (Front wall, House->Street) -> right & down
+      const uy = [Math.cos(A) * S, -Math.sin(A) * S];   // +Y depth (Front->Back)               -> right & up
+      const uz = [0, -S];                            // +Z height                            -> up
+      const O = [330, 470];
+
+      // ---- dimensions (from Spec Sheet) ----
+      const W = 19 + 11.5 / 12;      // Front/Back wall length  19'-11 1/2"
+      const L = 17.5;              // Side wall length        17'-6"
+      const H = 8;                 // plate height            8'-0"
+      const RIDGE = 11 + 2 / 12;       // ridge above slab      ≈11'-2"
+      const STONE = 4.5;             // stone wainscot height   4'-6"
+      // garage-door layout, measured from House-Side corner (X=0)
+      const segH = 2 + 2.75 / 12;      // 2'-2 3/4" solid (House-Side jamb)
+      const GD = 16 + 2.5 / 12;      // 16'-2 1/2" opening
+      const GDx0 = segH, GDx1 = segH + GD;   // jambs 2.229 / 18.438
+      const DH = 7;                // garage-door leaf height (assumed)
+      // back man-door (1'-0" off House Side; jambs 1'-0" / 4'-0")
+      const bdx0 = 1, bdx1 = 4, bdh = 80 / 12; // 3'-0" x 6'-8"
+      // roof
+      const ovE = 1.0, ovR = 0.5;            // eave / rake overhang
+      const rY = L / 2;                        // ridge runs along X at mid-depth
+      const slope = (RIDGE - H) / rY;
+      const eaveZ = H - ovE * slope;
+      // attic service cavity: flat 2x4 sleepers across the bottom chords, raised plywood
+      const SLP = 1.5 / 12;                    // flat 2x4 thickness (1.5") = cavity depth
+      const SLoc = 2;                         // sleepers 24" o.c. (3/4" ply spans this w/o sag)
+
+      function p(x, y, z) {
+        return [O[0] + x * ux[0] + y * uy[0] + z * uz[0],
+        O[1] + x * ux[1] + y * uy[1] + z * uz[1]];
+      }
+      const f = n => (Math.round(n * 100) / 100);
+      const ps = a => a.map(P => f(P[0]) + "," + f(P[1])).join(" ");
+      let out = [];
+      const poly = (pts, attr) => out.push(`<polygon points="${ps(pts)}" ${attr}/>`);
+      const line = (a, b, attr) => out.push(`<line x1="${f(a[0])}" y1="${f(a[1])}" x2="${f(b[0])}" y2="${f(b[1])}" ${attr}/>`);
+      const text = (P, t, attr) => out.push(`<text x="${f(P[0])}" y="${f(P[1])}" ${attr}>${t}</text>`);
+      const rtext = (P, ang, t, attr) => out.push(`<text x="${f(P[0])}" y="${f(P[1])}" transform="rotate(${f(ang)} ${f(P[0])} ${f(P[1])})" ${attr}>${t}</text>`);
+      // surface label: baseline follows the isometric axis but glyphs stay vertical (skewY about P)
+      const vtext = (P, ang, t, attr) => out.push(`<text x="${f(P[0])}" y="${f(P[1])}" transform="translate(${f(P[0])} ${f(P[1])}) skewY(${f(ang)}) translate(${f(-P[0])} ${f(-P[1])})" ${attr}>${t}</text>`);
+      const angX = Math.atan2(ux[1], ux[0]) * 180 / Math.PI;   // +30°  X / Front-wall axis (down-right)
+      const angY = Math.atan2(uy[1], uy[0]) * 180 / Math.PI;   // -30°  Y / Side-wall axis (up-right)
+
+      /* ---- ground shadow ---- */
+      poly([p(-12, 0, 0), p(W, 0, 0), p(W, L, 0), p(0, L, 0), p(-12, L, 0)],
+        'fill="rgba(34,31,24,.10)" transform="translate(10,16)" stroke="none"');
+
+      /* ---- SITE: concrete path (behind / Back wall) + flower bed (Street Side) ---- */
+      out.push('<g class="anim a1">');
+      // 4'-0" concrete pathway attached to the Back wall (Y=L), full width
+      const PW = 4;
+      poly([p(0, L, 0), p(W, L, 0), p(W, L + PW, 0), p(0, L + PW, 0)],
+        'fill="#cdc9c0" stroke="#a59f90" stroke-width="1.2"');
+      for (let x = 4; x < W - 0.01; x += 4) line(p(x, L, 0), p(x, L + PW, 0), 'stroke="#a59f90" stroke-width=".8" opacity=".7"'); // control joints
+      line(p(0, L + PW / 2, 0), p(W, L + PW / 2, 0), 'stroke="#a59f90" stroke-width=".8" opacity=".5"');
+      vtext(p(W * 0.5, L + PW * 0.62, 0.02), angX, "4'-0\" CONCRETE PATH",
+        'class="lbl" font-size="10.5" fill="#6b6253" text-anchor="middle" opacity=".9"');
+      // 4'-0" flower bed in front of the Street-Side stacked stone (X=W)
+      const FB = 4;
+      poly([p(W, 0, 0), p(W + FB, 0, 0), p(W + FB, L, 0), p(W, L, 0)],
+        'fill="#7d6a4f" stroke="#5e4e38" stroke-width="1.2"');
+      line(p(W + FB, 0, 0), p(W + FB, L, 0), 'stroke="#9a8865" stroke-width="1.6"'); // bed edging
+      for (let i = 0; i < 4; i++) {
+        const y = L * (i + 0.5) / 4;
+        let b = p(W + FB * 0.5, y, 0), fl = p(W + FB * 0.5, y, 0.6);
+        out.push(`<ellipse cx="${f(b[0])}" cy="${f(b[1])}" rx="9" ry="5" fill="#3f6e4a" opacity=".92"/>`);
+        out.push(`<circle cx="${f(fl[0] - 5)}" cy="${f(fl[1])}" r="2.3" fill="#d98b3a"/>`);
+        out.push(`<circle cx="${f(fl[0] + 5)}" cy="${f(fl[1])}" r="2.3" fill="#c64f4f"/>`);
+        out.push(`<circle cx="${f(fl[0])}"   cy="${f(fl[1] - 3)}" r="2.3" fill="#d9c24a"/>`);
+      }
+      vtext(p(W + FB * 0.28, L * 0.5, 0.02), angY, "4'-0\" FLOWER BED",
+        'class="lbl" font-size="10.5" fill="#efe4cf" text-anchor="middle" opacity=".95"');
+      out.push('</g>');
+
+      /* ---- existing house ghost (House Side / party wall) — white-brick ranch ---- */
+      const HX = -12, HZ = H;                   // height matched to the garage wall/plate (8'-0")
+      const hg = 'fill="rgba(238,234,226,.55)" stroke="#9b8e74" stroke-width="1" stroke-dasharray="5 4"';
+      const hgR = 'fill="rgba(90,86,78,.30)" stroke="#5C5446" stroke-width="1" stroke-dasharray="5 4"';
+      out.push('<g class="anim a1">');
+      poly([p(HX, 0, 0), p(0, 0, 0), p(0, 0, HZ), p(HX, 0, HZ)], hg);           // white-brick front wall
+      poly([p(HX, 0, HZ), p(0, 0, HZ), p(0, L, HZ), p(HX, L, HZ)], hgR);        // low-slope roof
+      // brick chimney hint at far end
+      poly([p(HX + 1, 0, HZ), p(HX + 2.4, 0, HZ), p(HX + 2.4, 0, HZ + 2.2), p(HX + 1, 0, HZ + 2.2)], hg);
+      text([243, 338], 'EXISTING',
+        'class="facetxt" font-size="15" fill="#5C5446" text-anchor="middle" opacity=".85"');
+      text([243, 355], 'HOUSE',
+        'class="facetxt" font-size="15" fill="#5C5446" text-anchor="middle" opacity=".85"');
+      out.push('</g>');
+
+      /* ===== INTERIOR / FAR WALLS (seen through the glass roof) ===== */
+      out.push('<g class="anim a2">');
+      // floor slab (faint)
+      poly([p(0, 0, 0), p(W, 0, 0), p(W, L, 0), p(0, L, 0)],
+        'fill="#d8cdb6" fill-opacity=".45" stroke="#b3a684" stroke-width="1"');
+      // BACK wall (Y=L) interior face = siding, rectangular to plate
+      poly([p(0, L, 0), p(W, L, 0), p(W, L, H), p(0, L, H)],
+        'fill="#bfa988" fill-opacity=".5" stroke="#8f7a55" stroke-width="1.2"');
+      for (let z = 0.55; z < H - 0.02; z += 0.55)
+        line(p(0, L, z), p(W, L, z), 'stroke="#8f7a55" stroke-width=".8" opacity=".45"');
+      // --- 36"x80" man-door on back wall (1'-0" off House Side) ---
+      poly([p(bdx0 - 0.17, L, 0), p(bdx1 + 0.17, L, 0), p(bdx1 + 0.17, L, bdh + 0.17), p(bdx0 - 0.17, L, bdh + 0.17)],
+        'fill="#5a4a30" fill-opacity=".7" stroke="#3a2f1d" stroke-width="1"');   // frame
+      poly([p(bdx0, L, 0), p(bdx1, L, 0), p(bdx1, L, bdh), p(bdx0, L, bdh)],
+        'fill="#cdbb95" fill-opacity=".85" stroke="#7d6a45" stroke-width="1.4"'); // leaf
+      // horizontal frosted-glass window slats
+      const sL = bdx0 + 0.35, sR = bdx1 - 0.35, gTop = bdh - 0.45, gBot = 0.55, slat = 0.52, gap = 0.12;
+      poly([p(sL, L, gBot), p(sR, L, gBot), p(sR, L, gTop), p(sL, L, gTop)],
+        'fill="#3a3326" fill-opacity=".55" stroke="#7d6a45" stroke-width="1"');
+      for (let z = gBot; z + slat <= gTop + 0.01; z += slat + gap) {
+        poly([p(sL, L, z), p(sR, L, z), p(sR, L, z + slat), p(sL, L, z + slat)],
+          'fill="#e6edee" fill-opacity=".82" stroke="#9fb0b2" stroke-width=".8"');
+        line(p(sL + 0.12, L, z + slat * 0.62), p(sR - 0.12, L, z + slat * 0.62),
+          'stroke="#ffffff" stroke-width="1" opacity=".45"');
+      }
+      line(p(sL, L, gBot), p(sL, L, gTop), 'stroke="#7d6a45" stroke-width="1.4"');
+      line(p(sR, L, gBot), p(sR, L, gTop), 'stroke="#7d6a45" stroke-width="1.4"');
+      out.push(`<circle cx="${f(p(bdx1 - 0.28, L, 3.3)[0])}" cy="${f(p(bdx1 - 0.28, L, 3.3)[1])}" r="2.2" fill="#6b5836"/>`);
+      // light switch on the interior Back wall, just right of the man-door
+      const swX0 = bdx1 + 0.5, swX1 = bdx1 + 0.82, swZ0 = 3.6, swZ1 = 4.15;
+      poly([p(swX0, L, swZ0), p(swX1, L, swZ0), p(swX1, L, swZ1), p(swX0, L, swZ1)],
+        'fill="#ece7da" stroke="#8a8472" stroke-width="1"');
+      line(p((swX0 + swX1) / 2, L, swZ0 + 0.13), p((swX0 + swX1) / 2, L, swZ1 - 0.13), 'stroke="#8a8472" stroke-width="1.6"');
+      // LEFT / HOUSE-SIDE wall (X=0) ghosted party wall + hatch
+      poly([p(0, 0, 0), p(0, L, 0), p(0, L, H), p(0, 0, H)],
+        'fill="#cfc3ad" fill-opacity=".42" stroke="#9b8e74" stroke-width="1.2"');
+      for (let y = 1.5; y < L; y += 1.5)
+        line(p(0, y, 0), p(0, y, H), 'stroke="#9b8e74" stroke-width=".7" opacity=".4"');
+      // House-Side gable triangle (abuts house) — ghost
+      poly([p(0, 0, H), p(0, L, H), p(0, rY, RIDGE)],
+        'fill="#cfc3ad" fill-opacity=".30" stroke="#9b8e74" stroke-width="1" stroke-dasharray="4 3"');
+      out.push('</g>');
+
+      /* ===== ROOF FRAMING: 2x8 king-post trusses @ 24" o.c. + 1x plank decking ===== */
+      out.push('<g class="anim a2">');
+      // 1x plank decking on the slopes (planks run parallel to the ridge)
+      const DK = 'stroke="#6f767b" stroke-width=".7" opacity=".28"';
+      for (let yy = -ovE + 0.9; yy < rY - 0.05; yy += 0.9) {      // front slope
+        let z = eaveZ + (yy + ovE) * slope;
+        line(p(-ovR, yy, z), p(W + ovR, yy, z), DK);
+      }
+      for (let yy = L + ovE - 0.9; yy > rY + 0.05; yy -= 0.9) {     // back slope
+        let z = eaveZ + ((L + ovE) - yy) * slope;
+        line(p(-ovR, yy, z), p(W + ovR, yy, z), DK);
+      }
+      // king-post trusses, span Front<->Back (17'-6"), spaced 24" o.c. along Street<->House
+      const TR = 'stroke="#2b2f31" stroke-width="1.4" opacity=".8" stroke-linecap="round"';
+      const KP = 'stroke="#2b2f31" stroke-width="1.8" opacity=".85" stroke-linecap="round"';
+      // bottom chords (ties) first — the sleepers sit ON these, so draw them underneath
+      for (let x = 2; x < W - 0.5; x += 2)
+        line(p(x, 0, H), p(x, L, H), TR);            // bottom chord (tie) at plate
+      out.push('</g>');
+
+      /* ===== ATTIC SERVICE CAVITY: flat 2x4 sleepers on chords + raised 3/4" plywood ===== */
+      out.push('<g class="anim a2">');
+      const SLZ = H + SLP;                         // underside of raised plywood
+      const SLc = 'stroke="#b89469" stroke-width="2.2" opacity=".9" stroke-linecap="round"';
+      const SLs = 'stroke="#6f5436" stroke-width="1" opacity=".45"';
+      function sleeper(yy) {
+        line(p(0, yy, SLZ), p(W, yy, SLZ), SLc);     // top of flat 2x4 (plywood bears here)
+        line(p(0, yy, H), p(W, yy, H), SLs);         // seat on the bottom chords
+      }
+      for (let y = 0; y < L - 0.01; y += SLoc) sleeper(y);
+      sleeper(L);                              // closing sleeper at the Back chord
+      // raised plywood attic-floor plane (ghosted) 1.5" above the chords
+      poly([p(0, 0, SLZ), p(W, 0, SLZ), p(W, L, SLZ), p(0, L, SLZ)],
+        'fill="#caa46a" fill-opacity=".12" stroke="#8a6f44" stroke-width="1" stroke-dasharray="5 4"');
+      out.push('</g>');
+
+      /* ===== TRUSS TOP CHORDS + KING POSTS (rafters drawn OVER the sleepers) ===== */
+      out.push('<g class="anim a2">');
+      for (let x = 2; x < W - 0.5; x += 2) {
+        let Pk = p(x, rY, RIDGE), bf = p(x, 0, H), bb = p(x, L, H), kpb = p(x, rY, H);
+        line(bf, Pk, TR);          // front top chord (rafter)
+        line(bb, Pk, TR);          // back top chord (rafter)
+        line(kpb, Pk, KP);         // king post
+      }
+      out.push('</g>');
+
+      /* ===== BACK ROOF SLOPE (far, glass) ===== */
+      out.push('<g class="anim a2">');
+      const R0 = p(-ovR, rY, RIDGE), R1 = p(W + ovR, rY, RIDGE);
+      const BE0 = p(-ovR, L + ovE, eaveZ), BE1 = p(W + ovR, L + ovE, eaveZ);
+      poly([R0, R1, BE1, BE0], 'fill="url(#gRoof)" fill-opacity="0.32" stroke="#221F18" stroke-width="1.2"');
+      out.push('</g>');
+
+      /* ================= STREET SIDE (X=W) : stone + siding + gable ================= */
+      out.push('<g class="anim a3">');
+      // stone band z 0..STONE
+      poly([p(W, 0, 0), p(W, L, 0), p(W, L, STONE), p(W, 0, STONE)],
+        'fill="url(#gStone)" stroke="#221F18" stroke-width="1.4"');
+      // siding band z STONE..H
+      poly([p(W, 0, STONE), p(W, L, STONE), p(W, L, H), p(W, 0, H)],
+        'fill="url(#gSide)" stroke="#221F18" stroke-width="1.4"');
+      // stacked-stone (ledgestone) coursing — thin courses, soft warm-gray joints
+      const csp = 0.42;
+      for (let z = csp; z < STONE - 0.02; z += csp)
+        line(p(W, 0, z), p(W, L, z), 'stroke="#c2b6a3" stroke-width=".9" opacity=".85"');
+      let ci = 0;
+      for (let z = 0; z < STONE - 0.01; z += csp) {
+        let off = (ci % 2) ? 0.95 : 0.25;
+        for (let y = off; y < L; y += 1.7)
+          line(p(W, y, z), p(W, y, Math.min(z + csp, STONE)), 'stroke="#c2b6a3" stroke-width=".7" opacity=".6"');
+        ci++;
+      }
+      // siding lap reveals on wall band
+      for (let z = STONE + 0.55; z < H - 0.02; z += 0.55)
+        line(p(W, 0, z), p(W, L, z), 'stroke="#4a2917" stroke-width="1" opacity=".8"');
+      line(p(W, 0, STONE), p(W, L, STONE), 'stroke="#221F18" stroke-width="2"');
+      // --- Street-Side GABLE triangle (near-black siding accent) ---
+      poly([p(W, 0, H), p(W, L, H), p(W, rY, RIDGE)],
+        'fill="url(#gGable)" stroke="#0d0e0f" stroke-width="1.6"');
+      for (let z = H + 0.55; z < RIDGE - 0.05; z += 0.55) {
+        let hw = rY * (1 - (z - H) / (RIDGE - H));
+        line(p(W, rY - hw, z), p(W, rY + hw, z), 'stroke="#3d4244" stroke-width="1" opacity=".6"');
+      }
+      out.push('</g>');
+
+      /* ================= FRONT (Y=0) : siding + garage door ================= */
+      out.push('<g class="anim a4">');
+      poly([p(0, 0, 0), p(W, 0, 0), p(W, 0, H), p(0, 0, H)],
+        'fill="url(#gSideF)" stroke="#221F18" stroke-width="1.4"');
+      for (let z = 0.55; z < H - 0.02; z += 0.55)
+        line(p(0, 0, z), p(W, 0, z), 'stroke="#4a2917" stroke-width="1" opacity=".7"');
+      // ---- garage door ----
+      poly([p(GDx0 - 0.25, 0, 0), p(GDx1 + 0.25, 0, 0), p(GDx1 + 0.25, 0, DH + 0.25), p(GDx0 - 0.25, 0, DH + 0.25)],
+        'fill="#2c2a24" stroke="#221F18" stroke-width="1.2"');
+      // dark flush sectional door (per photo: charcoal, no glazing)
+      poly([p(GDx0, 0, 0), p(GDx1, 0, 0), p(GDx1, 0, DH), p(GDx0, 0, DH)],
+        'fill="var(--door)" stroke="#0f1011" stroke-width="1.4"');
+      for (let z = 1.4; z < DH - 0.05; z += 1.4) {
+        line(p(GDx0, 0, z), p(GDx1, 0, z), 'stroke="var(--door-dk)" stroke-width="1.6"');         // shadow groove
+        line(p(GDx0, 0, z + 0.07), p(GDx1, 0, z + 0.07), 'stroke="var(--door-hi)" stroke-width=".7" opacity=".6"'); // highlight
+      }
+      for (let x = GDx0 + 3.4; x < GDx1 - 0.1; x += 3.4)
+        line(p(x, 0, 0), p(x, 0, DH), 'stroke="var(--door-dk)" stroke-width="0.7" opacity=".4"');
+      line(p(GDx0, 0, 0), p(GDx1, 0, 0), 'stroke="#0a0b0c" stroke-width="2.5"');
+      // outdoor GFCI outlet — 6" to the left (House-Side) of the garage door, on the solid panel
+      const olX = GDx0 - 0.5, olZ0 = 1.35, olZ1 = 1.8, olHW = 0.17;
+      poly([p(olX - olHW, 0, olZ0), p(olX + olHW, 0, olZ0), p(olX + olHW, 0, olZ1), p(olX - olHW, 0, olZ1)],
+        'fill="#d8d2c4" stroke="#5C5446" stroke-width="1"');                         // weatherproof box
+      line(p(olX, 0, olZ0 + 0.07), p(olX, 0, olZ1 - 0.07), 'stroke="#5C5446" stroke-width=".8"');  // lid hinge
+      out.push(`<circle cx="${f(p(olX - 0.07, 0, (olZ0 + olZ1) / 2)[0])}" cy="${f(p(olX - 0.07, 0, (olZ0 + olZ1) / 2)[1])}" r="1.4" fill="none" stroke="#5C5446" stroke-width=".8"/>`);
+      out.push('</g>');
+
+      /* ===== FRONT ROOF SLOPE (near, glass) + eaves + ridge ===== */
+      out.push('<g class="anim a4">');
+      const FE0 = p(-ovR, -ovE, eaveZ), FE1 = p(W + ovR, -ovE, eaveZ);
+      poly([FE0, FE1, R1, R0], 'fill="url(#gRoof)" fill-opacity="0.32" stroke="#221F18" stroke-width="1.2"');
+      // fascia at front eave + rafter tails
+      line(FE0, FE1, 'stroke="#2b2f32" stroke-width="2.4"');
+      for (let x = 0; x <= W + 0.01; x += 2) {
+        line(p(x, 0, H), p(x, -ovE, eaveZ), 'stroke="#3a3f43" stroke-width="1" opacity=".55"');
+      }
+      // rake boards on Street-Side gable
+      line(p(W, 0, H), p(W, rY, RIDGE), 'stroke="#2b2f32" stroke-width="2"');
+      line(p(W, L, H), p(W, rY, RIDGE), 'stroke="#2b2f32" stroke-width="2"');
+      // ridge
+      line(R0, R1, 'stroke="#1c1f21" stroke-width="3"');
+      out.push('</g>');
+
+      /* ================= EDGES (silhouette emphasis) ================= */
+      out.push('<g class="anim a4">');
+      const E = 'stroke="#221F18" stroke-width="2" fill="none" stroke-linejoin="round"';
+      line(p(0, 0, 0), p(0, 0, H), E); line(p(W, 0, 0), p(W, 0, H), E); line(p(W, L, 0), p(W, L, H), E);
+      line(p(0, 0, 0), p(W, 0, 0), E); line(p(W, 0, 0), p(W, L, 0), E);
+      line(p(W, 0, H), p(W, L, H), E);                 // street-side plate line
+      out.push('</g>');
+
+      /* ===== exterior wall-mounted motion light on the Back wall ===== */
+      out.push('<g class="anim a4">');
+      const MX = W * 0.6, MZ = H - 0.55;
+      const mb = p(MX, L, MZ);
+      poly([mb, p(MX - 1.7, L + 3.6, 0), p(MX + 1.7, L + 3.6, 0)],
+        'fill="#ffe79a" opacity=".22" stroke="none"');                                  // light cast onto path
+      out.push(`<circle cx="${f(mb[0])}" cy="${f(mb[1])}" r="3.4" fill="#3a3f43" stroke="#1c1f21" stroke-width="1"/>`); // backplate
+      const mh = p(MX, L + 0.5, MZ - 0.3);
+      out.push(`<circle cx="${f(mh[0])}" cy="${f(mh[1])}" r="2.3" fill="#ffe79a" stroke="#8a7a3a" stroke-width="1"/>`);  // lamp head
+      out.push('</g>');
+
+      /* ================= DIMENSIONS ================= */
+      out.push('<g class="anim a5">');
+      const DL = 'stroke="#221F18" stroke-width="1.2" marker-start="url(#arr)" marker-end="url(#arr)"';
+      const WL = 'stroke="#221F18" stroke-width="0.8" opacity=".75"';
+      function dim(a, b, off, label, toff, cls) {
+        const a2 = [a[0] + off[0], a[1] + off[1]], b2 = [b[0] + off[0], b[1] + off[1]];
+        line(a, a2, WL); line(b, b2, WL); line(a2, b2, DL);
+        const m = [(a2[0] + b2[0]) / 2 + toff[0], (a2[1] + b2[1]) / 2 + toff[1]];
+        let ang = Math.atan2(b2[1] - a2[1], b2[0] - a2[0]) * 180 / Math.PI;
+        if (ang > 90) ang -= 180; else if (ang < -90) ang += 180;   // keep text upright-ish
+        rtext(m, ang, label, `class="${cls || 'dimtxt'}" text-anchor="middle"`);
+      }
+      // every witness line runs parallel to a building axis (ux=width, uy=depth)
+      const AX = (v, k) => [v[0] * k, v[1] * k];
+      dim(p(0, 0, 0), p(W, 0, 0), AX(uy, -3.4), "19'-11½\" FRONT", [-2, 13]);   // witness ∥ depth (Y) edges, toward viewer
+      dim(p(W, 0, 0), p(W, L, 0), AX(ux, 4), "17'-6\" SIDE", [10, 14]);          // witness ∥ width (X) edges, on flower-bed edge
+      dim(p(W, 0, 0), p(W, 0, H), AX(ux, 2.9), "8'-0\" PLATE", [14, 2]);         // witness ∥ width (X) edges
+      dim(p(GDx0, 0, 0), p(GDx1, 0, 0), AX(uy, -1.7), "16'-2½\" DOOR", [0, -4]); // witness ∥ depth (Y) edges
+      dim(p(W, L, 0), p(W, L, STONE), AX(uy, 2.45), "4'-6\"", [26, 2]);          // witness ∥ depth (Y) edges
+      dim(p(W, L, STONE), p(W, L, H), AX(uy, 2.45), "3'-6\"", [26, 2]);
+      // front jamb segments (small, on the solid wall pieces)
+      rtext(p(GDx0 / 2, 0, 0.5), angX, "2'-2¾\"", 'class="dimsm" text-anchor="middle"');
+      rtext(p((GDx1 + W) / 2, 0, 0.5), angX, "1'-6¼\"", 'class="dimsm" text-anchor="middle"');
+      out.push('</g>');
+
+      /* ================= LABELS / CALLOUTS ================= */
+      out.push('<g class="anim a5">');
+      vtext(p(W / 2.2, 0, 3.4), angX, "FRONT",
+        'class="facetxt" font-size="20" fill="#f0e6d6" text-anchor="middle" opacity=".55"');
+      vtext(p(W, rY, 1.9), angY, "STACKED STONE",
+        'class="facetxt" font-size="13" fill="#6b6253" text-anchor="middle" opacity=".8"');
+      vtext(p(W, rY, 6.2), angY, "SIDING",
+        'class="facetxt" font-size="13" fill="#f0e6d6" text-anchor="middle" opacity=".85"');
+      vtext(p(W, rY, H + 0.55), angY, "STREET SIDE",
+        'class="facetxt" font-size="11.5" fill="#f0e6d6" text-anchor="middle" opacity=".8"');
+      // gable / roof callout
+      const pk = p(W, rY, RIDGE);
+      out.push(`<line x1="${f(pk[0])}" y1="${f(pk[1])}" x2="${f(pk[0] + 78)}" y2="${f(pk[1] - 66)}" stroke="#883C1E" stroke-width="1"/>`);
+      out.push(`<circle cx="${f(pk[0])}" cy="${f(pk[1])}" r="2.6" fill="#883C1E"/>`);
+      text([pk[0] + 82, pk[1] - 72], 'RIDGE ≈11\'-2"',
+        'class="lbl" font-size="12" fill="#883C1E"');
+      text([pk[0] + 82, pk[1] - 59], 'gable ≈3:12 (est.)',
+        'class="lbl" font-size="11" fill="#883C1E" opacity=".85"');
+      // roof-framing callout (to a truss seen through the glass roof) — top-centre
+      const tp = p(6, rY, RIDGE);
+      out.push(`<line x1="462" y1="90" x2="${f(tp[0])}" y2="${f(tp[1])}" stroke="#3A3F43" stroke-width="1"/>`);
+      out.push(`<circle cx="${f(tp[0])}" cy="${f(tp[1])}" r="2.4" fill="#3A3F43"/>`);
+      text([300, 54], 'ROOF FRAMING',
+        'class="lbl" font-size="12" fill="#3A3F43"');
+      text([300, 69], '2×8 king-post trusses @ 24" o.c.',
+        'class="lbl" font-size="11" fill="#3A3F43" opacity=".9"');
+      text([300, 84], '1× plank decking over top chords',
+        'class="lbl" font-size="11" fill="#3A3F43" opacity=".9"');
+      // attic service-cavity callout (flat 2x4 sleepers + raised plywood)
+      const sp = p(2, 4, SLZ);
+      out.push(`<line x1="120" y1="328" x2="${f(sp[0])}" y2="${f(sp[1])}" stroke="#AE4F2A" stroke-width="1"/>`);
+      out.push(`<circle cx="${f(sp[0])}" cy="${f(sp[1])}" r="2.4" fill="#AE4F2A"/>`);
+      text([30, 324], 'SERVICE CAVITY',
+        'class="lbl" font-size="11" fill="#AE4F2A"');
+      text([30, 338], '2×4 flat @ 24" o.c. · 1½" gap',
+        'class="lbl" font-size="10" fill="#AE4F2A" opacity=".9"');
+      // back wall callout — anchored clear of the light switch (X≈4.8) and motion light (W*0.6)
+      const bp = p(W * 0.45, L, H);
+      out.push(`<line x1="${f(bp[0])}" y1="${f(bp[1])}" x2="${f(bp[0] + 78)}" y2="${f(bp[1] - 60)}" stroke="#2F6B5E" stroke-width="1"/>`);
+      out.push(`<circle cx="${f(bp[0])}" cy="${f(bp[1])}" r="2.6" fill="#2F6B5E"/>`);
+      text([bp[0] + 82, bp[1] - 62], 'BACK WALL · SIDING',
+        'class="lbl" font-size="12" fill="#2F6B5E"');
+      // man-door callout — top-centre-right
+      const mdp = p(2.5, L, 80 / 12);
+      out.push(`<line x1="598" y1="74" x2="${f(mdp[0])}" y2="${f(mdp[1])}" stroke="#2F6B5E" stroke-width="1"/>`);
+      out.push(`<circle cx="${f(mdp[0])}" cy="${f(mdp[1])}" r="2.4" fill="#2F6B5E"/>`);
+      text([556, 54], '36"×80" MAN DOOR',
+        'class="lbl" font-size="12" fill="#2F6B5E"');
+      text([556, 69], "1'-0\" off House Side",
+        'class="lbl" font-size="11" fill="#2F6B5E" opacity=".9"');
+      // house attachment callout — lower-left, points at the House-Side corner
+      const hpA = p(0, 0, 5);
+      out.push(`<line x1="196" y1="394" x2="${f(hpA[0])}" y2="${f(hpA[1])}" stroke="#3F6E96" stroke-width="1"/>`);
+      out.push(`<circle cx="${f(hpA[0])}" cy="${f(hpA[1])}" r="2.6" fill="#3F6E96"/>`);
+      text([30, 392], 'HOUSE SIDE —',
+        'class="lbl" font-size="12" fill="#3F6E96"');
+      text([30, 406], 'ATTACHED / PARTY WALL',
+        'class="lbl" font-size="11" fill="#3F6E96" opacity=".9"');
+      // --- electrical fixture callouts ---
+      // motion light
+      out.push(`<line x1="${f(mb[0])}" y1="${f(mb[1])}" x2="${f(mb[0] + 58)}" y2="${f(mb[1] - 30)}" stroke="#3A3F43" stroke-width="1"/>`);
+      text([mb[0] + 62, mb[1] - 32], 'MOTION LIGHT', 'class="lbl" font-size="11" fill="#3A3F43"');
+      // light switch
+      const swp = p(swX1, L, (swZ0 + swZ1) / 2);
+      out.push(`<line x1="${f(swp[0])}" y1="${f(swp[1])}" x2="${f(swp[0] - 30)}" y2="${f(swp[1] - 96)}" stroke="#2F6B5E" stroke-width="1"/>`);
+      text([swp[0] - 34, swp[1] - 100], 'LIGHT SWITCH', 'class="lbl" font-size="10.5" fill="#2F6B5E" text-anchor="end"');
+      // GFCI outlet
+      const olp = p(olX - olHW, 0, (olZ0 + olZ1) / 2);
+      out.push(`<line x1="${f(olp[0])}" y1="${f(olp[1])}" x2="${f(olp[0] - 46)}" y2="${f(olp[1] + 26)}" stroke="#3A3F43" stroke-width="1"/>`);
+      text([olp[0] - 50, olp[1] + 30], 'GFCI OUTLET', 'class="lbl" font-size="10.5" fill="#3A3F43" text-anchor="end"');
+      out.push('</g>');
+
+      const iso = document.getElementById('iso');
+      iso.insertAdjacentHTML('beforeend', out.join("\n"));
+      // crop the viewBox to the actual drawing (kills the blank margins)
+      const bb = iso.getBBox(), m = 12;
+      iso.setAttribute('viewBox',
+        `${f(bb.x - m)} ${f(bb.y - m)} ${f(bb.width + 2 * m)} ${f(bb.height + 2 * m)}`);
+    })();
+  </script>
+
+  <script>
+    /* ===== material take-off calculators ===== */
+    (function () {
+      const W = 19 + 11.5 / 12, L = 17.5, H = 8, RIDGE = 11 + 2 / 12, STONE = 4.5;
+      const GD = 16 + 2.5 / 12, GDH = 7, MD = 3 * (80 / 12), gableH = RIDGE - H;
+      const ded = GD * GDH + MD;                 // door deductions shared by walls
+      const $ = id => document.getElementById(id);
+      const v = id => parseFloat($(id).value) || 0;
+      const set = (id, t) => { const e = $(id); if (e) e.textContent = t; };
+      const r1 = n => n.toFixed(1);
+      const up = n => Math.ceil(n - 1e-9);
+
+      function recalc() {
+        // --- external siding ---
+        const fb = 2 * W * H, band = L * (H - STONE), gab = 0.5 * L * gableH;
+        const sNet = fb + band + gab - ded;
+        set('s-fb', r1(fb)); set('s-band', r1(band)); set('s-gab', r1(gab));
+        set('s-ded', r1(ded)); set('s-net', r1(sNet));
+        const sArea = sNet * (1 + v('s-waste') / 100), exp = v('s-exp') / 12;
+        set('s-area', r1(sArea)); set('s-lf', exp > 0 ? up(sArea / exp) : '—');
+
+        // --- interior insulation (walls + ceiling) ---
+        const iWall = 2 * W * H + 2 * L * H - ded, iCeil = W * L, iTot = iWall + iCeil;
+        set('i-wall', r1(iWall)); set('i-ceil', r1(iCeil)); set('i-tot', r1(iTot));
+        const iArea = iTot * (1 + v('i-waste') / 100), iCov = v('i-cov');
+        set('i-area', r1(iArea)); set('i-bags', iCov > 0 ? up(iArea / iCov) : '—');
+
+        // --- interior GWB (walls + ceiling) ---
+        const gWall = 2 * W * H + 2 * L * H - ded, gCeil = W * L, gTot = gWall + gCeil;
+        set('g-wall', r1(gWall)); set('g-ceil', r1(gCeil)); set('g-tot', r1(gTot));
+        const gArea = gTot * (1 + v('g-waste') / 100), gCov = v('g-cov');
+        set('g-area', r1(gArea)); set('g-sheets', gCov > 0 ? up(gArea / gCov) : '—');
+
+        // --- 8' ceiling only plywood ---
+        const pCeil = W * L;
+        set('p-ceil', r1(pCeil));
+        const pArea = pCeil * (1 + v('p-waste') / 100), pCov = v('p-cov');
+        set('p-area', r1(pArea)); set('p-sheets', pCov > 0 ? up(pArea / pCov) : '—');
+
+        // --- attic 2x4 sleepers (flat, 24" o.c. perpendicular across the chords) ---
+        const aRuns = Math.ceil(L / 2) + 1, aLen = W, aLF = aRuns * aLen;
+        set('a-runs', aRuns); set('a-len', r1(aLen)); set('a-lf', r1(aLF));
+        const aOrd = aLF * (1 + v('a-waste') / 100), aStock = v('a-stock');
+        set('a-ord', r1(aOrd));
+        set('a-pcs', aStock > 0 ? aRuns * up(aLen / aStock) : '—');
+      }
+      const root = document.querySelector('.calcs');
+      root.addEventListener('input', recalc);
+      root.addEventListener('change', recalc);
+      recalc();
+    })();
+  </script>
+</body>
+
+</html>

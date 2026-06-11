@@ -1,0 +1,12 @@
+# This repo is published to GitHub Pages (public).
+# Ignore EVERYTHING by default, then re-include only files safe to publish.
+# Do NOT commit specs/markdown/photos that contain the property address or private notes.
+/*
+
+# Re-include the public diagram pages and their assets:
+!.gitignore
+!index.html
+!garage-isometric.html
+!wall-assembly-diagram.html
+!cor-a-vent-sv3-siding-ventilation-detail.jpg
+!fema-p499-wood-siding-rainscreen.jpg

@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Carport → Garage Conversion — Drawing Set</title>
+  <meta name="robots" content="noindex" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap"
+    rel="stylesheet" />
+  <style>
+    :root {
+      --paper: #ECE3D2;
+      --paper-2: #F5EFE2;
+      --ink: #221F18;
+      --ink-soft: #5C5446;
+      --line: #C7BBA3;
+      --rust: #AE4F2A;
+      --rust-deep: #883C1E;
+      --teal: #2F6B5E;
+      --blue: #3F6E96;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        repeating-linear-gradient(0deg, transparent 0 31px, rgba(199, 187, 163, .35) 31px 32px),
+        repeating-linear-gradient(90deg, transparent 0 31px, rgba(199, 187, 163, .35) 31px 32px),
+        var(--paper);
+      color: var(--ink);
+      font-family: "IBM Plex Sans", system-ui, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+    }
+
+    .sheet {
+      width: min(860px, 100%);
+      background: var(--paper-2);
+      border: 1.5px solid var(--ink);
+      box-shadow: 0 18px 40px rgba(34, 31, 24, .18);
+      padding: 38px clamp(22px, 5vw, 54px) 44px;
+    }
+
+    .eyebrow {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 12px;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--rust-deep);
+      margin: 0 0 10px;
+    }
+
+    h1 {
+      font-family: "Saira Condensed", sans-serif;
+      font-weight: 700;
+      font-size: clamp(30px, 5vw, 46px);
+      line-height: 1.02;
+      letter-spacing: .01em;
+      margin: 0 0 8px;
+      text-transform: uppercase;
+    }
+
+    .sub {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 13px;
+      color: var(--ink-soft);
+      margin: 0 0 30px;
+      padding-bottom: 22px;
+      border-bottom: 1.5px solid var(--line);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px;
+    }
+
+    a.card {
+      display: block;
+      text-decoration: none;
+      color: inherit;
+      background: var(--paper);
+      border: 1.5px solid var(--ink);
+      padding: 22px 22px 24px;
+      transition: transform .15s ease, box-shadow .15s ease;
+    }
+
+    a.card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 22px rgba(34, 31, 24, .2);
+    }
+
+    .tag {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 11px;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: var(--teal);
+    }
+
+    .card h2 {
+      font-family: "Saira Condensed", sans-serif;
+      font-weight: 600;
+      text-transform: uppercase;
+      font-size: 24px;
+      margin: 6px 0 8px;
+    }
+
+    .card p {
+      font-size: 14px;
+      line-height: 1.45;
+      color: var(--ink-soft);
+      margin: 0 0 16px;
+    }
+
+    .go {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 12px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--rust-deep);
+    }
+
+    .foot {
+      margin-top: 30px;
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 11px;
+      letter-spacing: .08em;
+      color: var(--ink-soft);
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      a.card { transition: none; }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="sheet">
+    <p class="eyebrow">Drawing Set · Sheet Index</p>
+    <h1>Carport → Garage Conversion</h1>
+    <p class="sub">Zone 4C Marine · Not To Scale · Design reference only</p>
+
+    <div class="grid">
+      <a class="card" href="garage-isometric.html">
+        <span class="tag">A-1 · Massing</span>
+        <h2>Isometric Massing</h2>
+        <p>Axonometric of the enclosed garage volume — roof, plate heights, door opening and overall dimensions.</p>
+        <span class="go">Open drawing →</span>
+      </a>
+
+      <a class="card" href="wall-assembly-diagram.html">
+        <span class="tag">A-2 · Detail</span>
+        <h2>Wall Assembly</h2>
+        <p>Vented rainscreen wall section — insulation, sheathing, housewrap, furring and Cor-A-Vent detail with product links.</p>
+        <span class="go">Open drawing →</span>
+      </a>
+    </div>
+
+    <div class="foot">
+      <span>Design reference — confirm framing, shear &amp; details against the permit set / engineer.</span>
+      <span>NTS</span>
+    </div>
+  </main>
+</body>
+
+</html>
