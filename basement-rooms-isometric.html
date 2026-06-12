@@ -376,7 +376,7 @@
         poly([p(MRx0, 0, H), p(0, 0, H), p(0, MRyN, H), p(MRx0, MRyN, H)], gMF);            // ceiling
         poly([p(MRx0, 0, 0), p(0, 0, 0), p(0, 0, H), p(MRx0, 0, H)], gMW);                  // south wall (Y=0, faces viewer)
         poly([p(MRx0, 0, 0), p(MRx0, MRyN, 0), p(MRx0, MRyN, H), p(MRx0, 0, H)], gMW);       // west / screen wall (X=MRx0)
-        poly([p(MRx0, MRyN, 0), p(MOx0, MRyN, 0), p(MOx0, MRyN, H), p(MRx0, MRyN, H)], gMW); // north wall, west of the door
+        poly([p(MRx0, MRyN, 0), p(0, MRyN, 0), p(0, MRyN, H), p(MRx0, MRyN, H)], gMW); // north wall — one continuous piece (door framing painted over it later)
         line(p(MRx0, 0, 0), p(MRx0, 0, H), gME);        // SW corner arris
         line(p(MRx0, MRyN, 0), p(MRx0, MRyN, H), gME);  // NW corner arris
         line(p(MRx0, 0, H), p(MRx0, MRyN, H), gME);     // west-end top edge
@@ -525,12 +525,8 @@
       out.push('<g class="anim a4">');
       // (the X=0 plane north of the 12'-0" partition is open to the hallway — no wall/opening drawn here)
       // (the chase itself is drawn earlier, in the soffit group, at the NW corner west of X=SFx0)
-      // --- movie-room WALL on the Y=12 plane (hallway south / movie-room wall): GWB around the door opening,
-      //     spanning the hallway width (CHx0..0), full height; semi-transparent so the hallway/chase read through ---
-      const wMR = 'fill="#332c24" fill-opacity=".55" stroke="#221F18" stroke-width="1.3"';
-      poly([p(CHx0, HWyS, 0), p(MOx0, HWyS, 0), p(MOx0, HWyS, H), p(CHx0, HWyS, H)], wMR);       // west panel
-      poly([p(MOx1, HWyS, 0), p(0, HWyS, 0), p(0, HWyS, H), p(MOx1, HWyS, H)], wMR);             // east panel (to partition corner)
-      poly([p(MOx0, HWyS, HWz), p(MOx1, HWyS, HWz), p(MOx1, HWyS, H), p(MOx0, HWyS, H)], wMR);   // header over the door
+      // --- movie-room WALL on the Y=12 plane (hallway south / movie-room wall): the one-piece ghosted
+      //     north wall (drawn earlier) already fills this plane, so no separate door-surround panels here ---
       poly([p(CHx0, HWyS, 0), p(MOx0, HWyS, 0), p(MOx0, HWyS, 0.5), p(CHx0, HWyS, 0.5)],
         'fill="#d9d0bb" fill-opacity=".7" stroke="#9b9078" stroke-width="1"');                    // west baseboard
       poly([p(MOx1, HWyS, 0), p(0, HWyS, 0), p(0, HWyS, 0.5), p(MOx1, HWyS, 0.5)],
@@ -604,10 +600,10 @@
       vtext(p(W * 0.5, 0, 6.6), angX, "DOOR WALL",
         'class="facetxt" font-size="13" fill="#6b6253" text-anchor="middle" opacity=".7"');
       vtext(p(W, D / 2, 5.0), angY, "SIDE WALL",
-        'class="facetxt" font-size="13" fill="#6b6253" text-anchor="middle" opacity=".75"');
+        'class="facetxt" font-size="13" fill="#fff" text-anchor="middle" opacity=".75"');
       // movie-room partition (X=0 plane) — same axis as the side wall (constant X, spans depth & height)
-      vtext(p(0, LW / 2, 5.0), angY, "MOVIE-ROOM WALL",
-        'class="facetxt" font-size="13" fill="#6b6253" text-anchor="middle" opacity=".75"');
+      vtext(p(0, LW / 2, 5.0 - 30 / S), angY, "MOVIE-ROOM WALL",
+        'class="facetxt" font-size="13" fill="#fff" text-anchor="middle" opacity=".75"');
       // adjacent movie room — ghosted context label, floated over its floor volume
       const mrc = p(MRx0 / 2, LW / 2, 0);
       text([mrc[0], mrc[1] - 72], 'MOVIE', 'class="facetxt" font-size="18" fill="#5C5446" text-anchor="middle" opacity=".7"');
@@ -622,12 +618,12 @@
 
       // ceiling callout (leader to a wall-wash trim) — light locations + spacing
       const cp = p(2.5, 4.5, H);
-      out.push(`<line x1="${f(cp[0])}" y1="${f(cp[1])}" x2="${f(cp[0] - 40)}" y2="${f(cp[1] - 56)}" stroke="#2F6B5E" stroke-width="1"/>`);
+      out.push(`<line x1="${f(cp[0])}" y1="${f(cp[1])}" x2="${f(cp[0] - 260)}" y2="${f(cp[1] + 24)}" stroke="#2F6B5E" stroke-width="1"/>`);
       out.push(`<circle cx="${f(cp[0])}" cy="${f(cp[1])}" r="2.4" fill="#2F6B5E"/>`);
-      text([cp[0] - 200, cp[1] - 74], 'FLAT CEILING @ 7\'-3⅝" · 8 recessed cans', 'class="lbl" font-size="12" fill="#2F6B5E"');
-      text([cp[0] - 200, cp[1] - 60], 'WALL-WASH (4): 2\'-6" off movie wall · 3\'-0" o.c.', 'class="lbl" font-size="11" fill="#2F6B5E" opacity=".9"');
-      text([cp[0] - 200, cp[1] - 46], 'GENERAL (4): 8\'-3" off movie wall · 3\'-6" o.c.', 'class="lbl" font-size="11" fill="#2F6B5E" opacity=".9"');
-      text([cp[0] - 200, cp[1] - 32], 'end cans ≈1\'-6"–1\'-9" off the end walls', 'class="lbl" font-size="10" fill="#2F6B5E" opacity=".8"');
+      text([cp[0] - 420, cp[1] + 6], 'FLAT CEILING @ 7\'-3⅝" · 8 recessed cans', 'class="lbl" font-size="12" fill="#2F6B5E"');
+      text([cp[0] - 420, cp[1] + 20], 'WALL-WASH (4): 2\'-6" off movie wall · 3\'-0" o.c.', 'class="lbl" font-size="11" fill="#2F6B5E" opacity=".9"');
+      text([cp[0] - 420, cp[1] + 34], 'GENERAL (4): 8\'-3" off movie wall · 3\'-6" o.c.', 'class="lbl" font-size="11" fill="#2F6B5E" opacity=".9"');
+      text([cp[0] - 420, cp[1] + 48], 'end cans ≈1\'-6"–1\'-9" off the end walls', 'class="lbl" font-size="10" fill="#2F6B5E" opacity=".8"');
 
       // HVAC soffit callout (leader to the NORTH side of the soffit, against the back wall); label raised 30px
       const sp = p(W * 0.5, SFy1, (SFz + H) / 2);
@@ -653,10 +649,11 @@
       // wall-wash glow on the movie-room wall (X=0, Y=0..LW): warm, brightest up top, fading down
       poly([p(0, 0, H), p(0, LW, H), p(0, LW, 0), p(0, 0, 0)], 'fill="url(#gWash)" stroke="none"');
       // recessed-light glyph; wash trims add a short warm "throw" toward the wall (−X)
-      function dl(x, y, wash) {
-        let q = p(x, y, H);
+      function dl(x, y, wash, z) {
+        z = (z === undefined) ? H : z;
+        let q = p(x, y, z);
         if (wash) {
-          let w = p(x - 1.1, y, H);
+          let w = p(x - 1.1, y, z);
           out.push(`<line x1="${f(q[0])}" y1="${f(q[1])}" x2="${f(w[0])}" y2="${f(w[1])}" stroke="#fde0a0" stroke-width="2.4" opacity=".85"/>`);
         }
         out.push(`<ellipse cx="${f(q[0])}" cy="${f(q[1])}" rx="7.5" ry="4.3" fill="#fff4d6" stroke="#b9ad8f" stroke-width="1"/>`);
@@ -666,6 +663,8 @@
       [1.5, 4.5, 7.5, 10.5].forEach(y => dl(2.5, y, true));
       // GENERAL row: ≈2'-9" off the side wall, 4 trims @ 3'-6" o.c. down the 14' depth
       [1.75, 5.25, 8.75, 12.25].forEach(y => dl(8.25, y, false));
+      // SOFFIT row: 3 recessed cans on the dropped-soffit underside (z=SFz), centered N-S, evenly E-W
+      [-1.0, 3.9, 8.75].forEach(x => dl(x, (SFy0 + SFy1) / 2, false, SFz));
       out.push('</g>');
 
       const iso = document.getElementById('iso');
