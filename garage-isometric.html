@@ -889,10 +889,10 @@
       }
       // every witness line runs parallel to a building axis (ux=width, uy=depth)
       const AX = (v, k) => [v[0] * k, v[1] * k];
-      dim(p(0, 0, 0), p(W, 0, 0), AX(uy, -3.4), "19'-11½\" FRONT", [-2, 13]);   // witness ∥ depth (Y) edges, toward viewer
-      dim(p(W, 0, 0), p(W, L, 0), AX(ux, 4), "17'-6\" SIDE", [10, 14]);          // witness ∥ width (X) edges, on flower-bed edge
-      dim(p(W, 0, 0), p(W, 0, H), AX(ux, 2.9), "8'-0\" PLATE", [14, 2]);         // witness ∥ width (X) edges
-      dim(p(GDx0, 0, 0), p(GDx1, 0, 0), AX(uy, -1.7), "16'-2½\" DOOR", [0, -4]); // witness ∥ depth (Y) edges
+      dim(p(0, 0, 0), p(W, 0, 0), AX(uy, -3.4), "19'-11½\"", [-2, 13]);   // witness ∥ depth (Y) edges, toward viewer
+      dim(p(W, 0, 0), p(W, L, 0), AX(ux, 4), "17'-6\"", [10, 14]);          // witness ∥ width (X) edges, on flower-bed edge
+      dim(p(W, 0, 0), p(W, 0, H), AX(ux, 2.9), "8'-0\"", [14, 2]);         // witness ∥ width (X) edges
+      dim(p(GDx0, 0, 0), p(GDx1, 0, 0), AX(uy, -1.7), "16'-2½\"", [0, -4]); // witness ∥ depth (Y) edges
       dim(p(W, L, 0), p(W, L, STONE), AX(uy, 2.45), "4'-6\"", [26, 2]);          // witness ∥ depth (Y) edges
       dim(p(W, L, STONE), p(W, L, H), AX(uy, 2.45), "3'-6\"", [26, 2]);
       // front jamb segments (small, on the solid wall pieces)

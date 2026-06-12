@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Basement Extra Room — Isometric Massing</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap"
+    rel="stylesheet" />
+  <style>
+    :root {
+      --paper: #ECE3D2;
+      --paper-2: #F5EFE2;
+      --ink: #221F18;
+      --ink-soft: #5C5446;
+      --line: #C7BBA3;
+      --rust: #AE4F2A;
+      --rust-deep: #883C1E;
+      --teal: #2F6B5E;
+      --blue: #3F6E96;
+      --slate: #3A3F43;
+      --metal: #8A9197;
+      --gwb: #e8e3d6;
+      --gwb-dk: #d6cfbd;
+      --floor: #c9a878;
+      --floor-dk: #a8854f;
+      --floor-lt: #e3cda3;
+      --glass: #9fb6c4;
+      --frame: #3a3f43;
+      --frame-dk: #1b1d1f;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: "IBM Plex Sans", system-ui, sans-serif;
+    }
+
+    body {
+      background-image:
+        linear-gradient(rgba(199, 187, 163, .20) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(199, 187, 163, .20) 1px, transparent 1px);
+      background-size: 24px 24px;
+      padding: 28px 20px 56px;
+    }
+
+    .sheet {
+      max-width: 1080px;
+      margin: 0 auto;
+      background: var(--paper-2);
+      border: 1.5px solid var(--ink);
+      box-shadow: 0 18px 50px rgba(34, 31, 24, .18);
+    }
+
+    header.tb {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 16px;
+      padding: 18px 26px 14px;
+      border-bottom: 1.5px solid var(--ink);
+      background:
+        repeating-linear-gradient(45deg, transparent 0 11px, rgba(174, 79, 42, .05) 11px 12px);
+    }
+
+    header.tb h1 {
+      font-family: "Saira Condensed", sans-serif;
+      font-weight: 700;
+      letter-spacing: .02em;
+      font-size: 30px;
+      line-height: .95;
+      margin: 0;
+      text-transform: uppercase;
+    }
+
+    header.tb .sub {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 12px;
+      color: var(--ink-soft);
+      margin-top: 6px;
+      letter-spacing: .03em;
+    }
+
+    header.tb .stamp {
+      text-align: right;
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 11px;
+      color: var(--ink-soft);
+      line-height: 1.5;
+    }
+
+    header.tb .stamp b {
+      color: var(--rust-deep);
+      font-weight: 600;
+    }
+
+    .drawing {
+      padding: 8px 10px 4px;
+    }
+
+    svg {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .lbl {
+      font-family: "IBM Plex Mono", monospace;
+      font-weight: 500;
+    }
+
+    .dimtxt {
+      font-family: "IBM Plex Mono", monospace;
+      font-weight: 600;
+      font-size: 10px;
+      fill: var(--ink);
+    }
+
+    .dimsm {
+      font-family: "IBM Plex Mono", monospace;
+      font-weight: 500;
+      font-size: 8.5px;
+      fill: var(--ink);
+    }
+
+    .facetxt {
+      font-family: "Saira Condensed", sans-serif;
+      font-weight: 700;
+      letter-spacing: .05em;
+    }
+
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 22px;
+      padding: 14px 26px 22px;
+      border-top: 1.5px solid var(--ink);
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 12px;
+      color: var(--ink-soft);
+    }
+
+    .legend .it {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .legend .sw {
+      width: 18px;
+      height: 14px;
+      border: 1px solid var(--ink);
+      display: inline-block;
+    }
+
+    footer.fn {
+      padding: 10px 26px 16px;
+      border-top: 1px dashed var(--line);
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 10.5px;
+      color: var(--ink-soft);
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    @media (prefers-reduced-motion:no-preference) {
+      .anim {
+        opacity: 0;
+        animation: fin .7s ease forwards;
+      }
+
+      .a1 {
+        animation-delay: .05s
+      }
+
+      .a2 {
+        animation-delay: .18s
+      }
+
+      .a3 {
+        animation-delay: .31s
+      }
+
+      .a4 {
+        animation-delay: .44s
+      }
+
+      .a5 {
+        animation-delay: .57s
+      }
+
+      .a6 {
+        animation-delay: .70s
+      }
+
+      @keyframes fin {
+        to {
+          opacity: 1
+        }
+      }
+    }
+
+    @media print {
+      body {
+        background: #fff;
+        padding: 0;
+      }
+
+      .sheet {
+        box-shadow: none;
+        border: 1px solid #000;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="sheet">
+    <header class="tb">
+      <div>
+        <h1>Basement Rooms — Isometric Massing</h1>
+        <div class="sub">Extra Room (subject) + adjacent Movie Room · NTS · 1 sq = 1'-0"</div>
+      </div>
+      <div class="stamp">
+        EXTRA ROOM&nbsp;&nbsp; <b>11'-2⅜" × 18'-7½"</b> &nbsp;·&nbsp; ≈209 sf<br />
+        MOVIE ROOM&nbsp;&nbsp; <b>12'-0" × 19'-1"</b> &nbsp;·&nbsp; west (context)<br />
+        CEILING&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>7'-3⅝"</b> &nbsp;·&nbsp; SOFFIT <b>6'-4¾"</b> clr &nbsp;·&nbsp; 8 cans<br />
+        DOOR&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>8'-1" × 6'-8"</b> slider<br />
+        SHEET &nbsp;A-0.3 &nbsp;/&nbsp; 2026-06-11
+      </div>
+    </header>
+
+    <div class="drawing">
+      <svg id="iso" viewBox="0 0 1080 660" role="img" aria-label="Isometric massing diagram of the Basement Rooms — the Extra Room and the adjacent Movie Room">
+        <defs>
+          <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7"
+            orient="auto-start-reverse">
+            <path d="M0,0 L10,5 L0,10 z" fill="#221F18" />
+          </marker>
+          <linearGradient id="gFloor" x1="0" y1="1" x2="0" y2="0">
+            <stop offset="0" stop-color="#a89e90" />
+            <stop offset="1" stop-color="#c7bfb2" />
+          </linearGradient>
+          <linearGradient id="gWallF" x1="0" y1="1" x2="0" y2="0">
+            <stop offset="0" stop-color="#ded7c6" />
+            <stop offset="1" stop-color="#f1ece0" />
+          </linearGradient>
+          <linearGradient id="gWallS" x1="0" y1="1" x2="0" y2="0">
+            <stop offset="0" stop-color="#cdc6b3" />
+            <stop offset="1" stop-color="#e2dccc" />
+          </linearGradient>
+          <linearGradient id="gGlass" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#bcccd6" />
+            <stop offset="1" stop-color="#8aa3b3" />
+          </linearGradient>
+          <!-- wall-wash glow: warm, strongest near the ceiling, fading toward the floor -->
+          <linearGradient id="gWash" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#fff0c4" stop-opacity=".42" />
+            <stop offset=".55" stop-color="#fff0c4" stop-opacity=".15" />
+            <stop offset="1" stop-color="#fff0c4" stop-opacity="0" />
+          </linearGradient>
+        </defs>
+        <!-- drawn by script -->
+      </svg>
+    </div>
+
+    <div class="legend">
+      <div class="it"><span class="sw" style="background:#f1ece0"></span>Painted 1/2" GWB on perimeter walls (7'-3⅝"
+        plate)</div>
+      <div class="it"><span class="sw" style="background:#e8e3d6"></span>Flat GWB ceiling @ 7'-3⅝" — 8 recessed lights:
+        4 wall-wash (2'-6" off the movie-room wall) + 4 general</div>
+      <div class="it"><span class="sw" style="background:#b6ac9c"></span>Carpet floor — light gray/brown loop pile over
+        slab</div>
+      <div class="it"><span class="sw" style="background:#9fb6c4"></span>8'-1" sliding glass door (6'-8" tall) on the
+        width wall, 2'-1" off the SE corner</div>
+      <div class="it"><span class="sw" style="background:#ece8de"></span>HVAC trunk soffit — E-W bulkhead (painted white), drops 7'-3⅝"
+        ceiling to 6'-4¾" clear</div>
+      <div class="it"><span class="sw" style="border-style:dashed;background:rgba(92,84,70,.10)"></span>Ceiling &amp;
+        partition wall shown ghosted (context); back wall solid, side wall semi-transparent</div>
+      <div class="it"><span class="sw" style="background:rgba(58,63,67,.10);border-color:#3a3f43"></span>West hallway (3'-3"
+        wide, 6'-4¾" clr): 3'-4" modern flush movie-room door + 3'×3' full-height chase at the NW corner, where the 14'-7½" back wall ends</div>
+      <div class="it"><span class="sw" style="border-style:dashed;background:rgba(92,84,70,.10)"></span>Adjacent MOVIE ROOM
+        (context, ghosted): 12'-0" × 19'-1", west of the movie-room wall; projector screen on the far (west) wall</div>
+    </div>
+
+    <footer class="fn">
+      <span>Massing study only — not a structural or framing drawing. Confirm clear dims, egress, headroom, and any
+        below-grade waterproofing / vapor control against the permit set.</span>
+      <span>Iso 30° · 1 sq = 1'-0"</span>
+    </footer>
+  </div>
+
+  <script>
+    (function () {
+      const S = 16, A = Math.PI / 6;
+      const ux = [Math.cos(A) * S, Math.sin(A) * S];   // +X width (door wall) -> right & down
+      const uy = [Math.cos(A) * S, -Math.sin(A) * S];   // +Y depth            -> right & up
+      const uz = [0, -S];                            // +Z height           -> up
+      const O = [360, 470];
+
+      // ---- dimensions (from the basement plan) ----
+      const W = 11.2;              // width  (door wall, X)         11'-2 3/8"
+      const D = 18 + 7.5 / 12;     // full depth, right wall (Y)    18'-7 1/2"
+      const LW = 12;               // LEFT wall solid length (X=0, Y=0..LW)  12'-0"
+      const H = 7 + 3.6 / 12;      // ceiling height (Z)            7'-3 5/8"  (≈ 7.3')
+      // 8'-1" sliding glass door on the south wall, set 2'-1" off the SE corner
+      const DW = 8 + 1 / 12, DHt = 80 / 12;   // 8'-1" wide x 6'-8" tall
+      const JmbR = 2 + 1 / 12;                // 2'-1" jamb at the right (E) corner
+      const DGx1 = W - JmbR;                  // 9.117
+      const DGx0 = DGx1 - DW;                 // 1.034  (left jamb ≈ 1'-0 3/8")
+      const DMx = (DGx0 + DGx1) / 2;          // meeting stile (two 4'-0 1/2" leaves)
+      // HVAC trunk soffit: E-W bulkhead, 4'-7" wide (N-S), butting the back wall; 14'-7½" long measured from the right wall
+      const S47 = 4 + 7 / 12;                 // 4'-7" soffit width (N-S)
+      const SFy1 = D;                         // soffit north face butts the back wall
+      const SFy0 = D - S47;                   // 14.042  soffit south (room-side) face; ≈ 2'-0½" of flat ceiling between it and the 12' wall
+      const SLen = 14 + 7.5 / 12;             // 14'-7½" soffit length (E-W), measured from the right wall
+      const SFx1 = W;                         // east end at the right (east) wall
+      const SFx0 = W - SLen;                  // -3.425  west end runs past the open left side, into the hallway
+      const SFz = 6 + 4.8 / 12;               // 6'-4 3/4" clear under the soffit (≈ 6.4'); drop ≈ 10 7/8"
+      // ---- WEST HALLWAY (fills the open west side, X<0; clear ht = soffit, 6'-4¾") ----
+      const HWx = SFx0;            // -3.425  west face of the drawn hallway slice (= soffit/floor west edge)
+      const HWyS = LW;             // 12      hallway south wall = partition north end = movie-room wall line
+      const HW = 3.3;              // 3'-3"   hallway N-S width (band Y = 12 .. 15.3)
+      const HWyN = LW + HW;        // 15.3    hallway north wall = start of the corner jog
+      const HWz = SFz;             // 6'-4¾"  hallway clear ceiling (under the soffit)
+      const MOW = 3 + 4 / 12;      // 3'-4"   movie-room door opening width (E-W, along X) in the Y=12 wall
+      const MOx1 = -1, MOx0 = MOx1 - MOW; // opening spans X = -4.33 .. -1 (moved 1'-0" west of the partition)
+      // ---- 3'×3' full-height GWB CHASE at the NW: BEGINS where the 14'-7½" back wall ENDS (X=SFx0) and projects WEST ----
+      const CHW = 3;               // 3'-0"   chase plan size (E-W and N-S)
+      const CHx1 = SFx0;           // -3.425  chase EAST face = back wall west end (where the wall ends / chase begins)
+      const CHx0 = SFx0 - CHW;     // -6.425  chase WEST face (footprint bumps out west, past the hallway line)
+      const CHy1 = D;              // chase NORTH face is coplanar with the back wall
+      const CHy0 = D - CHW;        // 15.625  chase SOUTH face
+
+      function p(x, y, z) {
+        return [O[0] + x * ux[0] + y * uy[0] + z * uz[0],
+        O[1] + x * ux[1] + y * uy[1] + z * uz[1]];
+      }
+      const f = n => (Math.round(n * 100) / 100);
+      const ps = a => a.map(P => f(P[0]) + "," + f(P[1])).join(" ");
+      let out = [];
+      const poly = (pts, attr) => out.push(`<polygon points="${ps(pts)}" ${attr}/>`);
+      const line = (a, b, attr) => out.push(`<line x1="${f(a[0])}" y1="${f(a[1])}" x2="${f(b[0])}" y2="${f(b[1])}" ${attr}/>`);
+      const text = (P, t, attr) => out.push(`<text x="${f(P[0])}" y="${f(P[1])}" ${attr}>${t}</text>`);
+      const rtext = (P, ang, t, attr) => out.push(`<text x="${f(P[0])}" y="${f(P[1])}" transform="rotate(${f(ang)} ${f(P[0])} ${f(P[1])})" ${attr}>${t}</text>`);
+      // surface label: baseline follows the isometric axis but glyphs stay vertical (skewY about P)
+      const vtext = (P, ang, t, attr) => out.push(`<text x="${f(P[0])}" y="${f(P[1])}" transform="translate(${f(P[0])} ${f(P[1])}) skewY(${f(ang)}) translate(${f(-P[0])} ${f(-P[1])})" ${attr}>${t}</text>`);
+      const angX = Math.atan2(ux[1], ux[0]) * 180 / Math.PI;   // +30°  X / door-wall axis (down-right)
+      const angY = Math.atan2(uy[1], uy[0]) * 180 / Math.PI;   // -30°  Y / side-wall axis (up-right)
+
+      out.push('<g class="anim a1">');
+
+      /* ===== ADJACENT MOVIE ROOM (context, west of the Movie-Room Wall) — ghosted massing ===== */
+      // 12'-0" (N-S, the shared partition wall) × 19'-1" (E-W, extending west). Drawn FIRST so the
+      // nearer extra-room walls / partition paint over the shared X=0 edge.
+      const MRL = 19 + 1 / 12;      // 19'-1" movie-room length (E-W, to the west)
+      const MRx0 = -MRL;            // -19.08  west (screen) wall
+      const MRyN = LW;              // 12'-0"  north wall (Y=12, hallway / movie-room-door side)
+      {
+        const gMF = 'fill="rgba(92,84,70,.06)" stroke="#5C5446" stroke-width="1" stroke-dasharray="5 4"';
+        const gMW = 'fill="rgba(92,84,70,.12)" stroke="#5C5446" stroke-width="1" stroke-dasharray="5 4"';
+        const gME = 'stroke="#5C5446" stroke-width="1.2" stroke-dasharray="5 4" fill="none"';
+        poly([p(MRx0, 0, 0), p(0, 0, 0), p(0, MRyN, 0), p(MRx0, MRyN, 0)], gMF);            // floor
+        poly([p(MRx0, 0, H), p(0, 0, H), p(0, MRyN, H), p(MRx0, MRyN, H)], gMF);            // ceiling
+        poly([p(MRx0, 0, 0), p(0, 0, 0), p(0, 0, H), p(MRx0, 0, H)], gMW);                  // south wall (Y=0, faces viewer)
+        poly([p(MRx0, 0, 0), p(MRx0, MRyN, 0), p(MRx0, MRyN, H), p(MRx0, 0, H)], gMW);       // west / screen wall (X=MRx0)
+        poly([p(MRx0, MRyN, 0), p(MOx0, MRyN, 0), p(MOx0, MRyN, H), p(MRx0, MRyN, H)], gMW); // north wall, west of the door
+        line(p(MRx0, 0, 0), p(MRx0, 0, H), gME);        // SW corner arris
+        line(p(MRx0, MRyN, 0), p(MRx0, MRyN, H), gME);  // NW corner arris
+        line(p(MRx0, 0, H), p(MRx0, MRyN, H), gME);     // west-end top edge
+        // projector screen on the far (west) wall — ~8'-0" wide × 4'-6" tall, centered
+        poly([p(MRx0, 2, 1.6), p(MRx0, 10, 1.6), p(MRx0, 10, 6.1), p(MRx0, 2, 6.1)],
+          'fill="rgba(34,31,24,.22)" stroke="#5C5446" stroke-width="1"');
+        vtext(p(MRx0, MRyN / 2, 6.55), angY, 'SCREEN',
+          'class="lbl" font-size="9" fill="#5C5446" text-anchor="middle" opacity=".85"');
+      }
+
+      /* ===== FLOOR + GHOSTED ENCLOSURE (far walls + ceiling) ===== */
+      // carpeted floor (light gray/brown) — full room rectangle W × D
+      // room rectangle W×D plus the hallway strip west of the partition (X = SFx0..0, Y = LW..D),
+      // so the room and the hallway beyond read as the same continuous carpet
+      poly([p(0, 0, 0), p(W, 0, 0), p(W, D, 0), p(CHx0, D, 0), p(CHx0, LW, 0), p(0, LW, 0)],
+        'fill="url(#gFloor)" stroke="#7d7569" stroke-width="1.2"');
+      // carpet pile texture — fine random flecks (gray + brown), gives a soft loop look
+      let seed = 7;
+      const rnd = () => (seed = (seed * 1103515245 + 12345) & 0x7fffffff) / 0x7fffffff;
+      const flecks = ['#9a9082', '#b6ac9c', '#8f8474', '#c2bbac'];
+      for (let i = 0; i < 1700; i++) {
+        let fx = CHx0 + rnd() * (W - CHx0);   // span the hallway strip (extended west) too
+        let fy = rnd() * D;
+        if (fx < 0 && fy < LW) continue;       // outside the carpet (south of the partition, in the hallway)
+        let q = p(fx, fy, 0);
+        out.push(`<circle cx="${f(q[0])}" cy="${f(q[1])}" r="${f(0.6 + rnd() * 0.7)}" fill="${flecks[i & 3]}" opacity="${f(0.18 + rnd() * 0.22)}"/>`);
+      }
+      // ghosted far walls + ceiling so the box reads as an enclosed room
+      // BACK wall (Y=D), 14'-7½" — SOLID, painted white (subtle gradient keeps the plane reading)
+      poly([p(SFx0, D, 0), p(W, D, 0), p(W, D, H), p(SFx0, D, H)],
+        'fill="#f4f1ea" stroke="#221F18" stroke-width="1.4"');
+      // PARTITION (movie-room) wall fill is drawn LATER, after the door — it is nearer the eye than the
+      // door (X=0 vs the door at X<0, Y=12), so the wall must paint over / occlude the door.
+      // north of the partition (Y=LW..D) the west side is open to the hallway
+      // CEILING (flat @ H) fill is drawn LATER — after the soffit and ending at the soffit's south face (see below).
+      // left wall ENDS at 12'-0"; north of it (Y=LW..D) is open — hallway treatment to be added later
+      // (recessed ceiling lights drawn LAST — see end of script — so they sit on top of everything)
+      out.push('</g>');
+
+      /* ===== FRONT / DOOR WALL (Y=0) — GWB around the sliding door + glass ===== */
+      out.push('<g class="anim a3">');
+      const wallF = 'fill="url(#gWallF)" stroke="#221F18" stroke-width="1.4"';
+      // wall built around the opening: left jamb panel, right jamb panel, header
+      poly([p(0, 0, 0), p(DGx0, 0, 0), p(DGx0, 0, H), p(0, 0, H)], wallF);            // left panel
+      poly([p(DGx1, 0, 0), p(W, 0, 0), p(W, 0, H), p(DGx1, 0, H)], wallF);            // right panel
+      poly([p(DGx0, 0, DHt), p(DGx1, 0, DHt), p(DGx1, 0, H), p(DGx0, 0, H)], wallF);   // header
+      // baseboard on the two solid panels
+      poly([p(0, 0, 0), p(DGx0, 0, 0), p(DGx0, 0, 0.5), p(0, 0, 0.5)], 'fill="#d9d0bb" stroke="#9b9078" stroke-width="1"');
+      poly([p(DGx1, 0, 0), p(W, 0, 0), p(W, 0, 0.5), p(DGx1, 0, 0.5)], 'fill="#d9d0bb" stroke="#9b9078" stroke-width="1"');
+
+      // ---- 8'-1" SLIDING GLASS DOOR (two 4'-0½" leaves) — clear glazing reveals the carpet behind ----
+      // NOTE: no opaque backing behind the glass, so the room floor (drawn earlier in a1) reads through it
+      const fr = 0.16;                       // frame face width
+      function leaf(x0, x1) {
+        // transparent glazing (low fill-opacity so the carpet shows through)
+        poly([p(x0 + fr, 0, fr), p(x1 - fr, 0, fr), p(x1 - fr, 0, DHt - fr), p(x0 + fr, 0, DHt - fr)],
+          'fill="url(#gGlass)" fill-opacity=".4" stroke="#2c3338" stroke-width="1.2"');
+        // glass reflection streaks
+        line(p(x0 + 0.45, 0, fr + 0.2), p(x1 - 0.55, 0, DHt - fr - 0.5),
+          'stroke="#ffffff" stroke-width="2" opacity=".22"');
+        line(p(x0 + 0.95, 0, fr + 0.2), p(x1 - 0.05, 0, DHt - fr - 0.5),
+          'stroke="#ffffff" stroke-width="1.2" opacity=".14"');
+      }
+      leaf(DGx0, DMx);   // left leaf (fixed)
+      leaf(DMx, DGx1);   // right leaf (slider)
+      // outer frame as a BORDER only (fill="none") so it never blocks the view through the glazing
+      poly([p(DGx0, 0, 0), p(DGx1, 0, 0), p(DGx1, 0, DHt), p(DGx0, 0, DHt)],
+        'fill="none" stroke="var(--frame)" stroke-width="3.4"');
+      poly([p(DGx0, 0, 0), p(DGx1, 0, 0), p(DGx1, 0, DHt), p(DGx0, 0, DHt)],
+        'fill="none" stroke="var(--frame-dk)" stroke-width="1.2"');
+      // meeting stile + interlock
+      poly([p(DMx - 0.09, 0, fr), p(DMx + 0.09, 0, fr), p(DMx + 0.09, 0, DHt - fr), p(DMx - 0.09, 0, DHt - fr)],
+        'fill="#2b3034" stroke="#15181a" stroke-width=".8"');
+      // head + sill track emphasis
+      line(p(DGx0, 0, 0), p(DGx1, 0, 0), 'stroke="#15181a" stroke-width="2.6"');
+      line(p(DGx0, 0, DHt), p(DGx1, 0, DHt), 'stroke="#15181a" stroke-width="1.8"');
+      // pull handle on the slider leaf
+      const hX = DMx + 0.28;
+      line(p(hX, 0, 3.0), p(hX, 0, 4.1), 'stroke="#d8d8d8" stroke-width="2.4"');
+      line(p(hX, 0, 3.0), p(hX, 0, 4.1), 'stroke="#7d8186" stroke-width="1"');
+      out.push('</g>');
+
+      /* ===== HVAC TRUNK SOFFIT — E-W bulkhead at the north, drops ceiling 7'-3⅝" → 6'-4¾" ===== */
+      out.push('<g class="anim a4">');
+      // ---- 3'×3' full-height GWB CHASE (HVAC riser) at the NW corner: butts the back wall's west end, projects west ----
+      // drawn FIRST (it is the farthest element here) so the nearer soffit/walls paint over the shared X=SFx0 edge.
+      // visible faces: SOUTH (Y=CHy0, faces viewer), EAST (X=CHx1, faces the hallway), TOP (Z=H). N/W faces hidden.
+      poly([p(CHx0, CHy0, 0), p(CHx1, CHy0, 0), p(CHx1, CHy0, H), p(CHx0, CHy0, H)],
+        'fill="url(#gWallF)" fill-opacity=".7" stroke="#221F18" stroke-width="1.3"');     // south face
+      poly([p(CHx1, CHy0, 0), p(CHx1, CHy1, 0), p(CHx1, CHy1, H), p(CHx1, CHy0, H)],
+        'fill="url(#gWallS)" fill-opacity=".55" stroke="#221F18" stroke-width="1.3"');    // east face (hallway side)
+      poly([p(CHx0, CHy0, H), p(CHx1, CHy0, H), p(CHx1, CHy1, H), p(CHx0, CHy1, H)],
+        'fill="#ece8de" fill-opacity=".8" stroke="#221F18" stroke-width="1"');            // top
+      const CHE = 'stroke="#221F18" stroke-width="1.7" fill="none"';
+      line(p(CHx1, CHy0, 0), p(CHx1, CHy0, H), CHE);   // SE vertical arris (nearest corner)
+      line(p(CHx0, CHy0, 0), p(CHx0, CHy0, H), CHE);   // SW vertical arris
+      line(p(CHx1, CHy1, 0), p(CHx1, CHy1, H), CHE);   // NE vertical arris (meets back wall end)
+      line(p(CHx0, CHy0, H), p(CHx1, CHy0, H), CHE);   // top south edge
+      line(p(CHx1, CHy0, H), p(CHx1, CHy1, H), CHE);   // top east edge
+      poly([p(CHx0, CHy0, 0), p(CHx1, CHy0, 0), p(CHx1, CHy0, 0.5), p(CHx0, CHy0, 0.5)],
+        'fill="#d9d0bb" fill-opacity=".7" stroke="#9b9078" stroke-width="1"');            // south baseboard
+      poly([p(CHx1, CHy0, 0), p(CHx1, CHy1, 0), p(CHx1, CHy1, 0.5), p(CHx1, CHy0, 0.5)],
+        'fill="#d9d0bb" fill-opacity=".7" stroke="#9b9078" stroke-width="1"');            // east baseboard
+      // soffit painted white, slightly transparent — FILL ONLY (faces graded south > west > underside);
+      // every border line is drawn exactly once below (the face polys used to stroke their outlines too,
+      // tripling some edges).
+      poly([p(SFx0, SFy0, SFz), p(SFx1, SFy0, SFz), p(SFx1, SFy1, SFz), p(SFx0, SFy1, SFz)],
+        'fill="#e3ded3" fill-opacity=".8" stroke="none"');   // bottom (underside) @ z=SFz
+      poly([p(SFx0, SFy0, SFz), p(SFx1, SFy0, SFz), p(SFx1, SFy0, H), p(SFx0, SFy0, H)],
+        'fill="#f4f1ea" fill-opacity=".8" stroke="none"');   // south (room-side) face
+      poly([p(SFx0, SFy0, SFz), p(SFx0, SFy1, SFz), p(SFx0, SFy1, H), p(SFx0, SFy0, H)],
+        'fill="#ece8de" fill-opacity=".8" stroke="none"');   // west end cap (runs out into the hallway)
+      // ---- soffit border lines, each drawn ONCE ----
+      const SE = 'stroke="#221F18" stroke-width="1.4" fill="none"';
+      // visible underside outline: front + west arrises, and the far edges where it meets the back/side walls
+      line(p(SFx0, SFy0, SFz), p(SFx1, SFy0, SFz), SE);   // underside front (south arris)
+      line(p(SFx0, SFy0, SFz), p(SFx0, SFy1, SFz), SE);   // underside west
+      line(p(SFx0, SFy1, SFz), p(SFx1, SFy1, SFz), SE);   // underside north (on the back wall)
+      line(p(SFx1, SFy0, SFz), p(SFx1, SFy1, SFz), SE);   // underside east (on the side wall)
+      // visible south-face verticals + top (ceiling line) and the west-end top
+      line(p(SFx0, SFy0, SFz), p(SFx0, SFy0, H), SE);     // SW vertical (near-left corner arris)
+      line(p(SFx1, SFy0, SFz), p(SFx1, SFy0, H), SE);     // SE vertical
+      line(p(SFx0, SFy0, H), p(SFx1, SFy0, H), SE);       // south top (ceiling line)
+      line(p(SFx0, SFy0, H), p(SFx0, SFy1, H), SE);       // west-end top
+      // The hidden back/top edges (east-top, north-top, NE & NW verticals) are intentionally NOT redrawn:
+      // they coincide with the already-solid back-wall top, side-wall top, building back corner, and chase arris.
+      // ceiling's left (X=0) edge from the partition end back to the soffit's south face — SOLID; it stops
+      // where it meets the top of the soffit (no line continues across the soffit top).
+      line(p(0, LW, H), p(0, SFy0, H), SE);
+      // CEILING (flat @ H, black tint) — drawn here so it sits ON TOP of the soffit, and ENDS at the soffit's
+      // south face (Y=SFy0); north of there the ceiling is the dropped soffit, not the flat ceiling.
+      poly([p(0, 0, H), p(W, 0, H), p(W, SFy0, H), p(0, SFy0, H)], 'fill="rgba(34,31,24,.6)" stroke="none"');
+      out.push('</g>');
+
+      /* ===== RIGHT SIDE WALL (X=W) — semi-transparent GWB; drawn AFTER the soffit so the nearest
+              plane (X=W) sits OVER the soffit's east end (see the room / back wall through it) ===== */
+      out.push('<g class="anim a2">');
+      poly([p(W, 0, 0), p(W, D, 0), p(W, D, H), p(W, 0, H)],
+        'fill="#332c24" fill-opacity=".55" stroke="#221F18" stroke-width="1.4"');
+      // baseboard
+      poly([p(W, 0, 0), p(W, D, 0), p(W, D, 0.5), p(W, 0, 0.5)],
+        'fill="#cfc6b1" fill-opacity=".55" stroke="#9b9078" stroke-width="1"'); // baseboard
+      out.push('</g>');
+
+      /* ===== WEST HALLWAY + FRAMED MOVIE-ROOM OPENING (fills the open west side) ===== */
+      out.push('<g class="anim a4">');
+      // (the X=0 plane north of the 12'-0" partition is open to the hallway — no wall/opening drawn here)
+      // (the chase itself is drawn earlier, in the soffit group, at the NW corner west of X=SFx0)
+      // --- movie-room WALL on the Y=12 plane (hallway south / movie-room wall): GWB around the door opening,
+      //     spanning the hallway width (CHx0..0), full height; semi-transparent so the hallway/chase read through ---
+      const wMR = 'fill="#332c24" fill-opacity=".55" stroke="#221F18" stroke-width="1.3"';
+      poly([p(CHx0, HWyS, 0), p(MOx0, HWyS, 0), p(MOx0, HWyS, H), p(CHx0, HWyS, H)], wMR);       // west panel
+      poly([p(MOx1, HWyS, 0), p(0, HWyS, 0), p(0, HWyS, H), p(MOx1, HWyS, H)], wMR);             // east panel (to partition corner)
+      poly([p(MOx0, HWyS, HWz), p(MOx1, HWyS, HWz), p(MOx1, HWyS, H), p(MOx0, HWyS, H)], wMR);   // header over the door
+      poly([p(CHx0, HWyS, 0), p(MOx0, HWyS, 0), p(MOx0, HWyS, 0.5), p(CHx0, HWyS, 0.5)],
+        'fill="#d9d0bb" fill-opacity=".7" stroke="#9b9078" stroke-width="1"');                    // west baseboard
+      poly([p(MOx1, HWyS, 0), p(0, HWyS, 0), p(0, HWyS, 0.5), p(MOx1, HWyS, 0.5)],
+        'fill="#d9d0bb" fill-opacity=".7" stroke="#9b9078" stroke-width="1"');                    // east baseboard
+      // --- movie-room door: simple modern flush interior door hung in the Y=12 wall opening (3'-4") ---
+      poly([p(MOx0, HWyS, 0), p(MOx1, HWyS, 0), p(MOx1, HWyS, HWz), p(MOx0, HWyS, HWz)],
+        'fill="#e7e0d0" stroke="#221F18" stroke-width="1.2"');                                    // jamb / casing
+      const dj = 0.09, dhead = 0.12;                                                              // jamb + head reveal
+      const dsx0 = MOx0 + dj, dsx1 = MOx1 - dj, dsz = HWz - dhead;                                // flush slab extent
+      poly([p(dsx0, HWyS, 0), p(dsx1, HWyS, 0), p(dsx1, HWyS, dsz), p(dsx0, HWyS, dsz)],
+        'fill="#f2ede1" stroke="#3a3530" stroke-width="1"');                                      // flush door slab
+      const dr = 0.16;
+      poly([p(dsx0 + dr, HWyS, dr), p(dsx1 - dr, HWyS, dr), p(dsx1 - dr, HWyS, dsz - dr), p(dsx0 + dr, HWyS, dsz - dr)],
+        'fill="none" stroke="#cabfa8" stroke-width=".7"');                                        // subtle inset reveal
+      // lever handle + rose on the latch (east) side, ≈36" AFF
+      const hrz = 3.0, hrx = dsx1 - 0.16, hp = p(hrx, HWyS, hrz);
+      out.push(`<circle cx="${f(hp[0])}" cy="${f(hp[1])}" r="2" fill="#5C5446"/>`);
+      line(p(hrx, HWyS, hrz), p(hrx - 0.5, HWyS, hrz), 'stroke="#5C5446" stroke-width="2.6"');    // lever
+      // PARTITION (movie-room) wall fill — drawn AFTER the door so the nearer wall (X=0) occludes it
+      poly([p(0, 0, 0), p(0, LW, 0), p(0, LW, H), p(0, 0, H)], 'fill="#332c24" fill-opacity=".7" stroke="none"');
+      out.push('</g>');
+
+      /* ================= EDGES (silhouette emphasis) ================= */
+      out.push('<g class="anim a4">');
+      const E = 'stroke="#221F18" stroke-width="2" fill="none" stroke-linejoin="round"';
+      // floor outline
+      line(p(0, 0, 0), p(W, 0, 0), E); line(p(W, 0, 0), p(W, D, 0), E);
+      // vertical corners
+      line(p(0, 0, 0), p(0, 0, H), E); line(p(W, 0, 0), p(W, 0, H), E); line(p(W, D, 0), p(W, D, H), E);
+      // top plate lines (near)
+      line(p(0, 0, H), p(W, 0, H), E); line(p(W, 0, H), p(W, D, H), E);
+      // movie-room (partition) wall outline — top + right-side (north end) edges drawn SOLID, after the
+      // door so these near edges sit on top of it (the front-left vertical is already a silhouette edge)
+      line(p(0, 0, H), p(0, LW, H), E);    // top edge (also the ceiling's west edge over the partition)
+      line(p(0, LW, 0), p(0, LW, H), E);   // right side (north end / door-jamb side), full height to ceiling
+      out.push('</g>');
+
+      /* ================= DIMENSIONS ================= */
+      out.push('<g class="anim a5">');
+      const DL = 'stroke="#221F18" stroke-width="1.2" marker-start="url(#arr)" marker-end="url(#arr)"';
+      const WL = 'stroke="#221F18" stroke-width="0.8" opacity=".75"';
+      function dim(a, b, off, label, toff, cls) {
+        const a2 = [a[0] + off[0], a[1] + off[1]], b2 = [b[0] + off[0], b[1] + off[1]];
+        line(a, a2, WL); line(b, b2, WL); line(a2, b2, DL);
+        const m = [(a2[0] + b2[0]) / 2 + toff[0], (a2[1] + b2[1]) / 2 + toff[1]];
+        let ang = Math.atan2(b2[1] - a2[1], b2[0] - a2[0]) * 180 / Math.PI;
+        if (ang > 90) ang -= 180; else if (ang < -90) ang += 180;   // keep text upright-ish
+        rtext(m, ang, label, `class="${cls || 'dimtxt'}" text-anchor="middle"`);
+      }
+      // every witness line runs parallel to a building axis (ux=width, uy=depth)
+      const AX = (v, k) => [v[0] * k, v[1] * k];
+      dim(p(0, 0, 0), p(W, 0, 0), AX(uy, -3.4), "11'-2⅜\"", [-2, 13]);   // witness ∥ depth (Y), toward viewer
+      dim(p(DGx0, 0, 0), p(DGx1, 0, 0), AX(uy, -1.7), "8'-1\"", [0, -4]);  // nested closer
+      dim(p(DGx1, 0, 0), p(W, 0, 0), AX(uy, -1.7), "2'-1\"", [0, -4], 'dimsm'); // jamb to SE corner
+      dim(p(W, 0, 0), p(W, D, 0), AX(ux, 3.1), "18'-7½\"", [10, 14]);     // right wall / full depth, witness ∥ width (X)
+      dim(p(W, 0, 0), p(W, 0, H), AX(ux, 2.0), "7'-3⅝\"", [14, 2]);         // ceiling height, witness ∥ width
+      dim(p(W, SFy0, 0), p(W, SFy0, SFz), AX(ux, 2.0), "6'-4¾\"", [14, 2], 'dimsm'); // clear under soffit
+      // LEFT side: 12'-0" Movie Room Partition Wall (west plane)
+      dim(p(0, 0, 0), p(0, LW, 0), AX(ux, -2.6), "12'-0\"", [-8, 12]);
+      // adjacent movie room length — continues the front (Y=0) dimension string to the west
+      dim(p(0, 0, 0), p(MRx0, 0, 0), AX(uy, -3.4), "19'-1\"", [-2, 13]);
+      // door height — small, on the front plane (witness ∥ width)
+      dim(p(DGx1, 0, 0), p(DGx1, 0, DHt), AX(ux, 0.9), "6'-8\"", [12, 2], 'dimsm');
+      // west hallway: framed movie opening (∥ depth witness)
+      dim(p(MOx0, HWyS, 0), p(MOx1, HWyS, 0), AX(uy, -1.3), "3'-4\"", [0, -4], 'dimsm');
+      out.push('</g>');
+
+      /* ================= LABELS / CALLOUTS ================= */
+      out.push('<g class="anim a5">');
+      // face labels sit ON their planes (vtext: baseline follows the axis, glyphs upright)
+      vtext(p(W * 0.5, 0, 6.6), angX, "DOOR WALL",
+        'class="facetxt" font-size="13" fill="#6b6253" text-anchor="middle" opacity=".7"');
+      vtext(p(W, D / 2, 5.0), angY, "SIDE WALL",
+        'class="facetxt" font-size="13" fill="#6b6253" text-anchor="middle" opacity=".75"');
+      // movie-room partition (X=0 plane) — same axis as the side wall (constant X, spans depth & height)
+      vtext(p(0, LW / 2, 5.0), angY, "MOVIE-ROOM WALL",
+        'class="facetxt" font-size="13" fill="#6b6253" text-anchor="middle" opacity=".75"');
+      // adjacent movie room — ghosted context label, floated over its floor volume
+      const mrc = p(MRx0 / 2, LW / 2, 0);
+      text([mrc[0], mrc[1] - 72], 'MOVIE', 'class="facetxt" font-size="18" fill="#5C5446" text-anchor="middle" opacity=".7"');
+      text([mrc[0], mrc[1] - 52], 'ROOM', 'class="facetxt" font-size="18" fill="#5C5446" text-anchor="middle" opacity=".7"');
+      text([mrc[0], mrc[1] - 34], "12'-0\" × 19'-1\"", 'class="lbl" font-size="10.5" fill="#5C5446" text-anchor="middle" opacity=".7"');
+      // subject EXTRA ROOM — name floated in its own volume so the two rooms read distinctly
+      const erc = p(W * 0.5, D * 0.44, 0);
+      text([erc[0], erc[1] - 58], 'EXTRA', 'class="facetxt" font-size="19" fill="#3A3F43" text-anchor="middle" opacity=".82"');
+      text([erc[0], erc[1] - 37], 'ROOM', 'class="facetxt" font-size="19" fill="#3A3F43" text-anchor="middle" opacity=".82"');
+      text([erc[0], erc[1] - 20], "11'-2⅜\" × 18'-7½\" · ≈209 sf", 'class="lbl" font-size="10" fill="#3A3F43" text-anchor="middle" opacity=".8"');
+
+
+      // ceiling callout (leader to a wall-wash trim) — light locations + spacing
+      const cp = p(2.5, 4.5, H);
+      out.push(`<line x1="${f(cp[0])}" y1="${f(cp[1])}" x2="${f(cp[0] - 40)}" y2="${f(cp[1] - 56)}" stroke="#2F6B5E" stroke-width="1"/>`);
+      out.push(`<circle cx="${f(cp[0])}" cy="${f(cp[1])}" r="2.4" fill="#2F6B5E"/>`);
+      text([cp[0] - 200, cp[1] - 74], 'FLAT CEILING @ 7\'-3⅝" · 8 recessed cans', 'class="lbl" font-size="12" fill="#2F6B5E"');
+      text([cp[0] - 200, cp[1] - 60], 'WALL-WASH (4): 2\'-6" off movie wall · 3\'-0" o.c.', 'class="lbl" font-size="11" fill="#2F6B5E" opacity=".9"');
+      text([cp[0] - 200, cp[1] - 46], 'GENERAL (4): 8\'-3" off movie wall · 3\'-6" o.c.', 'class="lbl" font-size="11" fill="#2F6B5E" opacity=".9"');
+      text([cp[0] - 200, cp[1] - 32], 'end cans ≈1\'-6"–1\'-9" off the end walls', 'class="lbl" font-size="10" fill="#2F6B5E" opacity=".8"');
+
+      // HVAC soffit callout (leader to the NORTH side of the soffit, against the back wall); label raised 30px
+      const sp = p(W * 0.5, SFy1, (SFz + H) / 2);
+      out.push(`<line x1="${f(sp[0])}" y1="${f(sp[1])}" x2="${f(sp[0] + 64)}" y2="${f(sp[1] - 60)}" stroke="#AE4F2A" stroke-width="1"/>`);
+      out.push(`<circle cx="${f(sp[0])}" cy="${f(sp[1])}" r="2.6" fill="#AE4F2A"/>`);
+      text([sp[0] + 68, sp[1] - 69], 'HVAC TRUNK SOFFIT', 'class="lbl" font-size="12" fill="#AE4F2A"');
+      text([sp[0] + 68, sp[1] - 55], '14\'-7½" × 4\'-7" · 6\'-4¾" clr', 'class="lbl" font-size="11" fill="#AE4F2A" opacity=".9"');
+
+      // ---- west hallway labels ----
+      // movie-room door callout — dot at the door's TOP-LEFT corner; label in the clear lower-left
+      const mop = p(MOx0, HWyS, HWz);
+      out.push(`<line x1="${f(mop[0])}" y1="${f(mop[1])}" x2="${f(mop[0] - 80)}" y2="${f(mop[1] - 10)}" stroke="#AE4F2A" stroke-width="1"/>`);
+      out.push(`<circle cx="${f(mop[0])}" cy="${f(mop[1])}" r="2.6" fill="#AE4F2A"/>`);
+      text([mop[0] - 217, mop[1] - 6], "MOVIE-ROOM DOOR", 'class="lbl" font-size="12" fill="#AE4F2A"');
+      text([mop[0] - 217, mop[1] + 8], "3'-4\"", 'class="lbl" font-size="11" fill="#AE4F2A" opacity=".9"');
+      out.push('</g>');
+
+      // ===== CEILING LIGHTING — 8 recessed downlights in the 11'×14' flat ceiling =====
+      // drawn LAST so they sit on top of the ceiling and every wall. (Soffit zone excluded.)
+      // Layout: a 4-light WALL-WASH row 2'-6" off the movie-room wall (X=0) to graze it,
+      // plus a 4-light GENERAL row down the body of the room.
+      out.push('<g class="anim a6">');
+      // wall-wash glow on the movie-room wall (X=0, Y=0..LW): warm, brightest up top, fading down
+      poly([p(0, 0, H), p(0, LW, H), p(0, LW, 0), p(0, 0, 0)], 'fill="url(#gWash)" stroke="none"');
+      // recessed-light glyph; wash trims add a short warm "throw" toward the wall (−X)
+      function dl(x, y, wash) {
+        let q = p(x, y, H);
+        if (wash) {
+          let w = p(x - 1.1, y, H);
+          out.push(`<line x1="${f(q[0])}" y1="${f(q[1])}" x2="${f(w[0])}" y2="${f(w[1])}" stroke="#fde0a0" stroke-width="2.4" opacity=".85"/>`);
+        }
+        out.push(`<ellipse cx="${f(q[0])}" cy="${f(q[1])}" rx="7.5" ry="4.3" fill="#fff4d6" stroke="#b9ad8f" stroke-width="1"/>`);
+        out.push(`<ellipse cx="${f(q[0])}" cy="${f(q[1])}" rx="3.4" ry="2" fill="#fbe7a6" stroke="#caa46a" stroke-width=".8"/>`);
+      }
+      // WALL-WASH row: 2'-6" off the movie wall, 4 trims @ 3'-0" o.c. along the 12' wall
+      [1.5, 4.5, 7.5, 10.5].forEach(y => dl(2.5, y, true));
+      // GENERAL row: ≈2'-9" off the side wall, 4 trims @ 3'-6" o.c. down the 14' depth
+      [1.75, 5.25, 8.75, 12.25].forEach(y => dl(8.25, y, false));
+      out.push('</g>');
+
+      const iso = document.getElementById('iso');
+      iso.insertAdjacentHTML('beforeend', out.join("\n"));
+      // crop the viewBox to the actual drawing (kills the blank margins)
+      const bb = iso.getBBox(), m = 12;
+      iso.setAttribute('viewBox',
+        `${f(bb.x - m)} ${f(bb.y - m)} ${f(bb.width + 2 * m)} ${f(bb.height + 2 * m)}`);
+    })();
+  </script>
+
+</body>
+
+</html>
