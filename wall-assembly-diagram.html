@@ -7,23 +7,18 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="shared.css">
 <style>
   :root{
-    --paper:#ECE3D2; --paper-2:#F5EFE2; --ink:#221F18; --ink-soft:#5C5446;
-    --line:#C7BBA3; --rust:#AE4F2A; --rust-deep:#883C1E; --teal:#2F6B5E;
-    --blue:#3F6E96; --slate:#3A3F43; --metal:#8A9197;
     --shadow:0 18px 40px -22px rgba(40,30,18,.55);
   }
-  *{box-sizing:border-box;}
-  html,body{margin:0;padding:0;}
   body{
-    background:var(--paper);
     background-image:linear-gradient(var(--line) .5px,transparent .5px),linear-gradient(90deg,var(--line) .5px,transparent .5px);
     background-size:26px 26px;background-position:center;
-    color:var(--ink);font-family:"IBM Plex Sans",sans-serif;line-height:1.55;
+    line-height:1.55;
     padding:32px 20px 80px;-webkit-font-smoothing:antialiased;
   }
-  .sheet{max-width:1120px;margin:0 auto;background:var(--paper-2);border:1.5px solid var(--ink);box-shadow:var(--shadow);position:relative;}
+  .sheet{max-width:1120px;margin:0 auto;box-shadow:var(--shadow);position:relative;}
   .sheet::before{content:"";position:absolute;inset:7px;border:1px solid var(--line);pointer-events:none;}
   header{display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:18px;padding:30px 36px 22px;border-bottom:1.5px solid var(--ink);}
   .title-block h1{font-family:"Saira Condensed",sans-serif;font-weight:800;font-size:clamp(34px,6vw,62px);line-height:.9;margin:0;text-transform:uppercase;}
@@ -36,7 +31,6 @@
   .drawing{padding:24px 30px 6px;}
   .sec-title{font-family:"Saira Condensed",sans-serif;font-weight:700;font-size:21px;letter-spacing:.04em;text-transform:uppercase;margin:0 0 2px;}
   .sec-sub{font-family:"IBM Plex Mono",monospace;font-size:10.5px;color:var(--ink-soft);letter-spacing:.06em;text-transform:uppercase;margin:0 0 12px;}
-  svg{width:100%;height:auto;display:block;}
   svg text{font-weight:700;}
   .sec-row{display:flex;gap:22px;align-items:flex-start;flex-wrap:wrap;}
   .sec-row>svg{flex:1 1 520px;min-width:0;}
@@ -50,6 +44,8 @@
   .l1{animation-delay:.05s}.l2{animation-delay:.15s}.l3{animation-delay:.25s}.l4{animation-delay:.35s}
   .l5{animation-delay:.45s}.l6{animation-delay:.55s}.l7{animation-delay:.65s}.l8{animation-delay:.75s}
   .callout-num{font-family:"IBM Plex Mono",monospace;font-weight:600;}
+  .facetxt{font-family:"Saira Condensed",sans-serif;font-weight:700;letter-spacing:.05em;}
+  .lbl{font-family:"IBM Plex Mono",monospace;font-weight:500;}
   @media (prefers-reduced-motion:reduce){.layer{animation:none;opacity:1;}}
   .details{display:grid;grid-template-columns:1fr 1.35fr;border-top:1.5px solid var(--ink);}
   .det{padding:22px 26px;}
@@ -104,43 +100,49 @@
     <span>Exterior / Wet ►</span>
   </div>
 
-  <!-- ===================== SOURCING / SHOPPING LIST ===================== -->
+  <!-- ===================== LAYER SCHEDULE ===================== -->
   <div class="schedule">
-    <p class="sec-title">Sourcing / Shopping List</p>
-    <p class="sec-sub">Every product link in one place · grouped by layer # · see the Layer Schedule below for specs</p>
+    <p class="sec-title">Layer Schedule</p>
+    <p class="sec-sub">Interior → exterior · ✓ = you already have it</p>
     <div class="sched-grid">
+
+      <div class="spec opt">
+        <div class="n">1</div>
+        <div>
+          <h3>Interior Finish <em>optional</em></h3>
+          <p>½&quot; gypsum + latex paint = <b>Class III vapor retarder</b> (allowed because the cladding is vented). Never add poly sheet here. Leave open if unconditioned.</p>
+        </div>
+      </div>
+
+      <div class="spec">
+        <div class="n">2</div>
+        <div>
+          <h3>Framing <em>✓ have</em></h3>
+          <p><b>2×4 @ 16&quot; o.c.</b>, PT bottom plate, anchored. Sheathing/nailing per permit — enclosing the carport changes lateral bracing.</p>
+        </div>
+      </div>
 
       <div class="spec">
         <div class="n">3</div>
         <div>
-          <h3>Cavity Insulation</h3>
-          <div class="links">
-            <a class="lnk" href="https://www.homedepot.com/p/ROCKWOOL-R-15-Comfortbatt-3-1-2-in-x-15-in-x-47-in-Fire-Resistant-Stone-Wool-Insulation-Batt-59-7-sq-ft-RXCB351525/202090820" target="_blank" rel="noopener">Rockwool R-15 · HD</a>
-            <a class="lnk" href="https://www.lowes.com/pd/ROCKWOOL-COMFORTBATT-R-15-Stone-Wool-Batt-Insulation-with-Sound-Barrier-15-25-in-W-x-47-in-L/3388304" target="_blank" rel="noopener">Lowe's</a>
-          </div>
+          <h3>Cavity Insulation <em>✓ have</em></h3>
+          <p><b>R-15 Rockwool ComfortBatt</b>, unfaced. Vapor-open; dries both ways — ideal for a marine wall.</p>
+        </div>
+      </div>
+
+      <div class="spec">
+        <div class="n">4</div>
+        <div>
+          <h3>Sheathing <em>✓ have</em></h3>
+          <p><b>15/32&quot; APA-rated plywood.</b> ⅛&quot; gap at panel edges/ends; nailing per shear/braced-wall spec on your permit set.</p>
         </div>
       </div>
 
       <div class="spec">
         <div class="n">5</div>
         <div>
-          <h3>WRB + Window Flashing</h3>
-          <div class="links">
-            <a class="lnk" href="https://www.homedepot.com/b/Building-Materials-Siding-Siding-Accessories-Housewrap/TYVEK/N-5yc1vZbaxzZ1gs" target="_blank" rel="noopener">Tyvek · HD</a>
-            <a class="lnk" href="https://www.dupont.com/products/dupont-flexwrap-nf.html" target="_blank" rel="noopener">FlexWrap NF</a>
-            <a class="lnk" href="https://www.dupont.com/products/dupont-straightflash.html" target="_blank" rel="noopener">StraightFlash</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="spec opt">
-        <div class="n">F</div>
-        <div>
-          <h3>Flashing — Head · Drip · Transition</h3>
-          <div class="links">
-            <a class="lnk" href="https://homedepot.com/p/Amerimax-Home-Products-76-in-x-8-ft-White-Aluminum-Drip-Cap-Flashing-5503400096/100017722" target="_blank" rel="noopener">Amerimax Drip / Head Cap · HD</a>
-            <a class="lnk" href="https://www.homedepot.com/s/Transition%20Flashing?NCNI-5" target="_blank" rel="noopener">Transition Flashing · Search HD</a>
-          </div>
+          <h3>WRB + Opening Flashing <em>✓ wrap</em></h3>
+          <p><b>Tyvek HomeWrap</b> + tape, cap staples. Openings get <b>FlexWrap NF</b> (sills) + <b>StraightFlash</b> (jambs/head) — see Detail 2.</p>
         </div>
       </div>
 
@@ -148,10 +150,7 @@
         <div class="n">6</div>
         <div>
           <h3>Rainscreen Furring</h3>
-          <div class="links">
-            <a class="lnk" href="https://homedepot.com/p/1-2-in-x-2-in-x-8-ft-Pressure-Treated-Plywood-Furring-Strips-5898902120208000/309089058" target="_blank" rel="noopener">PT Furring · HD</a>
-            <a class="lnk" href="https://www.homedepot.com/s/Furring%20Strips?NCNI-5" target="_blank" rel="noopener">Furring Strips · Search HD</a>
-          </div>
+          <p>Vertical <b>¾&quot; furring @ 16&quot; o.c.</b> over studs — 1×4 PT or ripped CDX plywood. This is only the <b>spacer that creates the gap</b> (drainage + drying). A gap by itself is a <em>drained</em> rainscreen — #7 is what makes it <em>vented</em>.</p>
         </div>
       </div>
 
@@ -159,11 +158,15 @@
         <div class="n">7</div>
         <div>
           <h3>Cavity Venting</h3>
-          <div class="links">
-            <a class="lnk" href="https://www.cor-a-vent.com/siding-vent-sv-3.cfm" target="_blank" rel="noopener">Cor-A-Vent SV-3</a>
-            <a class="lnk" href="https://www.amazon.com/Cor-A-Vent-SV-3-Rainscreen-Siding-Vent/dp/B0BSP2BRFL" target="_blank" rel="noopener">Amazon</a>
-            <a class="lnk" href="https://www.menards.com/main/building-materials/siding/siding-accessories/cor-a-vent-sv-3-siding-rainscreen-vent/sv-3/p-4375227662653419-c-5824.htm" target="_blank" rel="noopener">Menards</a>
-          </div>
+          <p><b>Cor-A-Vent SV-3</b> + insect screen at top &amp; bottom of the wall and around openings. <b>This is what turns the gap into a vented rainscreen</b> — air in low, out high, bugs out. Furring (#6) makes the gap; this opens &amp; screens it. See Section A.</p>
+        </div>
+      </div>
+
+      <div class="spec">
+        <div class="n">8</div>
+        <div>
+          <h3>Cladding <em>✓ have</em></h3>
+          <p><b>V-groove thermo-modified wood.</b> Back-prime/oil cut ends; finish with a penetrating UV oil if you want to hold the color (else it silvers).</p>
         </div>
       </div>
 
@@ -171,10 +174,7 @@
         <div class="n">9</div>
         <div>
           <h3>Fasteners</h3>
-          <div class="links">
-            <a class="lnk" href="https://www.homedepot.com/p/Grip-Rite-2-in-x-13-Gauge-6-penny-Stainless-Steel-Ring-Shank-Siding-Nails-5-lb-Box-MAXN62434/203353099" target="_blank" rel="noopener">304 · 2&quot; · HD</a>
-            <a class="lnk" href="https://homedepot.com/p/PRO-FIT-2-1-2-in-8D-316-Stainless-Steel-Ring-Shank-Siding-Nail-5-lbs-980-Count-0241155S/320957671" target="_blank" rel="noopener">316 · 2½&quot; · HD</a>
-          </div>
+          <p><b>304 / 316 stainless ring-shank</b> siding nails — stops tannin staining &amp; corrosion. Length must bite ≥1&quot; into studs through the gap.</p>
         </div>
       </div>
 
@@ -184,9 +184,9 @@
   <!-- ===================== SECTION A ===================== -->
   <div class="drawing">
     <p class="sec-title">Section A — Typical Exterior Wall</p>
-    <p class="sec-sub">Vertical cut · slab to top plate · airflow + drainage shown</p>
+    <p class="sec-sub">Isometric cutaway · interior → exterior · stepped layers · airflow + drainage shown · NTS</p>
     <div class="sec-row">
-    <svg viewBox="0 0 1060 560" role="img" aria-label="Wall section from interior to exterior with rainscreen venting">
+    <svg id="isoA" viewBox="0 0 820 620" role="img" aria-label="Isometric cutaway of the typical exterior wall assembly, interior to exterior, with rainscreen venting">
       <defs>
         <pattern id="insul" width="22" height="22" patternUnits="userSpaceOnUse">
           <rect width="22" height="22" fill="#C9AE4E"/>
@@ -211,111 +211,7 @@
         </pattern>
         <marker id="arrow" markerWidth="9" markerHeight="9" refX="6" refY="3" orient="auto"><path d="M0 0l6 3-6 3z" fill="#2F6B5E"/></marker>
       </defs>
-
-      <!-- slab -->
-      <rect x="60" y="478" width="470" height="42" fill="#B6A68A"/>
-      <line x1="60" y1="478" x2="530" y2="478" stroke="#6f6346" stroke-width="1.5"/>
-      <text x="64" y="503" font-family="'IBM Plex Mono',monospace" font-size="11" fill="#574c34">CONCRETE SLAB · PT BOTTOM PLATE, ANCHORED</text>
-
-      <!-- 1 interior finish (optional) -->
-      <g class="layer l1">
-        <rect x="92" y="70" width="40" height="408" fill="#E7DEC9" stroke="#9c907a" stroke-width="1" stroke-dasharray="6 5"/>
-        <text x="112" y="290" font-family="'IBM Plex Mono',monospace" font-size="11" fill="#6b6047" transform="rotate(-90 112 290)" text-anchor="middle">X-Rated Drywall and Paint</text>
-        <circle cx="112" cy="92" r="13" fill="none" stroke="#883C1E" stroke-width="1.6" stroke-dasharray="3 3"/>
-        <text x="112" y="97" text-anchor="middle" class="callout-num" font-size="13" fill="#883C1E">1</text>
-      </g>
-
-      <!-- 2/3 framing + insulation -->
-      <g class="layer l2">
-        <rect x="132" y="70" width="150" height="408" fill="url(#insul)"/>
-        <rect x="132" y="70" width="150" height="26" fill="url(#stud)" stroke="#7d5a2c" stroke-width="1"/>
-        <rect x="132" y="452" width="150" height="26" fill="url(#stud)" stroke="#7d5a2c" stroke-width="1"/>
-        <text x="207" y="270" font-family="'IBM Plex Mono',monospace" font-size="11" fill="#5a4d22" text-anchor="middle" transform="rotate(-90 207 270)">R-15 ROCKWOOL · UNFACED · 2×4 @16&quot; O.C.</text>
-        <circle cx="207" cy="92" r="13" fill="#221F18"/><text x="207" y="97" text-anchor="middle" class="callout-num" font-size="13" fill="#F5EFE2">2</text>
-        <circle cx="207" cy="438" r="13" fill="#221F18"/><text x="207" y="443" text-anchor="middle" class="callout-num" font-size="13" fill="#F5EFE2">3</text>
-      </g>
-
-      <!-- 4 sheathing -->
-      <g class="layer l3">
-        <rect x="282" y="70" width="26" height="408" fill="url(#ply)" stroke="#8a6938" stroke-width="1"/>
-        <text x="295" y="290" font-family="'IBM Plex Mono',monospace" font-size="10.5" fill="#5e4422" transform="rotate(-90 295 290)" text-anchor="middle">15/32&quot; APA PLYWOOD</text>
-        <circle cx="295" cy="92" r="13" fill="#221F18"/><text x="295" y="97" text-anchor="middle" class="callout-num" font-size="13" fill="#F5EFE2">4</text>
-      </g>
-
-      <!-- 5 WRB -->
-      <g class="layer l4">
-        <rect x="308" y="70" width="10" height="408" fill="#E9EEF2" stroke="#3F6E96" stroke-width="1.4"/>
-        <g fill="#3F6E96"><circle cx="313" cy="130" r="2.4"/><circle cx="313" cy="220" r="2.4"/><circle cx="313" cy="310" r="2.4"/><circle cx="313" cy="400" r="2.4"/></g>
-        <circle cx="338" cy="540" r="13" fill="#3F6E96"/><text x="338" y="545" text-anchor="middle" class="callout-num" font-size="13" fill="#F5EFE2">5</text>
-        <line x1="338" y1="527" x2="316" y2="470" stroke="#3F6E96" stroke-width="1"/>
-      </g>
-
-      <!-- 6/7 rainscreen gap + furring + SV-3 vents -->
-      <g class="layer l5">
-        <rect x="318" y="92" width="44" height="378" fill="#EFF3EE"/>
-        <rect x="320" y="92" width="20" height="378" fill="url(#stud)" opacity=".5" stroke="#7d5a2c" stroke-width=".8" stroke-dasharray="4 4"/>
-        <!-- airflow -->
-        <line x1="352" y1="442" x2="352" y2="118" stroke="#2F6B5E" stroke-width="2" marker-end="url(#arrow)"/>
-        <!-- SV-3 TOP (exhaust) -->
-        <rect x="318" y="70" width="44" height="22" fill="url(#flute)"/>
-        <rect x="356" y="70" width="6" height="22" fill="url(#mesh)"/>
-        <!-- SV-3 BASE (intake) — sits above slab, weeps out over flashing -->
-        <rect x="318" y="448" width="44" height="22" fill="url(#flute)"/>
-        <rect x="356" y="448" width="6" height="22" fill="url(#mesh)"/>
-        <text x="334" y="300" font-family="'IBM Plex Mono',monospace" font-size="10" fill="#27574b" transform="rotate(-90 334 300)" text-anchor="middle">3/4&quot; VENTED RAINSCREEN</text>
-        <circle cx="330" cy="92" r="13" fill="#946233"/><text x="330" y="97" text-anchor="middle" class="callout-num" font-size="13" fill="#F5EFE2">6</text>
-      </g>
-
-      <!-- 8 siding -->
-      <g class="layer l6">
-        <path d="M362 70 h40 v400 h-40 z" fill="#BD8243"/>
-        <g stroke="#7d5326" stroke-width="1.3" fill="none">
-          <path d="M402 70 v400"/>
-          <path d="M362 130 h40 M362 190 h40 M362 250 h40 M362 310 h40 M362 370 h40 M362 430 h40"/>
-        </g>
-        <g fill="#A66E32" opacity=".5">
-          <path d="M394 126 l8 4 -8 4z"/><path d="M394 186 l8 4 -8 4z"/><path d="M394 246 l8 4 -8 4z"/>
-          <path d="M394 306 l8 4 -8 4z"/><path d="M394 366 l8 4 -8 4z"/><path d="M394 426 l8 4 -8 4z"/>
-        </g>
-        <text x="382" y="300" font-family="'IBM Plex Mono',monospace" font-size="10" fill="#5b3c1a" transform="rotate(-90 382 300)" text-anchor="middle">V-GROOVE THERMO-MOD WOOD</text>
-        <circle cx="382" cy="92" r="13" fill="#221F18"/><text x="382" y="97" text-anchor="middle" class="callout-num" font-size="13" fill="#F5EFE2">8</text>
-      </g>
-
-      <!-- base drip / Z flashing — tucks behind WRB, kicks out over slab edge -->
-      <g class="layer l7">
-        <path d="M308 470 h98" fill="none" stroke="#8A9197" stroke-width="4"/>
-        <path d="M406 470 l16 12 0 -7" fill="none" stroke="#8A9197" stroke-width="4"/>
-      </g>
-
-      <!-- SS nail -->
-      <g class="layer l7">
-        <line x1="444" y1="410" x2="276" y2="410" stroke="#5a5650" stroke-width="2.4"/>
-        <path d="M444 406 l10 4 -10 4z" fill="#5a5650"/><circle cx="444" cy="410" r="3.5" fill="#5a5650"/>
-        <circle cx="520" cy="382" r="13" fill="#221F18"/><text x="520" y="387" text-anchor="middle" class="callout-num" font-size="13" fill="#F5EFE2">9</text>
-        <line x1="520" y1="395" x2="500" y2="407" stroke="#221F18" stroke-width="1"/>
-      </g>
-
-      <!-- weather arrows -->
-      <g class="layer l8" stroke="#3F6E96" stroke-width="1.6" fill="none" opacity=".8">
-        <path d="M520 165 l-40 20 M488 173 l-8 12 8 0"/><path d="M520 225 l-40 20 M488 233 l-8 12 8 0"/>
-      </g>
-      <text x="525" y="150" font-family="'IBM Plex Mono',monospace" font-size="10.5" fill="#3F6E96">WIND-DRIVEN RAIN</text>
-
-      <!-- Cor-A-Vent leader callouts (emphasized) -->
-      <g class="layer l8" font-family="'IBM Plex Mono',monospace">
-        <line x1="362" y1="81" x2="560" y2="81" stroke="#3A3F43" stroke-width="1"/>
-        <rect x="560" y="68" width="270" height="30" fill="#3A3F43" rx="2"/>
-        <text x="572" y="80" font-size="11" fill="#F5EFE2" font-weight="600">7 · COR-A-VENT SV-3 — TOP VENT</text>
-        <text x="572" y="92" font-size="9.5" fill="#bcc3c8">air + moisture exhaust ↑ · insect screen</text>
-
-        <line x1="362" y1="459" x2="560" y2="481" stroke="#3A3F43" stroke-width="1"/>
-        <rect x="560" y="468" width="290" height="30" fill="#3A3F43" rx="2"/>
-        <text x="572" y="480" font-size="11" fill="#F5EFE2" font-weight="600">7 · COR-A-VENT SV-3 — BASE VENT</text>
-        <text x="572" y="492" font-size="9.5" fill="#bcc3c8">air intake ↑ · drains over drip flashing</text>
-
-        <line x1="422" y1="482" x2="560" y2="522" stroke="#8A9197" stroke-width="1"/>
-        <text x="566" y="526" font-size="10" fill="#6f767c">DRIP / Z-FLASHING — KICKS WATER OUT</text>
-      </g>
+      <!-- drawn by script (IIFE at end of body) -->
     </svg>
       <div class="ref-col">
         <figure class="ref">
@@ -327,6 +223,230 @@
           <figcaption><b>Reference · FEMA P-499</b><br>Wood-siding rainscreen — bevel siding · PT furring strips · sheathing · housewrap (Fact Sheet 5.1, 12/10). Mirrors the #6 furring gap shown in Section A.</figcaption>
         </figure>
       </div>
+    </div>
+  </div>
+
+  <!-- ===================== SECTION B ===================== -->
+  <div class="drawing">
+    <p class="sec-title">Section B — Street-Side Stone Wainscot</p>
+    <p class="sec-sub">Vertical cut · slab to plate · stacked-stone veneer (lower 4'-6&quot;) → wood siding above · Street Side only</p>
+    <svg viewBox="0 0 1060 560" style="width:100%;height:auto" role="img" aria-label="Street-side wall section: mortar-set stacked-stone wainscot over wood framing, transitioning to vented wood siding above the 4 foot 6 inch line">
+      <defs>
+        <pattern id="stone" width="42" height="26" patternUnits="userSpaceOnUse">
+          <rect width="42" height="26" fill="#b7bcbe"/>
+          <rect x="0" y="0" width="16" height="13" fill="#c6c9cb"/>
+          <rect x="26" y="13" width="16" height="13" fill="#a9afb2"/>
+          <line x1="0" y1="0" x2="42" y2="0" stroke="#868c91" stroke-width="1.4"/>
+          <line x1="0" y1="13" x2="42" y2="13" stroke="#868c91" stroke-width="1.4"/>
+          <line x1="16" y1="0" x2="16" y2="13" stroke="#868c91" stroke-width="1.1"/>
+          <line x1="30" y1="0" x2="30" y2="13" stroke="#868c91" stroke-width="1.1"/>
+          <line x1="8" y1="13" x2="8" y2="26" stroke="#868c91" stroke-width="1.1"/>
+          <line x1="26" y1="13" x2="26" y2="26" stroke="#868c91" stroke-width="1.1"/>
+        </pattern>
+        <pattern id="mortar" width="9" height="9" patternUnits="userSpaceOnUse">
+          <rect width="9" height="9" fill="#cfcabd"/>
+          <circle cx="2" cy="3" r=".7" fill="#a39c89"/><circle cx="6.5" cy="6.5" r=".7" fill="#a39c89"/>
+        </pattern>
+        <pattern id="drain" width="8" height="11" patternUnits="userSpaceOnUse">
+          <rect width="8" height="11" fill="#e4e7e2"/>
+          <path d="M0 0 q4 5.5 0 11 M8 0 q-4 5.5 0 11" stroke="#9aa39b" stroke-width="1" fill="none"/>
+        </pattern>
+      </defs>
+
+      <!-- slab -->
+      <rect x="60" y="478" width="470" height="42" fill="#B6A68A"/>
+      <line x1="60" y1="478" x2="530" y2="478" stroke="#6f6346" stroke-width="1.5"/>
+      <text x="64" y="503" font-family="'IBM Plex Mono',monospace" font-size="11" fill="#574c34">CONCRETE SLAB · PT BOTTOM PLATE, ANCHORED</text>
+
+      <!-- 4'-6" wainscot height dim -->
+      <g class="layer l1" stroke="#221F18" stroke-width="1">
+        <line x1="80" y1="250" x2="80" y2="476"/>
+        <line x1="76" y1="250" x2="84" y2="250"/><line x1="76" y1="476" x2="84" y2="476"/>
+      </g>
+      <text x="70" y="363" font-family="'IBM Plex Mono',monospace" font-size="10" fill="#221F18" transform="rotate(-90 70 363)" text-anchor="middle">4'-6&quot; STONE WAINSCOT</text>
+
+      <!-- interior finish (optional) -->
+      <g class="layer l1">
+        <rect x="92" y="70" width="40" height="408" fill="#E7DEC9" stroke="#9c907a" stroke-width="1" stroke-dasharray="6 5"/>
+        <text x="112" y="300" font-family="'IBM Plex Mono',monospace" font-size="10.5" fill="#6b6047" transform="rotate(-90 112 300)" text-anchor="middle">X-RATED DRYWALL (OPTIONAL)</text>
+      </g>
+
+      <!-- framing + insulation -->
+      <g class="layer l2">
+        <rect x="132" y="70" width="150" height="408" fill="url(#insul)"/>
+        <rect x="132" y="70" width="150" height="26" fill="url(#stud)" stroke="#7d5a2c" stroke-width="1"/>
+        <rect x="132" y="452" width="150" height="26" fill="url(#stud)" stroke="#7d5a2c" stroke-width="1"/>
+        <text x="207" y="370" font-family="'IBM Plex Mono',monospace" font-size="11" fill="#5a4d22" text-anchor="middle" transform="rotate(-90 207 370)">R-15 ROCKWOOL · 2×4 @16&quot; O.C.</text>
+      </g>
+
+      <!-- sheathing -->
+      <g class="layer l3">
+        <rect x="282" y="70" width="26" height="408" fill="url(#ply)" stroke="#8a6938" stroke-width="1"/>
+        <text x="295" y="150" font-family="'IBM Plex Mono',monospace" font-size="10" fill="#5e4422" transform="rotate(-90 295 150)" text-anchor="middle">15/32&quot; PLYWOOD</text>
+      </g>
+
+      <!-- WRB — single layer above the stone, two layers (bond break) behind it -->
+      <g class="layer l4">
+        <rect x="308" y="70" width="5" height="408" fill="#E9EEF2" stroke="#3F6E96" stroke-width="1.2"/>
+        <rect x="313" y="236" width="5" height="242" fill="#dCe7f0" stroke="#3F6E96" stroke-width="1" stroke-dasharray="4 3"/>
+      </g>
+
+      <!-- UPPER: vented wood-siding rainscreen (above the stone) -->
+      <g class="layer l5">
+        <rect x="313" y="96" width="45" height="140" fill="#EFF3EE"/>
+        <rect x="320" y="96" width="16" height="140" fill="url(#stud)" opacity=".5" stroke="#7d5a2c" stroke-width=".8" stroke-dasharray="4 4"/>
+        <line x1="346" y1="226" x2="346" y2="112" stroke="#2F6B5E" stroke-width="2" marker-end="url(#arrow)"/>
+        <!-- siding -->
+        <path d="M358 70 h40 v144 h-40 z" fill="#BD8243"/>
+        <g stroke="#7d5326" stroke-width="1.2" fill="none"><path d="M358 130 h40 M358 184 h40"/></g>
+        <!-- SV-3 base vent at foot of siding, lands on the cap flashing -->
+        <rect x="313" y="214" width="45" height="22" fill="url(#flute)"/>
+        <rect x="352" y="214" width="6" height="22" fill="url(#mesh)"/>
+        <text x="382" y="148" font-family="'IBM Plex Mono',monospace" font-size="10" fill="#5b3c1a" transform="rotate(-90 382 148)" text-anchor="middle">WOOD SIDING — PER SECTION A</text>
+      </g>
+
+      <!-- cap / transition flashing over stone top, tucks behind WRB -->
+      <g class="layer l7">
+        <path d="M313 236 H452 l-2 14 -7 -6" fill="none" stroke="#8A9197" stroke-width="4" stroke-linejoin="round"/>
+      </g>
+
+      <!-- STONE WAINSCOT (lower 4'-6") -->
+      <g class="layer l6">
+        <!-- drainage gap / mat -->
+        <rect x="318" y="248" width="10" height="218" fill="url(#drain)"/>
+        <!-- scratch coat + setting bed (with self-furring lath) -->
+        <rect x="328" y="248" width="18" height="218" fill="url(#mortar)" stroke="#a39c89" stroke-width=".8"/>
+        <line x1="332" y1="250" x2="332" y2="464" stroke="#7c7568" stroke-width="1" stroke-dasharray="2 3"/>
+        <!-- stone veneer with stepped (stacked) outer profile -->
+        <path d="M346 248 H446 V274 H438 V300 H450 V326 H440 V352 H448 V378 H437 V404 H449 V430 H441 V452 H447 V466 H346 Z"
+              fill="url(#stone)" stroke="#5b6064" stroke-width="1.4" stroke-linejoin="round"/>
+        <text x="398" y="372" font-family="'IBM Plex Mono',monospace" font-size="10" fill="#3f4347" transform="rotate(-90 398 372)" text-anchor="middle">STACKED STONE — MORTAR SET</text>
+        <!-- weep screed kick-out at base -->
+        <path d="M318 466 H452 l-4 12 -130 0 z" fill="#8A9197" stroke="#6f767c" stroke-width="1"/>
+        <g fill="#3a3f43"><circle cx="360" cy="472" r="1.6"/><circle cx="392" cy="472" r="1.6"/><circle cx="424" cy="472" r="1.6"/></g>
+      </g>
+
+      <!-- 6" projection dim across the stone -->
+      <g class="layer l8" stroke="#221F18" stroke-width="1">
+        <line x1="308" y1="498" x2="446" y2="498"/>
+        <line x1="308" y1="494" x2="308" y2="502"/><line x1="446" y1="494" x2="446" y2="502"/>
+      </g>
+      <text x="377" y="516" font-family="'IBM Plex Mono',monospace" font-size="10" fill="#221F18" text-anchor="middle">≈6&quot; STONE PROJECTION (PROUD OF FRAMING)</text>
+
+      <!-- leader callouts (right) -->
+      <g class="layer l8" font-family="'IBM Plex Mono',monospace">
+        <!-- S5 cap flashing -->
+        <circle cx="450" cy="243" r="2.4" fill="#8A9197"/>
+        <line x1="450" y1="243" x2="560" y2="120" stroke="#8A9197" stroke-width="1"/>
+        <rect x="560" y="106" width="320" height="30" fill="#3A3F43" rx="2"/>
+        <text x="572" y="118" font-size="11" fill="#F5EFE2" font-weight="600">S5 · CAP / TRANSITION FLASHING</text>
+        <text x="572" y="130" font-size="9.5" fill="#bcc3c8">sheds stone top · SV-3 siding base vent sits above it</text>
+
+        <!-- S4 stone veneer -->
+        <circle cx="446" cy="300" r="2.4" fill="#5b6064"/>
+        <line x1="446" y1="300" x2="560" y2="186" stroke="#5b6064" stroke-width="1"/>
+        <rect x="560" y="172" width="340" height="30" fill="#6f757a" rx="2"/>
+        <text x="572" y="184" font-size="11" fill="#F5EFE2" font-weight="600">S4 · STACKED-STONE VENEER ≈6&quot; — MORTAR SET</text>
+        <text x="572" y="196" font-size="9.5" fill="#e4e7e9">natural ledgestone on setting bed · back-buttered</text>
+
+        <!-- S3 lath + scratch -->
+        <circle cx="340" cy="360" r="2.4" fill="#a39c89"/>
+        <line x1="340" y1="360" x2="560" y2="252" stroke="#a39c89" stroke-width="1"/>
+        <rect x="560" y="238" width="340" height="30" fill="#8a7f63" rx="2"/>
+        <text x="572" y="250" font-size="11" fill="#F5EFE2" font-weight="600">S3 · GALV/SS METAL LATH + SCRATCH COAT</text>
+        <text x="572" y="262" font-size="9.5" fill="#efe9da">self-furring lath nailed to studs · Type S mortar</text>
+
+        <!-- S2 drainage gap + weep screed -->
+        <circle cx="323" cy="438" r="2.4" fill="#2F6B5E"/>
+        <line x1="323" y1="438" x2="560" y2="318" stroke="#2F6B5E" stroke-width="1"/>
+        <rect x="560" y="304" width="340" height="30" fill="#2F6B5E" rx="2"/>
+        <text x="572" y="316" font-size="11" fill="#F5EFE2" font-weight="600">S2 · DRAINAGE GAP + WEEP SCREED</text>
+        <text x="572" y="328" font-size="9.5" fill="#bfe0d8">≥3⁄16&quot; drainage mat · weeps out at base (IRC R703.7)</text>
+
+        <!-- S1 two-layer WRB -->
+        <circle cx="315" cy="410" r="2.4" fill="#3F6E96"/>
+        <line x1="315" y1="410" x2="560" y2="384" stroke="#3F6E96" stroke-width="1"/>
+        <rect x="560" y="370" width="340" height="30" fill="#3F6E96" rx="2"/>
+        <text x="572" y="382" font-size="11" fill="#F5EFE2" font-weight="600">S1 · TWO-LAYER WRB (BOND BREAK)</text>
+        <text x="572" y="394" font-size="9.5" fill="#cfe0ef">2× building paper/housewrap · one is sacrificial</text>
+      </g>
+    </svg>
+    <p class="cap">The Street Side carries a <b>stacked-stone (ledgestone) wainscot</b> on its lower <b>4'-6&quot;</b> — a mortar-set veneer that stands ≈6&quot; <b>proud of the 2×4 framing</b>, then steps back to the vented wood siding (Section A) above. Because it's an adhered masonry veneer on a wood-framed wall, it gets the full water-managed back-up: <b>two layers of WRB</b> (the inner one a sacrificial bond break), a <b>drainage gap + weep screed</b> at the base, <b>corrosion-resistant lath + scratch coat</b>, then the stone. The <b>cap / transition flashing</b> at the 4'-6&quot; line sheds the stone top and the siding's base vent drains over it — keep the two systems' flashings shingle-lapped so water always exits outward.</p>
+  </div>
+
+  <!-- ===================== STONE WAINSCOT SCHEDULE ===================== -->
+  <div class="schedule">
+    <p class="sec-title">Stone Wainscot Schedule — Street Side</p>
+    <p class="sec-sub">Lower 4'-6&quot; of the Street-Side wall only · adhered/mortar-set stacked stone over the framed wall (S1 → S5, inside → out)</p>
+    <div class="sched-grid">
+
+      <div class="spec">
+        <div class="n">S1</div>
+        <div>
+          <h3>Two-Layer WRB <em>bond break</em></h3>
+          <p>Behind adhered stone, run <b>two layers of WRB</b> over the sheathing — the inner layer is a sacrificial bond break so a mortar bond can't bridge moisture to the wall. Lap over the Section-A Tyvek at the 4'-6&quot; transition.</p>
+          <div class="links">
+            <a class="lnk" href="https://www.homedepot.com/s/grade%20D%20building%20paper?NCNI-5" target="_blank" rel="noopener">Grade-D Paper · Search HD</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="spec">
+        <div class="n">S2</div>
+        <div>
+          <h3>Drainage Gap + Weep Screed</h3>
+          <p>Code now requires a <b>drained</b> adhered-veneer back-up: a <b>≥3⁄16&quot; drainage mat</b> behind the lath plus a <b>weep screed</b> at the base so water exits over the slab edge. <b>IRC R703.7</b>.</p>
+          <div class="links">
+            <a class="lnk" href="https://www.homedepot.com/s/weep%20screed?NCNI-5" target="_blank" rel="noopener">Weep Screed · HD</a>
+            <a class="lnk" href="https://www.homedepot.com/s/stucco%20drainage%20mat?NCNI-5" target="_blank" rel="noopener">Drainage Mat · HD</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="spec">
+        <div class="n">S3</div>
+        <div>
+          <h3>Metal Lath</h3>
+          <p><b>Self-furring galvanized or stainless lath</b>, fastened through the WRB into studs (not just sheathing) with corrosion-resistant fasteners. Stainless near the marine coast.</p>
+          <div class="links">
+            <a class="lnk" href="https://www.homedepot.com/s/galvanized%20metal%20lath?NCNI-5" target="_blank" rel="noopener">Galv Lath · HD</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="spec">
+        <div class="n">S4</div>
+        <div>
+          <h3>Scratch Coat + Setting Bed</h3>
+          <p><b>Type S</b> (or N) polymer-modified mortar — scratch coat over the lath, cure, then the setting bed. Back-butter each stone. Keep mortar off the weep screed's drainage path.</p>
+          <div class="links">
+            <a class="lnk" href="https://www.homedepot.com/s/type%20s%20mortar?NCNI-5" target="_blank" rel="noopener">Type S Mortar · HD</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="spec">
+        <div class="n">S5</div>
+        <div>
+          <h3>Stacked-Stone Veneer <em>✓ have</em></h3>
+          <p><b>White stacked-stone / ledgestone</b>, ≈6&quot; deep, set in the bed and stands proud of the framing. Seal the cut top course at the cap-flashing transition; do not point the weeps shut.</p>
+          <div class="links">
+            <a class="lnk" href="https://www.homedepot.com/b/Flooring-Tile-Natural-Stone-Tile-Ledger-Panels/N-5yc1vZcb3l" target="_blank" rel="noopener">Stacked-Stone Ledger · HD</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="spec opt">
+        <div class="n">F</div>
+        <div>
+          <h3>Cap / Transition Flashing <em>at 4'-6&quot;</em></h3>
+          <p>Metal cap over the stone top, tucked behind the upper WRB and sloped to drain. The siding's <b>SV-3 base vent</b> lands above it — shingle-lap so the stone and siding water-management stay continuous.</p>
+          <div class="links">
+            <a class="lnk" href="https://homedepot.com/p/Amerimax-Home-Products-76-in-x-8-ft-White-Aluminum-Drip-Cap-Flashing-5503400096/100017722" target="_blank" rel="noopener">Cap / Drip Flashing · HD</a>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 
@@ -425,87 +545,6 @@
     </div>
   </div>
 
-  <!-- ===================== LAYER SCHEDULE ===================== -->
-  <div class="schedule">
-    <p class="sec-title">Layer Schedule</p>
-    <p class="sec-sub">Interior → exterior · ✓ = you already have it · product links in the Sourcing list up top</p>
-    <div class="sched-grid">
-
-      <div class="spec opt">
-        <div class="n">1</div>
-        <div>
-          <h3>Interior Finish <em>optional</em></h3>
-          <p>½&quot; gypsum + latex paint = <b>Class III vapor retarder</b> (allowed because the cladding is vented). Never add poly sheet here. Leave open if unconditioned.</p>
-        </div>
-      </div>
-
-      <div class="spec">
-        <div class="n">2</div>
-        <div>
-          <h3>Framing <em>✓ have</em></h3>
-          <p><b>2×4 @ 16&quot; o.c.</b>, PT bottom plate, anchored. Sheathing/nailing per permit — enclosing the carport changes lateral bracing.</p>
-        </div>
-      </div>
-
-      <div class="spec">
-        <div class="n">3</div>
-        <div>
-          <h3>Cavity Insulation <em>✓ have</em></h3>
-          <p><b>R-15 Rockwool ComfortBatt</b>, unfaced. Vapor-open; dries both ways — ideal for a marine wall.</p>
-        </div>
-      </div>
-
-      <div class="spec">
-        <div class="n">4</div>
-        <div>
-          <h3>Sheathing <em>✓ have</em></h3>
-          <p><b>15/32&quot; APA-rated plywood.</b> ⅛&quot; gap at panel edges/ends; nailing per shear/braced-wall spec on your permit set.</p>
-        </div>
-      </div>
-
-      <div class="spec">
-        <div class="n">5</div>
-        <div>
-          <h3>WRB + Opening Flashing <em>✓ wrap</em></h3>
-          <p><b>Tyvek HomeWrap</b> + tape, cap staples. Openings get <b>FlexWrap NF</b> (sills) + <b>StraightFlash</b> (jambs/head) — see Detail 2.</p>
-        </div>
-      </div>
-
-      <div class="spec">
-        <div class="n">6</div>
-        <div>
-          <h3>Rainscreen Furring</h3>
-          <p>Vertical <b>¾&quot; furring @ 16&quot; o.c.</b> over studs — 1×4 PT or ripped CDX plywood. This is only the <b>spacer that creates the gap</b> (drainage + drying). A gap by itself is a <em>drained</em> rainscreen — #7 is what makes it <em>vented</em>.</p>
-        </div>
-      </div>
-
-      <div class="spec">
-        <div class="n">7</div>
-        <div>
-          <h3>Cavity Venting</h3>
-          <p><b>Cor-A-Vent SV-3</b> + insect screen at top &amp; bottom of the wall and around openings. <b>This is what turns the gap into a vented rainscreen</b> — air in low, out high, bugs out. Furring (#6) makes the gap; this opens &amp; screens it. See Section A.</p>
-        </div>
-      </div>
-
-      <div class="spec">
-        <div class="n">8</div>
-        <div>
-          <h3>Cladding <em>✓ have</em></h3>
-          <p><b>V-groove thermo-modified wood.</b> Back-prime/oil cut ends; finish with a penetrating UV oil if you want to hold the color (else it silvers).</p>
-        </div>
-      </div>
-
-      <div class="spec">
-        <div class="n">9</div>
-        <div>
-          <h3>Fasteners</h3>
-          <p><b>304 / 316 stainless ring-shank</b> siding nails — stops tannin staining &amp; corrosion. Length must bite ≥1&quot; into studs through the gap.</p>
-        </div>
-      </div>
-
-    </div>
-  </div>
-
   <!-- ===================== NOTES ===================== -->
   <div class="notes">
     <div class="note">
@@ -520,13 +559,217 @@
       <h4>Fire Separation</h4>
       <p>Any wall/ceiling shared with living space needs gypsum on the garage side (½&quot;, or ⅝&quot; Type X under living space) — separate from this exterior detail.</p>
     </div>
+    <div class="note">
+      <h4>Stone Wainscot — Street Side</h4>
+      <p>Only the lower 4'-6&quot; of the Street Side is stone (Section B); siding above. Adhered veneer is heavy — confirm it bears on the slab/foundation, not on framing, and detail a drained back-up per <b>IRC R703.7</b>.</p>
+    </div>
   </div>
 
   <footer>
-    <span>Wall Assembly · Section A + Details 1–2</span>
+    <span>Wall Assembly · Sections A–B + Details 1–2</span>
     <span>Zone 4C Marine · NTS</span>
   </footer>
 
 </div>
+
+<script>
+/* ===== Section A — isometric cutaway wall assembly =====
+   Projection matches the *-isometric.html pages: S=16, A=30°.
+   X = through-wall thickness (interior 0 → exterior), Y = wall run, Z = height.
+   Layers are stacked along +X and stepped DOWN in height going outward so each
+   inner layer's outer face + top face read above the layer in front of it; the
+   near end (Y=0) stays a flush section cut — the original Section A, in 3-D. */
+(function () {
+  const S = 16, A = Math.PI / 6;
+  const ux = [Math.cos(A) * S, Math.sin(A) * S];   // +X thickness  -> down-right
+  const uy = [Math.cos(A) * S, -Math.sin(A) * S];  // +Y wall run   -> up-right
+  const uz = [0, -S];                              // +Z height     -> up
+  const O = [250, 470];
+  const p = (x, y, z) => [O[0] + x * ux[0] + y * uy[0] + z * uz[0],
+                          O[1] + x * ux[1] + y * uy[1] + z * uz[1]];
+  const f = n => Math.round(n * 100) / 100;
+  const ps = a => a.map(P => f(P[0]) + "," + f(P[1])).join(" ");
+  let out = [];
+  const poly = (pts, attr) => out.push(`<polygon points="${ps(pts)}" ${attr}/>`);
+  const line = (a, b, attr) => out.push(`<line x1="${f(a[0])}" y1="${f(a[1])}" x2="${f(b[0])}" y2="${f(b[1])}" ${attr}/>`);
+  const text = (P, t, attr) => out.push(`<text x="${f(P[0])}" y="${f(P[1])}" ${attr}>${t}</text>`);
+  const circle = (P, r, attr) => out.push(`<circle cx="${f(P[0])}" cy="${f(P[1])}" r="${r}" ${attr}/>`);
+  const vtext = (P, ang, t, attr) => out.push(`<text x="${f(P[0])}" y="${f(P[1])}" transform="translate(${f(P[0])} ${f(P[1])}) skewY(${f(ang)}) translate(${f(-P[0])} ${f(-P[1])})" ${attr}>${t}</text>`);
+  const angX = Math.atan2(ux[1], ux[0]) * 180 / Math.PI;   //  +30°  (X / thickness axis)
+  const angY = Math.atan2(uy[1], uy[0]) * 180 / Math.PI;   //  -30°  (Y / wall-run axis)
+
+  // ---- geometry -------------------------------------------------------------
+  // layer depths drawn to scale — real material thicknesses (inches), interior → exterior:
+  //   ½" gypsum · 3½" 2×4 stud cavity (insulation fills it) · 15/32" plywood ·
+  //   ~0.05" WRB membrane · ¾" rainscreen gap · ¾" wood siding
+  const tin = [0.5, 3.5, 0.469, 0.05, 0.75, 0.5];   // real thickness, inches
+  const DS = 0.67;                                    // depth scale (in → model units): keeps footprint
+  const t = tin.map(v => v * DS);
+  const x0 = [], x1 = []; let acc = 0;
+  for (let i = 0; i < t.length; i++) { x0[i] = acc; acc += t[i]; x1[i] = acc; }
+  const TX = acc;                 // total wall thickness
+  const YL = 8.0;                 // length of wall chunk shown
+  const Hb = 13.2, stepZ = 0.42;   // innermost height + per-layer step-down
+  const H = t.map((_, i) => Hb - i * stepZ);
+  const xc = i => (x0[i] + x1[i]) / 2;
+
+  // box-face helpers (each layer is an upright slab; 3 faces ever visible)
+  const nearFace = (i, attr) => poly([p(x0[i], 0, 0), p(x1[i], 0, 0), p(x1[i], 0, H[i]), p(x0[i], 0, H[i])], attr);
+  const topFace  = (i, attr) => poly([p(x0[i], 0, H[i]), p(x1[i], 0, H[i]), p(x1[i], YL, H[i]), p(x0[i], YL, H[i])], attr);
+  const outFace  = (i, attr) => poly([p(x1[i], 0, 0), p(x1[i], YL, 0), p(x1[i], YL, H[i]), p(x1[i], 0, H[i])], attr);
+
+  const EK = 'stroke="#221F18" stroke-width="1"';
+
+  // ---- ground shadow --------------------------------------------------------
+  poly([p(-0.3, 0, 0), p(TX + 1.1, 0, 0), p(TX + 1.1, YL, 0), p(-0.3, YL, 0)],
+    'fill="rgba(34,31,24,.10)" transform="translate(12,16)" stroke="none"');
+
+  // ---- concrete slab + PT bottom plate --------------------------------------
+  out.push('<g class="layer l1">');
+  const sX0 = -0.25, sX1 = TX + 0.95, sZ = -0.65;
+  poly([p(sX0, 0, 0), p(sX1, 0, 0), p(sX1, YL, 0), p(sX0, YL, 0)], 'fill="#C2B295" ' + EK);            // top
+  poly([p(sX0, 0, 0), p(sX1, 0, 0), p(sX1, 0, sZ), p(sX0, 0, sZ)], 'fill="#B6A68A" ' + EK);            // near face
+  poly([p(sX1, 0, 0), p(sX1, YL, 0), p(sX1, YL, sZ), p(sX1, 0, sZ)], 'fill="#9f9078" ' + EK);          // exterior end
+  vtext(p((sX0 + sX1) / 2 + 0.5, 0, sZ * 0.5), angX, "CONCRETE SLAB",
+    'class="lbl" font-size="4" fill="#efe7d6" text-anchor="middle"');
+  out.push('</g>');
+
+  // ---- wall layers, inner → outer (painter order = back to front) -----------
+  const cls = ['l2', 'l3', 'l4', 'l5', 'l6', 'l7'];
+  const nearF = ['#E7DEC9', 'url(#insul)', 'url(#ply)', '#E9EEF2', '#EFF3EE', '#BD8243'];
+  const topF  = ['#EFE7D4', 'url(#insul)', '#CDAA75', '#EEF3F7', '#EAF0E8', '#C98F4D'];
+  const outF  = ['#DDD2BB', '#C2A44F', '#C19A63', '#DBE6F0', '#E3ECE2', '#B07B3F'];
+  const nStroke = ['stroke="#9c907a" stroke-width="1" stroke-dasharray="6 5"',
+                   EK, EK, 'stroke="#3F6E96" stroke-width="1.2"', EK, EK];
+
+  for (let i = 0; i < t.length; i++) {
+    out.push(`<g class="layer ${cls[i]}">`);
+    const fo = i === 5 ? ' fill-opacity="0.35"' : '';   // siding rendered see-through
+    outFace(i, `fill="${outF[i]}"${fo} ${EK}`);
+    topFace(i, `fill="${topF[i]}"${fo} ${EK}`);
+    nearFace(i, `fill="${nearF[i]}"${fo} ${nStroke[i]}`);
+
+    if (i === 1) {                       // FRAMING — insulation-filled bay (near + top); 2×4 studs stand at the back, against the sheathing
+      poly([p(x0[1], 0, 0), p(x1[1], 0, 0), p(x1[1], 0, 0.5), p(x0[1], 0, 0.5)], 'fill="url(#stud)" stroke="#7d5a2c" stroke-width="1"'); // PT bottom plate (cut)
+      const w = 0.5, dx = 0.6;                                         // 2×4 width along the run, depth shown into the bay
+      const studBehind = (y) => {        // upright 2×4 standing against the sheathing (x1[1]) — thin 3-D bar: top + face + side
+        const xa = x1[1] - dx, xb = x1[1];
+        poly([p(xa, y, H[1]), p(xb, y, H[1]), p(xb, y + w, H[1]), p(xa, y + w, H[1])], 'fill="#cda063" stroke="#7d5a2c" stroke-width=".8"'); // top
+        poly([p(xb, y, 0.5), p(xb, y + w, 0.5), p(xb, y + w, H[1]), p(xb, y, H[1])], 'fill="url(#stud)" stroke="#7d5a2c" stroke-width=".8"'); // +X face (against sheathing)
+        poly([p(xa, y, 0.5), p(xb, y, 0.5), p(xb, y, H[1]), p(xa, y, H[1])], 'fill="#a8814b" stroke="#7d5a2c" stroke-width=".8"'); // −Y side
+      };
+      studBehind(0.7);
+      studBehind(3.2);
+    }
+    if (i === 4) {                       // RAINSCREEN GAP — furring, vertical SV-5, airflow, SV-3 caps
+      poly([p(x0[4], 0, 0.5), p(x0[4] + 0.22, 0, 0.5), p(x0[4] + 0.22, 0, H[4] - 0.5), p(x0[4], 0, H[4] - 0.5)],
+        'fill="url(#stud)" opacity=".5" stroke="#7d5a2c" stroke-width=".8" stroke-dasharray="4 4"');   // furring strip
+      // 3-D Cor-A-Vent block: top + outer(+X) + near(−Y) faces, consistently shaded near-black,
+      // drawn before the siding so it reads through the see-through cladding.
+      const vbox = (xa, xb, ya, yb, za, zb) => {
+        poly([p(xa, ya, zb), p(xb, ya, zb), p(xb, yb, zb), p(xa, yb, zb)], 'fill="#4b5156" stroke="#22262a" stroke-width=".4"'); // top
+        poly([p(xb, ya, za), p(xb, yb, za), p(xb, yb, zb), p(xb, ya, zb)], 'fill="#3a4044" stroke="#22262a" stroke-width=".4"'); // outer +X
+        poly([p(xa, ya, za), p(xb, ya, za), p(xb, ya, zb), p(xa, ya, zb)], 'fill="#2c3134" stroke="#22262a" stroke-width=".4"'); // near −Y
+      };
+      vbox(x0[4], x1[4], 0, YL, 0, 0.5);                  // SV-3 base (intake)  — full wall run
+      vbox(x0[4], x1[4], 0, YL, H[4] - 0.5, H[4]);        // SV-3 top  (exhaust) — full wall run
+      const yMid = YL * 0.5, sw = 0.55;
+      vbox(x0[4], x1[4], yMid - sw, yMid + sw, 0.5, H[4] - 0.5);  // vertical SV-5 — sits BETWEEN the SV-3 caps, mid-wall
+      line(p(xc(4) + 0.16, 0, 0.62), p(xc(4) + 0.16, 0, H[4] - 0.62), 'stroke="#2F6B5E" stroke-width="2" marker-end="url(#arrow)"'); // airflow ↑
+    }
+    if (i === 5) {                       // SIDING — V-groove courses on the outer face + near cut
+      for (let z = 0.55; z < H[5] - 0.02; z += 0.55)
+        line(p(x1[5], 0, z), p(x1[5], YL, z), 'stroke="#7d5326" stroke-width="1" opacity=".7"');       // course shadow lines
+    }
+    out.push('</g>');
+  }
+
+  // ---- base drip / Z-flashing over the slab edge ----------------------------
+  out.push('<g class="layer l7">');
+  line(p(x1[2], 0, 0.05), p(TX + 0.7, 0, 0.05), 'stroke="#8A9197" stroke-width="3.5"');
+  line(p(TX + 0.7, 0, 0.05), p(TX + 0.85, 0, -0.18), 'stroke="#8A9197" stroke-width="3.5"');
+  out.push('</g>');
+
+  // ---- stainless ring-shank siding nail (through siding + gap into the stud) -
+  out.push('<g class="layer l7">');
+  const nA = p(TX + 0.55, 0, 3.0), nB = p(1.55, 0, 3.0);   // head (exterior) -> tip (in stud)
+  {
+    const dx = nB[0] - nA[0], dy = nB[1] - nA[1];
+    const L = Math.hypot(dx, dy), d = [dx / L, dy / L], pp = [-d[1], d[0]];
+    const A = (P, s, t) => [P[0] + d[0] * s + pp[0] * t, P[1] + d[1] * s + pp[1] * t]; // along/perp offsets
+    const w = 1.1, tl = 6;                                  // shaft half-width, tip taper length
+    const tb = A(nB, -tl, 0);                               // where the point taper begins
+    poly([A(nA, 0, w), A(tb, 0, w), nB, A(tb, 0, -w), A(nA, 0, -w)],
+      'fill="#aab0b4" stroke="#5a5650" stroke-width=".5"');                       // shaft + point
+    for (let s = 7; s < L - tl; s += 4)                                           // ring-shank ridges
+      line(A(nA, s, w + .6), A(nA, s, -w - .6), 'stroke="#5a5650" stroke-width=".4" opacity=".75"');
+    line(A(nA, 0, 3.4), A(nA, 0, -3.4), 'stroke="#6b6f73" stroke-width="2.8" stroke-linecap="round"');   // flat head
+    line(A(nA, -1.1, 2.6), A(nA, -1.1, -2.6), 'stroke="#cdd2d5" stroke-width="1" stroke-linecap="round"'); // head highlight
+  }
+  out.push('</g>');
+
+  // ---- numbered layer badges (map to the Layer Schedule below) --------------
+  // sit on each top-face step, at the near (Y) end
+  out.push('<g class="layer l8">');
+  function badge(i, num, fill, txtfill, yoff) {
+    const c = p(xc(i), (yoff || 0.5), H[i]);
+    circle(c, 4, `fill="${fill}" stroke="#221F18" stroke-width="1"`);
+    text([c[0], c[1] + 1.7], num, `class="callout-num" font-size="5" fill="${txtfill}" text-anchor="middle"`);
+  }
+  // badge 1 is a dashed rust open circle (interior finish is optional)
+  const c1 = p(xc(0), 0.5, H[0]);
+  circle(c1, 4, 'fill="#F5EFE2" stroke="#883C1E" stroke-width="1.4" stroke-dasharray="3 3"');
+  text([c1[0], c1[1] + 1.7], '1', 'class="callout-num" font-size="5" fill="#883C1E" text-anchor="middle"');
+  badge(1, '2', '#221F18', '#F5EFE2', 0.5);
+  badge(1, '3', '#221F18', '#F5EFE2', 2.0);
+  badge(2, '4', '#221F18', '#F5EFE2', 0.5);   // thin layers: walk badges up the
+  badge(3, '5', '#3F6E96', '#F5EFE2', 1.7);   // step (along +Y) so they separate
+  badge(4, '6', '#946233', '#F5EFE2', 2.9);
+  badge(5, '8', '#221F18', '#F5EFE2', 1.2);
+  out.push('</g>');
+
+  // ---- left-hand label column: callouts + material labels -------------------
+  // every label sits in a left-side stack with a leader pointing right into its
+  // target on the near (section-cut) face. Items are sorted by target screen-y
+  // and assigned anchors top→bottom so the leaders never cross.
+  out.push('<g class="layer l8" font-family="\'IBM Plex Mono\',monospace">');
+  const items = [
+    { t: p((sX0 + sX1) / 2, 0, sZ * 0.5), lab: 'CONCRETE SLAB',              col: '#6f767c' },
+    { t: p(xc(5), 0, H[5] * 0.5),         lab: '8 · WOOD SIDING',            col: '#3A3F43' },
+    { t: p(x1[4], YL * 0.5, H[4] - 0.25), lab: '7 · SV-3 VENT — EXHAUST ↑',  col: '#3A3F43' },
+    { t: p(x1[4], YL * 0.5, 0.3),         lab: '7 · SV-3 VENT — INTAKE',     col: '#3A3F43' },
+    { t: p(x1[4], YL * 0.5, H[4] * 0.5),  lab: '6 · COR-A-VENT SV-5 ↕ (VERTICAL)', col: '#3A3F43' },
+    { t: p(xc(1), 0, H[1] * 0.55),        lab: '3 · R-15 ROCKWOOL',          col: '#5a4d22' },
+    { t: nA,                              lab: '9 · 304/316 SS NAIL',        col: '#3A3F43' },
+    { t: p(TX + 0.8, 0, -0.08),           lab: 'DRIP / Z-FLASHING',          col: '#6f767c' },
+  ];
+  items.sort((a, b) => a.t[1] - b.t[1]);             // top → bottom by target height
+  const LX = O[0] - 58;                              // anchor column, left of geometry
+  const yTop = O[1] - 112, dy = 17;                  // stack start + spacing
+  items.forEach((it, k) => {
+    const ay = yTop + k * dy;
+    line(it.t, [LX, ay], `stroke="${it.col}" stroke-width="1"`);
+    circle(it.t, 2.4, `fill="${it.col}"`);
+    text([LX - 5, ay + 1.6], it.lab,
+      `class="lbl" font-size="4.5" fill="${it.col}" text-anchor="end"`);
+  });
+  out.push('</g>');
+
+  const svg = document.getElementById('isoA');
+  // rain marker (blue) — append to defs
+  svg.querySelector('defs').insertAdjacentHTML('beforeend',
+    '<marker id="rainhead" markerWidth="8" markerHeight="8" refX="5" refY="3" orient="auto"><path d="M0 0l6 3-6 3z" fill="#3F6E96"/></marker>');
+  svg.insertAdjacentHTML('beforeend', out.join("\n"));
+  // crop the viewBox to the drawing — but only AFTER the web fonts have loaded.
+  // getBBox measures text with whatever font is active; running it before the
+  // async Google Fonts swap in would measure the narrow fallback metrics and
+  // crop too tight, clipping the wider real-font labels (Saira/IBM Plex Mono).
+  const crop = () => {
+    const bb = svg.getBBox(), m = 14;
+    svg.setAttribute('viewBox', `${f(bb.x - m)} ${f(bb.y - m)} ${f(bb.width + 2 * m)} ${f(bb.height + 2 * m)}`);
+  };
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(crop); else crop();
+})();
+</script>
 </body>
 </html>

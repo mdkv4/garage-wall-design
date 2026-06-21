@@ -1,0 +1,45 @@
+/* shared.css — common design tokens, reset, and base styles for the
+   Carport → Garage / Basement drawing set.
+   Aesthetic + token reference: see CLAUDE.md "Design system".
+   Page-specific bits (body grid overlay, .sheet sizing, extra color tokens)
+   stay inline in each page and override these via source order — keep the
+   <link> to this file BEFORE each page's inline <style>. */
+
+:root {
+  --paper: #ECE3D2;
+  --paper-2: #F5EFE2;
+  --ink: #221F18;
+  --ink-soft: #5C5446;
+  --line: #C7BBA3;
+  --rust: #AE4F2A;
+  --rust-deep: #883C1E;
+  --teal: #2F6B5E;
+  --blue: #3F6E96;
+  --slate: #3A3F43;
+  --metal: #8A9197;
+}
+
+* { box-sizing: border-box; }
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: "IBM Plex Sans", system-ui, sans-serif;
+}
+
+.sheet {
+  background: var(--paper-2);
+  border: 1.5px solid var(--ink);
+}
+
+svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
