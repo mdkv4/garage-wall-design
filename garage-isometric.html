@@ -179,6 +179,83 @@
       line-height: 1.4;
     }
 
+    /* ---- back-wall exterior elevation ---- */
+    .elev {
+      padding: 18px 26px 22px;
+      border-top: 1.5px solid var(--ink);
+    }
+
+    .elev .ch {
+      font-family: "Saira Condensed", sans-serif;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+      font-size: 18px;
+      margin: 0 0 4px;
+    }
+
+    .elev .csub {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 11px;
+      color: var(--ink-soft);
+      margin: 0 0 12px;
+    }
+
+    .elev .edraw {
+      background: var(--paper-2);
+      border: 1px solid var(--line);
+    }
+
+    .elev svg {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    .vlegend {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 11px;
+      color: var(--ink-soft);
+      margin-top: 10px;
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+
+    .vlegend i {
+      display: inline-block;
+      width: 18px;
+      height: 8px;
+      background: #1f2224;
+      border: 1px solid #000;
+      margin-right: 6px;
+      vertical-align: middle;
+    }
+
+    .refimg {
+      margin: 16px 0 0;
+    }
+
+    .refimg img {
+      display: block;
+      width: 100%;
+      max-width: 920px;
+      height: auto;
+      margin: 0 auto;
+      border: 1px solid var(--ink);
+      background: #fff;
+    }
+
+    .refimg figcaption {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 10.5px;
+      color: var(--ink-soft);
+      line-height: 1.45;
+      margin: 7px auto 0;
+      max-width: 920px;
+    }
+
     @media print {
       .ctrl input,
       .ctrl select {
@@ -256,6 +333,32 @@
       <div class="it"><span class="sw" style="border-style:dashed;background:rgba(92,84,70,.10)"></span>Existing house —
         House Side (party wall)</div>
     </div>
+
+    <section class="elev">
+      <h2 class="ch">Back Wall — Exterior Elevation w/ Rainscreen Vents</h2>
+      <p class="csub">Looking at the Back (eave) wall from outside · drawn to scale (1 sq = 1'-0") · rainscreen layers
+        x-rayed behind the siding: vertical furring @ 16" o.c. (the gap layer) + SV-3 vent continuous top &amp; bottom (broken
+        at the door) and over/under every opening.</p>
+      <div class="edraw">
+        <svg id="elev" role="img"
+          aria-label="Back wall exterior elevation, to scale, with ghosted vertical furring and SV-3 rainscreen vents"></svg>
+      </div>
+      <div class="vlegend">
+        <span><i></i>SV-3 vent (ghost) — top, bottom &amp; over/under openings</span>
+        <span><i style="background:rgba(202,164,106,.5);border-color:#6f5436"></i>Vertical furring @ 16" o.c. (ghost) — gap
+          layer behind the siding</span>
+        <span>Clearances: siding 2" above concrete (6" to soil) · ¼" gap at the soffit · keep both ends open/screened —
+          never caulked.</span>
+      </div>
+      <figure class="refimg">
+        <img src="cor-a-vent-sv3-siding-ventilation-detail.png"
+          alt="Cor-A-Vent SV-3 rainscreen siding ventilation detail — manufacturer reference drawing" loading="lazy" />
+        <figcaption>Manufacturer reference — Cor-A-Vent SV-3 Rainscreen Siding Ventilation Detail (drawing COR-SV-3). The
+          spec this elevation follows: vertical Sturdi-Strip furring at each stud (16"–24" o.c.) over felt/house wrap,
+          SV-3 continuous top &amp; bottom, ¼" opening at the top of wall, Sturdi-Starter at the base, and siding nailed
+          through the SV-3 + furring into the framing.</figcaption>
+      </figure>
+    </section>
 
     <section class="calcs">
       <h2 class="ch">Material Take-off Calculators</h2>
@@ -402,6 +505,68 @@
           <div class="res">Order ≈ <b id="a-ord"></b> lf<br><b id="a-pcs"></b> pcs 2×4</div>
           <div class="note">Flat 2×4 @ 24" o.c. perpendicular to the chords; ¾" plywood over → 1½" service cavity. Each
             run lands on every chord. Pcs = runs × cuts/run at the chosen stock length.</div>
+        </div>
+
+        <div class="card">
+          <div class="ct"><span class="dot" style="background:#1f2224"></span>Rainscreen Siding Vent (SV-3)</div>
+          <table class="brk">
+            <tr>
+              <td>Top-of-wall runs (F + B + Street)</td>
+              <td class="v"><span id="rv-top"></span> lf</td>
+            </tr>
+            <tr>
+              <td>Bottom runs (− door sills)</td>
+              <td class="v"><span id="rv-bot"></span> lf</td>
+            </tr>
+            <tr>
+              <td>Over garage + man-door headers</td>
+              <td class="v"><span id="rv-hdr"></span> lf</td>
+            </tr>
+            <tr>
+              <td>Around windows (head + sill)</td>
+              <td class="v"><span id="rv-win"></span> lf</td>
+            </tr>
+            <tr class="net">
+              <td>Net vent length</td>
+              <td class="v"><span id="rv-net"></span> lf</td>
+            </tr>
+          </table>
+          <div class="ctrl">
+            <label>Waste % <input id="rv-waste" type="number" min="0" value="10"></label>
+          </div>
+          <div class="res">Order ≈ <b id="rv-order"></b> lf<br>SV-3 vent (7/16" × 3")</div>
+          <div class="note">SV-3 run horizontally: vent at top &amp; bottom of each siding wall + over/under openings, per
+            Cor-A-Vent. House Side (party wall) &amp; stone wainscot base excluded; gable-rake venting extra.</div>
+        </div>
+
+        <div class="card">
+          <div class="ct"><span class="dot" style="background:#caa46a"></span>Vertical Furring (rainscreen)</div>
+          <table class="brk">
+            <tr>
+              <td>Net wall area (= siding)</td>
+              <td class="v"><span id="vf-area"></span> sf</td>
+            </tr>
+            <tr>
+              <td>Strip rate @ spacing</td>
+              <td class="v"><span id="vf-rate"></span> lf/sf</td>
+            </tr>
+            <tr class="net">
+              <td>Furring length</td>
+              <td class="v"><span id="vf-len"></span> lf</td>
+            </tr>
+          </table>
+          <div class="ctrl">
+            <label>Waste % <input id="vf-waste" type="number" min="0" value="10"></label>
+            <label>Spacing
+              <select id="vf-oc">
+                <option value="1">16" o.c.</option>
+                <option value="0.8">24" o.c.</option>
+              </select>
+            </label>
+          </div>
+          <div class="res">Order ≈ <b id="vf-ord"></b> lf<br>vertical furring (3/8"–½" × 1½")</div>
+          <div class="note">Solid spacer strips up each stud — the gap layer, NOT a vent. Keep thickness 3/8"–½" to match
+            the SV-3 vents. Cor-A-Vent rate: 1 lf/sf @ 16" o.c., ×0.8 @ 24".</div>
         </div>
 
       </div>
@@ -940,11 +1105,179 @@
         const aOrd = aLF * (1 + v('a-waste') / 100), aStock = v('a-stock');
         set('a-ord', r1(aOrd));
         set('a-pcs', aStock > 0 ? aRuns * up(aLen / aStock) : '—');
+
+        // --- rainscreen siding vent (SV-3 equiv, 7/16" × 3") ---
+        // horizontal vent at top & bottom of each siding wall + over/under openings
+        const GDw = GD, MDw = 3, winW = 47.5 / 12, nWin = 2;
+        const rvTop = W + W + L;                     // top run: Front + Back + Street band
+        const rvBot = rvTop - GDw - MDw;             // bottom run minus the two door openings at grade
+        const rvHdr = GDw + MDw;                      // vent over the garage- and man-door headers
+        const rvWin = nWin * 2 * winW;               // head + sill at each picture window
+        const rvNet = rvTop + rvBot + rvHdr + rvWin;
+        set('rv-top', r1(rvTop)); set('rv-bot', r1(rvBot));
+        set('rv-hdr', r1(rvHdr)); set('rv-win', r1(rvWin)); set('rv-net', r1(rvNet));
+        const rvOrder = rvNet * (1 + v('rv-waste') / 100);
+        set('rv-order', r1(rvOrder));
+
+        // --- vertical furring (rainscreen gap layer) ---
+        const vfArea = sNet;                         // same net area as the siding
+        const vfRate = v('vf-oc');                   // Cor-A-Vent: 1.0 lf/sf @ 16" o.c., 0.8 @ 24"
+        const vfLen = vfArea * vfRate;
+        set('vf-area', r1(vfArea)); set('vf-rate', vfRate.toFixed(2)); set('vf-len', r1(vfLen));
+        set('vf-ord', r1(vfLen * (1 + v('vf-waste') / 100)));
       }
       const root = document.querySelector('.calcs');
       root.addEventListener('input', recalc);
       root.addEventListener('change', recalc);
       recalc();
+    })();
+  </script>
+
+  <script>
+    /* ===== Back-wall exterior elevation (to scale) + SV-3 rainscreen vents ===== */
+    (function () {
+      const s = 46;                       // px per foot
+      const W = 19 + 11.5 / 12, H = 8;    // 19'-11½" wide, 8'-0" plate
+      const ML = 68, MT = 82, BM = 118, RM = 96;   // margins
+      const Wpx = W * s, Hpx = H * s;
+      // openings — measured from the HOUSE-side corner; viewed from outside the
+      // back wall, House Side is on the RIGHT, Street Side on the LEFT, so convert
+      // to hx = distance from the Street-side (left) corner:
+      const doorH = 80 / 12;              // 6'-8"
+      const dL = W - 4, dR = W - 1;        // man-door jambs (1'..4' from House) -> from left
+      const winW = 47.5 / 12, winH = 11.5 / 12, sill = 5.0, head = sill + winH; // head 5'-11½"
+      const winC = [W - (15 + 1 / 12), W - (9 + 1 / 12)];   // window centres from left
+      const VT = 0.25;                    // vent face = 3"
+      const SB = 2 / 12;                  // siding held 2" above the concrete (base clearance)
+
+      const f = n => Math.round(n * 100) / 100;
+      const p = (hx, z) => [ML + hx * s, MT + (H - z) * s];   // grade z=0 at bottom
+      let out = [];
+      const rect = (x, y, w, h, a) => out.push(`<rect x="${f(x)}" y="${f(y)}" width="${f(w)}" height="${f(h)}" ${a}/>`);
+      const line = (A, B, a) => out.push(`<line x1="${f(A[0])}" y1="${f(A[1])}" x2="${f(B[0])}" y2="${f(B[1])}" ${a}/>`);
+      const txt = (x, y, t, a) => out.push(`<text x="${f(x)}" y="${f(y)}" ${a}>${t}</text>`);
+      const band = (a0, a1, z0, z1, a) => { const tl = p(a0, z1); rect(tl[0], tl[1], (a1 - a0) * s, (z1 - z0) * s, a); };
+
+      out.push(`<defs>
+        <marker id="earr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#221F18"/></marker>
+        <linearGradient id="eSide" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#7c452a"/><stop offset="1" stop-color="#a05e3b"/></linearGradient>
+      </defs>`);
+
+      /* concrete slab / path at the base (top of concrete = z 0) */
+      band(-0.5, W + 0.5, -0.34, 0, 'fill="#cdc9c0" stroke="#a59f90" stroke-width="1.2"');
+      line(p(-0.5, 0), p(W + 0.5, 0), 'stroke="#5C5446" stroke-width="2.2"');     // top of slab
+      for (let x = 3.8; x < W; x += 1.2) { const d = p(x, -0.17); out.push(`<circle cx="${f(d[0])}" cy="${f(d[1])}" r="1.1" fill="#a59f90" opacity=".7"/>`); }
+      txt(ML + 6, p(0, -0.17)[1] + 4, 'CONCRETE SLAB / PATH', 'font-family="IBM Plex Mono, monospace" font-size="10" fill="#6b6253"');
+
+      /* wall — 6" lap siding, first course held SB above the concrete */
+      band(0, W, SB, H, 'fill="url(#eSide)" stroke="#221F18" stroke-width="1.6"');
+      for (let z = SB + 0.5; z < H - 0.001; z += 0.5) line(p(0, z), p(W, z), 'stroke="#4a2917" stroke-width="1" opacity=".5"');
+      line(p(-0.3, H), p(W + 0.3, H), 'stroke="#2b2f32" stroke-width="2.6"');   // eave / top plate
+
+      /* ---- ghost: vertical furring strips @ 16" o.c. (the gap layer, behind siding) ---- */
+      const FUR = 'fill="#caa46a" fill-opacity=".30" stroke="#6f5436" stroke-width=".8" stroke-dasharray="3 2"';
+      const fw = 1.5 / 12;                                  // 1½" furring face
+      for (let x = 0; x <= W - fw + 0.001; x += 16 / 12) band(x, x + fw, 0, H, FUR);
+      band(W - fw, W, 0, H, FUR);                           // right-corner stud
+
+      /* ---- man-door (36"×80", frosted slats) ---- */
+      band(dL - 0.12, dR + 0.12, 0, doorH + 0.12, 'fill="#3a2f1d" stroke="#221F18" stroke-width="1.2"');  // frame
+      band(dL, dR, 0, doorH, 'fill="#cdbb95" stroke="#7d6a45" stroke-width="1.4"');                       // leaf
+      const slB = doorH - 2.4, slT = doorH - 0.5;
+      band(dL + 0.3, dR - 0.3, slB, slT, 'fill="#dfe6e6" stroke="#9fb0b2" stroke-width="1"');            // frosted lite
+      for (let z = slB + 0.32; z < slT - 0.04; z += 0.32) line(p(dL + 0.3, z), p(dR - 0.3, z), 'stroke="#9fb0b2" stroke-width=".8" opacity=".7"');
+      { const hdl = p(dL + 0.28, doorH * 0.45); out.push(`<circle cx="${f(hdl[0])}" cy="${f(hdl[1])}" r="2.4" fill="#6b5836"/>`); }
+      txt(p((dL + dR) / 2, 2.1)[0], p((dL + dR) / 2, 2.1)[1], '36"×80"', 'font-family="IBM Plex Mono, monospace" font-size="10" fill="#f0e6d6" text-anchor="middle"');
+
+      /* ---- 2× Hy-Lite Prairie picture windows (47½"×11½", bronze) ---- */
+      for (const c of winC) {
+        const a = c - winW / 2, b = c + winW / 2, fr = 0.08;
+        band(a - fr, b + fr, sill - fr, head + fr, 'fill="#5e4d33" stroke="#241d11" stroke-width="1.2"');  // bronze frame
+        band(a, b, sill, head, 'fill="#b7c7d0" stroke="#3a3326" stroke-width=".8"');                       // frosted glass
+        line(p(a + 0.2, head - 0.12), p(a + 1.0, sill + 0.12), 'stroke="#fff" stroke-width="1.2" opacity=".3"'); // sheen
+        const m = 0.1, sq = 0.12, cols = 7;
+        for (let i = 0; i < cols; i++) {
+          const sx = a + m + (b - a - 2 * m - sq) * (i / (cols - 1));
+          const t1 = p(sx, head - m), t2 = p(sx, sill + m + sq);
+          rect(t1[0], t1[1], sq * s, sq * s, 'fill="#6e5a3c" opacity=".5"');
+          rect(t2[0], t2[1], sq * s, sq * s, 'fill="#6e5a3c" opacity=".5"');
+        }
+        txt(p(c, sill - 0.42)[0], p(c, sill - 0.42)[1], '47½"×11½"', 'font-family="IBM Plex Mono, monospace" font-size="9.5" fill="#f0e6d6" text-anchor="middle"');
+      }
+
+      /* ---- Sturdi-Starter (non-venting) at the base, below the bottom SV-3 (per COR-SV-3) ---- */
+      const STR = 1.25 / 12;                              // starter 1¼" face
+      const bV = SB + STR;                                // bottom SV-3 sits just above the starter
+      const SA = 'fill="#3a3f43" fill-opacity=".55" stroke="#1f2224" stroke-width=".8" stroke-dasharray="2 2"';
+      band(0, dL, SB, bV, SA); band(dR, W, SB, bV, SA);   // starter, broken at the door
+
+      /* ---- SV-3 rainscreen vents (black, fluted) ---- */
+      const vA = 'fill="#1f2224" fill-opacity=".42" stroke="#1f2224" stroke-width="1" stroke-dasharray="3 2"';
+      function vent(a0, a1, z0, z1) {
+        band(a0, a1, z0, z1, vA);
+        for (let x = a0 + 0.1; x < a1 - 0.03; x += 0.16) line(p(x, z1), p(x, z0), 'stroke="#1f2224" stroke-width=".6" opacity=".5"');
+      }
+      vent(0, W, H - VT, H);                              // continuous top of wall
+      vent(0, dL, bV, bV + VT); vent(dR, W, bV, bV + VT); // bottom — behind first course, above the starter, broken at door
+      vent(dL, dR, doorH, doorH + VT);                    // over the door head
+      for (const c of winC) {                             // over & under each window
+        const a = c - winW / 2, b = c + winW / 2;
+        vent(a, b, head, head + VT);
+        vent(a, b, sill - VT, sill);
+      }
+
+      /* ---- dimensions ---- */
+      const DA = 'stroke="#221F18" stroke-width="1" marker-start="url(#earr)" marker-end="url(#earr)"';
+      const WL = 'stroke="#221F18" stroke-width=".7" opacity=".7"';
+      const DT = 'font-family="IBM Plex Mono, monospace" font-size="12" fill="#221F18" text-anchor="middle"';
+      // overall width (below the slab)
+      line(p(0, 0), p(0, -0.78), WL); line(p(W, 0), p(W, -0.78), WL);
+      line(p(0, -0.78), p(W, -0.78), DA);
+      txt(p(W / 2, -0.78)[0], p(W / 2, -0.78)[1] + 16, "19'-11½\"", DT);
+      // 2" siding clearance above the concrete — right end
+      line(p(W, 0), p(W + 0.95, 0), WL); line(p(W, SB), p(W + 0.95, SB), WL);
+      line(p(W + 0.7, 0), p(W + 0.7, SB), DA);
+      txt(p(W + 1.05, SB / 2)[0], p(W + 1.05, SB / 2)[1] + 4, '2"', 'font-family="IBM Plex Mono, monospace" font-size="11" fill="#221F18" text-anchor="start"');
+      // overall height (left)
+      line(p(0, 0), p(-0.6, 0), WL); line(p(0, H), p(-0.6, H), WL);
+      line(p(-0.6, 0), p(-0.6, H), DA);
+      { const hm = p(-0.6, H / 2); out.push(`<text x="${f(hm[0] - 8)}" y="${f(hm[1])}" transform="rotate(-90 ${f(hm[0] - 8)} ${f(hm[1])})" font-family="IBM Plex Mono, monospace" font-size="12" fill="#221F18" text-anchor="middle">8'-0"</text>`); }
+      // sill height — short vertical dim left of the right-hand window
+      { const dx = winC[1] - winW / 2 - 0.45; line(p(dx, 0), p(dx, sill), DA); line(p(winC[1] - winW / 2, sill), p(dx, sill), WL);
+        const sm = p(dx, sill / 2); out.push(`<text x="${f(sm[0] - 7)}" y="${f(sm[1])}" transform="rotate(-90 ${f(sm[0] - 7)} ${f(sm[1])})" font-family="IBM Plex Mono, monospace" font-size="11" fill="#221F18" text-anchor="middle">5'-0" SILL</text>`); }
+      // 1'-0" door offset from the House-side (right) corner
+      line(p(dR, 0.4), p(W, 0.4), DA);
+      txt(p((dR + W) / 2, 0.4)[0], p((dR + W) / 2, 0.4)[1] - 4, "1'-0\"", 'font-family="IBM Plex Mono, monospace" font-size="10" fill="#221F18" text-anchor="middle"');
+
+      /* ---- labels / leaders ---- */
+      txt(ML + 4, MT - 50, 'STREET SIDE', 'font-family="IBM Plex Mono, monospace" font-size="12" fill="#221F18"');
+      txt(ML + Wpx - 4, MT - 50, 'HOUSE SIDE — ATTACHED', 'font-family="IBM Plex Mono, monospace" font-size="12" fill="#221F18" text-anchor="end"');
+      function leader(tx, ty, P, t, col, anchor, tcol) {
+        line([tx, ty + 2], P, `stroke="${col}" stroke-width="1"`);
+        out.push(`<circle cx="${f(P[0])}" cy="${f(P[1])}" r="2.3" fill="${col}"/>`);
+        txt(tx, ty, t, `font-family="IBM Plex Mono, monospace" font-size="11" fill="${tcol || col}" text-anchor="${anchor}"`);
+      }
+      // top vent
+      leader(ML + Wpx * 0.34, MT - 30, p(W * 0.34, H - VT / 2), 'SV-3 VENT (GHOST) — CONT. TOP OF WALL', '#883C1E', 'middle');
+      // over/under windows (cream text for contrast on the siding)
+      leader(p(winC[1] + winW / 2 + 0.3, head + 0.55)[0], p(winC[1] + winW / 2 + 0.3, head + 0.55)[1], p(winC[1], head + VT / 2), 'VENT OVER & UNDER EACH OPENING', '#883C1E', 'start', '#f3ead8');
+      // bottom vent / intake
+      leader(p(W * 0.5, -0.0)[0] + 60, p(W * 0.18, 0)[1] + 30, p(W * 0.18, bV + VT / 2), 'BOTTOM VENT · OPEN/SCREENED INTAKE (BROKEN @ DOOR)', '#883C1E', 'start');
+      // top: ¼" expansion gap at the soffit — leave vented
+      leader(ML + Wpx * 0.63, MT - 30, p(W * 0.63, H), '¼" EXP. GAP AT SOFFIT — LEAVE VENTED', '#883C1E', 'middle');
+      // vertical furring (ghost) — label in the clear lower field, leader up to a strip
+      leader(ML + Wpx * 0.30, MT + Hpx * 0.58, p(2 + 2 / 3 + fw / 2, H * 0.45), 'VERTICAL FURRING @ 16" O.C. (GHOST)', '#5C5446', 'middle', '#f3ead8');
+      // base detail (per COR-SV-3): Sturdi-Starter + nail-through note
+      { const T = p(W * 0.30, SB + STR / 2), ny = MT + Hpx + 74;
+        line([T[0], ny - 6], T, 'stroke="#5C5446" stroke-width="1"');
+        out.push(`<circle cx="${f(T[0])}" cy="${f(T[1])}" r="2.3" fill="#5C5446"/>`);
+        txt(T[0] + 6, ny, 'STURDI-STARTER (NON-VENTING) AT BASE', 'font-family="IBM Plex Mono, monospace" font-size="11" fill="#5C5446"');
+        txt(T[0] + 6, ny + 13, 'SIDING NAILED THROUGH SV-3 + FURRING INTO FRAMING', 'font-family="IBM Plex Mono, monospace" font-size="11" fill="#5C5446"');
+      }
+
+      const el = document.getElementById('elev');
+      el.setAttribute('viewBox', `0 0 ${f(ML + Wpx + RM)} ${f(MT + Hpx + BM)}`);
+      el.insertAdjacentHTML('beforeend', out.join("\n"));
     })();
   </script>
 </body>
