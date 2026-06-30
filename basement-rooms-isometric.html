@@ -82,7 +82,7 @@
       <div class="stamp">
         EXTRA ROOM&nbsp;&nbsp; <b>11'-2⅜" × 18'-7½"</b> &nbsp;·&nbsp; ≈209 sf<br />
         MOVIE ROOM&nbsp;&nbsp; <b>12'-0" × 19'-1"</b> &nbsp;·&nbsp; west (context)<br />
-        CEILING&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>7'-3⅝"</b> &nbsp;·&nbsp; SOFFIT <b>6'-4¾"</b> clr &nbsp;·&nbsp; 8 cans<br />
+        CEILING&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>7'-3⅝"</b> &nbsp;·&nbsp; SOFFIT <b>6'-4¾"</b> clr &nbsp;·&nbsp; 6 cans<br />
         DOOR&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>8'-1" × 6'-8"</b> slider<br />
         SHEET &nbsp;A-0.3 &nbsp;/&nbsp; 2026-06-11
       </div>
@@ -125,18 +125,18 @@
     <div class="lightspec">
       <h3>Ceiling Lighting</h3>
       <div class="rows">
-        <span>Flat GWB ceiling @ 7'-3⅝" — <b>8 recessed cans</b></span>
-        <span><b>Wall-wash (4):</b> 2'-6" off movie wall · 3'-0" o.c.</span>
-        <span><b>General (4):</b> 8'-3" off movie wall · 3'-6" o.c.</span>
-        <span>End cans ≈1'-6"–1'-9" off the end walls</span>
+        <span>Flat GWB ceiling @ 7'-3⅝" — <b>6 recessed cans</b></span>
+        <span><b>Wall-wash (3):</b> 2'-6" off movie wall · 4'-0" o.c.</span>
+        <span><b>General (3):</b> 8'-3" off movie wall · 4'-6" o.c.</span>
+        <span>End cans ≈2'-0"–2'-6" off the end walls</span>
       </div>
     </div>
 
     <div class="legend">
       <div class="it"><span class="sw" style="background:#f1ece0"></span>Painted 1/2" GWB on perimeter walls (7'-3⅝"
         plate)</div>
-      <div class="it"><span class="sw" style="background:#e8e3d6"></span>Flat GWB ceiling @ 7'-3⅝" — 8 recessed lights:
-        4 wall-wash (2'-6" off the movie-room wall) + 4 general</div>
+      <div class="it"><span class="sw" style="background:#e8e3d6"></span>Flat GWB ceiling @ 7'-3⅝" — 6 recessed lights:
+        3 wall-wash (2'-6" off the movie-room wall) + 3 general</div>
       <div class="it"><span class="sw" style="background:#b6ac9c"></span>Carpet floor — light gray/brown loop pile over
         slab</div>
       <div class="it"><span class="sw" style="background:#9fb6c4"></span>8'-1" sliding glass door (6'-8" tall) on the
@@ -528,10 +528,10 @@
         'class="lbl" font-size="9.5" fill="#AE4F2A" text-anchor="middle" opacity=".9"');
       out.push('</g>');
 
-      // ===== CEILING LIGHTING — 8 recessed downlights in the 11'×14' flat ceiling =====
+      // ===== CEILING LIGHTING — 6 recessed downlights in the 11'×14' flat ceiling =====
       // drawn LAST so they sit on top of the ceiling and every wall. (Soffit zone excluded.)
-      // Layout: a 4-light WALL-WASH row 2'-6" off the movie-room wall (X=0) to graze it,
-      // plus a 4-light GENERAL row down the body of the room.
+      // Layout: a 3-light WALL-WASH row 2'-6" off the movie-room wall (X=0) to graze it,
+      // plus a 3-light GENERAL row down the body of the room.
       out.push('<g class="anim a6">');
       // wall-wash glow on the movie-room wall (X=0, Y=0..LW): warm, brightest up top, fading down
       poly([p(0, 0, H), p(0, LW, H), p(0, LW, 0), p(0, 0, 0)], 'fill="url(#gWash)" stroke="none"');
@@ -546,10 +546,10 @@
         out.push(`<ellipse cx="${f(q[0])}" cy="${f(q[1])}" rx="7.5" ry="4.3" fill="#fff4d6" stroke="#b9ad8f" stroke-width="1"/>`);
         out.push(`<ellipse cx="${f(q[0])}" cy="${f(q[1])}" rx="3.4" ry="2" fill="#fbe7a6" stroke="#caa46a" stroke-width=".8"/>`);
       }
-      // WALL-WASH row: 2'-6" off the movie wall, 4 trims @ 3'-0" o.c. along the 12' wall
-      [1.5, 4.5, 7.5, 10.5].forEach(y => dl(2.5, y, true));
-      // GENERAL row: ≈2'-9" off the side wall, 4 trims @ 3'-6" o.c. down the 14' depth
-      [1.75, 5.25, 8.75, 12.25].forEach(y => dl(8.25, y, false));
+      // WALL-WASH row: 2'-6" off the movie wall, 3 trims @ 4'-0" o.c. along the 12' wall
+      [2, 6, 10].forEach(y => dl(2.5, y, true));
+      // GENERAL row: ≈2'-11" off the side wall, 3 trims @ 4'-6" o.c. down the 14' depth
+      [2.5, 7, 11.5].forEach(y => dl(8.25, y, false));
       // SOFFIT row: 3 recessed cans on the dropped-soffit underside (z=SFz), centered N-S, evenly E-W
       [-1.0, 3.9, 8.75].forEach(x => dl(x, (SFy0 + SFy1) / 2, false, SFz));
       out.push('</g>');
