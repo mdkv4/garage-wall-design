@@ -1138,7 +1138,7 @@
     (function () {
       const s = 46;                       // px per foot
       const W = 19 + 11.5 / 12, H = 8;    // 19'-11½" wide, 8'-0" plate
-      const ML = 68, MT = 82, BM = 118, RM = 96;   // margins
+      const ML = 116, MT = 82, BM = 118, RM = 120;   // margins (left room for the stone-edge side view)
       const Wpx = W * s, Hpx = H * s;
       // openings — measured from the HOUSE-side corner; viewed from outside the
       // back wall, House Side is on the RIGHT, Street Side on the LEFT, so convert
@@ -1226,6 +1226,29 @@
         vent(a, b, sill - VT, sill);
       }
 
+      /* ---- stacked-stone wainscot — SIDE VIEW (the Street-Side return seen edge-on) ----
+         Only the stone is shown: it returns ≈6" deep at the left corner, lower 4'-6" tall. */
+      {
+        const DPT = 0.5;                                   // ≈6" stone depth (proud return)
+        const STN = 4.5;                                   // 4'-6" wainscot height
+        band(-DPT, 0, 0, STN, 'fill="#ddd7c9" stroke="#221F18" stroke-width="1.4"');   // edge face (slightly shaded vs. a front face)
+        for (let z = 0.5; z < STN - 0.02; z += 0.5) line(p(-DPT, z), p(0, z), 'stroke="#9a958a" stroke-width=".8" opacity=".6"');   // courses across the 6" depth
+        line(p(-DPT, STN), p(0, STN), 'stroke="#221F18" stroke-width="1.5"');           // top of wainscot
+        line(p(-DPT, 0), p(-DPT, STN), 'stroke="#221F18" stroke-width="1.4"');          // outer (street-face) edge
+        // depth dim ≈6" across the top
+        const SDA = 'stroke="#221F18" stroke-width="1" marker-start="url(#earr)" marker-end="url(#earr)"';
+        const SWL = 'stroke="#221F18" stroke-width=".7" opacity=".7"';
+        line(p(-DPT, STN), p(-DPT, STN + 0.5), SWL); line(p(0, STN), p(0, STN + 0.5), SWL);
+        line(p(-DPT, STN + 0.42), p(0, STN + 0.42), SDA);
+        txt(p(-DPT / 2, STN + 0.42)[0], p(-DPT / 2, STN + 0.42)[1] - 5, '≈6"', 'font-family="IBM Plex Mono, monospace" font-size="10" fill="#221F18" text-anchor="middle"');
+        // 4'-6" stone height to the left of the edge
+        line(p(-DPT, 0), p(-DPT - 0.55, 0), SWL); line(p(-DPT, STN), p(-DPT - 0.55, STN), SWL);
+        line(p(-DPT - 0.55, 0), p(-DPT - 0.55, STN), SDA);
+        { const m = p(-DPT - 0.55, STN / 2); out.push(`<text x="${f(m[0] - 7)}" y="${f(m[1])}" transform="rotate(-90 ${f(m[0] - 7)} ${f(m[1])})" font-family="IBM Plex Mono, monospace" font-size="11" fill="#221F18" text-anchor="middle">4'-6"</text>`); }
+        txt(p(-DPT, STN)[0], MT - 14, 'STACKED-STONE WAINSCOT', 'font-family="IBM Plex Mono, monospace" font-size="9.5" fill="#6b6253" text-anchor="start"');
+        txt(p(-DPT, STN)[0], MT - 2, '(SIDE VIEW · STREET-SIDE RETURN)', 'font-family="IBM Plex Mono, monospace" font-size="9.5" fill="#6b6253" text-anchor="start"');
+      }
+
       /* ---- dimensions ---- */
       const DA = 'stroke="#221F18" stroke-width="1" marker-start="url(#earr)" marker-end="url(#earr)"';
       const WL = 'stroke="#221F18" stroke-width=".7" opacity=".7"';
@@ -1238,10 +1261,10 @@
       line(p(W, 0), p(W + 0.95, 0), WL); line(p(W, SB), p(W + 0.95, SB), WL);
       line(p(W + 0.7, 0), p(W + 0.7, SB), DA);
       txt(p(W + 1.05, SB / 2)[0], p(W + 1.05, SB / 2)[1] + 4, '2"', 'font-family="IBM Plex Mono, monospace" font-size="11" fill="#221F18" text-anchor="start"');
-      // overall height (left)
-      line(p(0, 0), p(-0.6, 0), WL); line(p(0, H), p(-0.6, H), WL);
-      line(p(-0.6, 0), p(-0.6, H), DA);
-      { const hm = p(-0.6, H / 2); out.push(`<text x="${f(hm[0] - 8)}" y="${f(hm[1])}" transform="rotate(-90 ${f(hm[0] - 8)} ${f(hm[1])})" font-family="IBM Plex Mono, monospace" font-size="12" fill="#221F18" text-anchor="middle">8'-0"</text>`); }
+      // overall height (moved to the RIGHT — left side now holds the stone-edge side view)
+      line(p(W, 0), p(W + 1.95, 0), WL); line(p(W, H), p(W + 1.95, H), WL);
+      line(p(W + 1.95, 0), p(W + 1.95, H), DA);
+      { const hm = p(W + 1.95, H / 2); out.push(`<text x="${f(hm[0] + 9)}" y="${f(hm[1])}" transform="rotate(-90 ${f(hm[0] + 9)} ${f(hm[1])})" font-family="IBM Plex Mono, monospace" font-size="12" fill="#221F18" text-anchor="middle">8'-0"</text>`); }
       // sill height — short vertical dim left of the right-hand window
       { const dx = winC[1] - winW / 2 - 0.45; line(p(dx, 0), p(dx, sill), DA); line(p(winC[1] - winW / 2, sill), p(dx, sill), WL);
         const sm = p(dx, sill / 2); out.push(`<text x="${f(sm[0] - 7)}" y="${f(sm[1])}" transform="rotate(-90 ${f(sm[0] - 7)} ${f(sm[1])})" font-family="IBM Plex Mono, monospace" font-size="11" fill="#221F18" text-anchor="middle">5'-0" SILL</text>`); }
