@@ -275,6 +275,161 @@
       </div>
     </section>
 
+    <section class="spec">
+      <div class="wide">
+        <h3>Wiring Best Practices — One Run from the Controller to the Strip</h3>
+        <svg viewBox="0 0 1000 425" role="img" aria-label="Wiring diagram: AC circuit, Mean Well HEP-1000-24, standby relay, Dig-Quad terminals, 2-conductor power and data cables to the 3 strip pads, corner jumper and end feed, with conductor counts">
+            <rect x="10" y="40" width="90" height="80" fill="#F5EFE2" stroke="#221F18" stroke-width="1.6"/>
+            <text x="55.0" y="66" class="facetxt" font-size="15" fill="#221F18" text-anchor="middle">AC CIRCUIT</text>
+            <text x="55.0" y="82" class="lbl" font-size="9" fill="#5C5446" text-anchor="middle">120 V · breaker</text>
+            <text x="55" y="108" class="lbl" font-size="8.5" fill="#221F18" text-anchor="middle">electrician</text>
+            <rect x="190" y="30" width="170" height="120" fill="#F5EFE2" stroke="#221F18" stroke-width="1.6"/>
+            <text x="275.0" y="56" class="facetxt" font-size="15" fill="#221F18" text-anchor="middle">HEP-1000-24</text>
+            <text x="275.0" y="72" class="lbl" font-size="9" fill="#5C5446" text-anchor="middle">PSU · 24V · 42 A · IP67</text>
+            <text x="198" y="86" class="lbl" font-size="8.5" fill="#221F18" text-anchor="start">AC IN</text>
+            <text x="352" y="104" class="lbl" font-size="8.5" fill="#221F18" text-anchor="end">+V</text>
+            <text x="352" y="124" class="lbl" font-size="8.5" fill="#221F18" text-anchor="end">−V</text>
+            <text x="275" y="142" class="lbl" font-size="8" fill="#221F18" text-anchor="middle">CN71: REMOTE · +12V-AUX · GND-AUX</text>
+            <rect x="200" y="215" width="100" height="46" fill="#F5EFE2" stroke="#221F18" stroke-width="1.4"/>
+            <text x="250" y="235" class="facetxt" font-size="13" fill="#221F18" text-anchor="middle">RELAY</text>
+            <text x="250" y="251" class="lbl" font-size="8.5" fill="#221F18" text-anchor="middle">dry contact</text>
+            <path d="M100,80 H190" fill="none" stroke="#3F6E96" stroke-width="3.2" stroke-linejoin="round"/>
+            <path d="M250,150 V215" fill="none" stroke="#3A3F43" stroke-width="3.2" stroke-linejoin="round"/>
+            <path d="M320,150 V190 H450" fill="none" stroke="#3A3F43" stroke-width="3.2" stroke-linejoin="round"/>
+            <path d="M300,240 H450" fill="none" stroke="#3A3F43" stroke-width="3.2" stroke-linejoin="round"/>
+            <path d="M360,100 H450" fill="none" stroke="#B23A2E" stroke-width="3.2" stroke-linejoin="round"/>
+            <path d="M360,120 H450" fill="none" stroke="#221F18" stroke-width="3.2" stroke-linejoin="round"/>
+            <rect x="450" y="30" width="170" height="345" fill="#F5EFE2" stroke="#221F18" stroke-width="1.6" stroke-dasharray="6 3"/>
+            <text x="535.0" y="56" class="facetxt" font-size="15" fill="#221F18" text-anchor="middle">DIG-QUAD</text>
+            <text x="535.0" y="72" class="lbl" font-size="9" fill="#5C5446" text-anchor="middle">controller · WLED · in attic</text>
+            <text x="458" y="104" class="lbl" font-size="8.5" fill="#221F18" text-anchor="start">MAIN IN +</text>
+            <text x="458" y="124" class="lbl" font-size="8.5" fill="#221F18" text-anchor="start">MAIN IN −</text>
+            <text x="458" y="194" class="lbl" font-size="8.5" fill="#221F18" text-anchor="start">5vEXT</text>
+            <text x="458" y="244" class="lbl" font-size="8.5" fill="#221F18" text-anchor="start">Q1R</text>
+            <rect x="598" y="143" width="14" height="14" fill="#d9d2c3" stroke="#221F18" stroke-width="1.2"/>
+            <circle cx="605" cy="150" r="3" fill="#221F18"/>
+            <text x="592" y="153" class="lbl" font-size="8.5" fill="#221F18" text-anchor="end">+ fused output (start feed)</text>
+            <rect x="598" y="173" width="14" height="14" fill="#d9d2c3" stroke="#221F18" stroke-width="1.2"/>
+            <circle cx="605" cy="180" r="3" fill="#221F18"/>
+            <text x="592" y="183" class="lbl" font-size="8.5" fill="#221F18" text-anchor="end">− GND</text>
+            <rect x="598" y="228" width="14" height="14" fill="#d9d2c3" stroke="#221F18" stroke-width="1.2"/>
+            <circle cx="605" cy="235" r="3" fill="#221F18"/>
+            <text x="592" y="238" class="lbl" font-size="8.5" fill="#221F18" text-anchor="end">GND (next to LED1)</text>
+            <rect x="598" y="258" width="14" height="14" fill="#d9d2c3" stroke="#221F18" stroke-width="1.2"/>
+            <circle cx="605" cy="265" r="3" fill="#221F18"/>
+            <text x="592" y="268" class="lbl" font-size="8.5" fill="#221F18" text-anchor="end">LED1 DATA</text>
+            <rect x="598" y="308" width="14" height="14" fill="#d9d2c3" stroke="#221F18" stroke-width="1.2"/>
+            <circle cx="605" cy="315" r="3" fill="#221F18"/>
+            <text x="592" y="318" class="lbl" font-size="8.5" fill="#221F18" text-anchor="end">− GND</text>
+            <rect x="598" y="338" width="14" height="14" fill="#d9d2c3" stroke="#221F18" stroke-width="1.2"/>
+            <circle cx="605" cy="345" r="3" fill="#221F18"/>
+            <text x="592" y="348" class="lbl" font-size="8.5" fill="#221F18" text-anchor="end">+ fused output (end feed)</text>
+            <rect x="746" y="181" width="233" height="48" fill="#ffd98a" opacity=".35" rx="8"/>
+            <rect x="750" y="185" width="110" height="40" fill="#E9A23B" stroke="#221F18" stroke-width=".9"/>
+            <rect x="885" y="185" width="90" height="40" fill="#E9A23B" stroke="#221F18" stroke-width=".9"/>
+            <rect x="746" y="189" width="8" height="8" fill="#c79a3a" stroke="#221F18" stroke-width=".8"/>
+            <rect x="746" y="201" width="8" height="8" fill="#c79a3a" stroke="#221F18" stroke-width=".8"/>
+            <rect x="746" y="213" width="8" height="8" fill="#c79a3a" stroke="#221F18" stroke-width=".8"/>
+            <rect x="856" y="189" width="8" height="8" fill="#c79a3a" stroke="#221F18" stroke-width=".8"/>
+            <rect x="856" y="201" width="8" height="8" fill="#c79a3a" stroke="#221F18" stroke-width=".8"/>
+            <rect x="856" y="213" width="8" height="8" fill="#c79a3a" stroke="#221F18" stroke-width=".8"/>
+            <rect x="881" y="189" width="8" height="8" fill="#c79a3a" stroke="#221F18" stroke-width=".8"/>
+            <rect x="881" y="201" width="8" height="8" fill="#c79a3a" stroke="#221F18" stroke-width=".8"/>
+            <rect x="881" y="213" width="8" height="8" fill="#c79a3a" stroke="#221F18" stroke-width=".8"/>
+            <rect x="971" y="189" width="8" height="8" fill="#c79a3a" stroke="#221F18" stroke-width=".8"/>
+            <rect x="971" y="201" width="8" height="8" fill="#c79a3a" stroke="#221F18" stroke-width=".8"/>
+            <rect x="971" y="213" width="8" height="8" fill="#c79a3a" stroke="#221F18" stroke-width=".8"/>
+            <text x="759" y="196" class="lbl" font-size="7.5" fill="#221F18" text-anchor="start" font-weight="600">+24V</text>
+            <text x="759" y="208" class="lbl" font-size="7.5" fill="#221F18" text-anchor="start" font-weight="600">GND</text>
+            <text x="759" y="220" class="lbl" font-size="7.5" fill="#221F18" text-anchor="start" font-weight="600">DI</text>
+            <text x="966" y="196" class="lbl" font-size="7.5" fill="#221F18" text-anchor="end" font-weight="600">+24V</text>
+            <text x="966" y="208" class="lbl" font-size="7.5" fill="#221F18" text-anchor="end" font-weight="600">GND</text>
+            <text x="966" y="220" class="lbl" font-size="7.5" fill="#221F18" text-anchor="end" font-weight="600">DO · open</text>
+            <path transform="translate(815,204)" d="M-5,-4 L5,0 L-5,4 Z" fill="#2F6B5E"/>
+            <path transform="translate(920,204)" d="M-5,-4 L5,0 L-5,4 Z" fill="#2F6B5E"/>
+            <path d="M860,193 H885" fill="none" stroke="#B23A2E" stroke-width="2.4" stroke-linejoin="round"/>
+            <path d="M860,205 H885" fill="none" stroke="#221F18" stroke-width="2.4" stroke-linejoin="round"/>
+            <path d="M860,217 H885" fill="none" stroke="#2F6B5E" stroke-width="2.4" stroke-linejoin="round"/>
+            <text x="750" y="173" class="facetxt" font-size="10" fill="#221F18" text-anchor="start">STRIP — DI END</text>
+            <text x="975" y="173" class="facetxt" font-size="10" fill="#221F18" text-anchor="end">DO END</text>
+            <rect x="640" y="152" width="60" height="24" rx="7" fill="#8A9197" opacity=".28"/>
+            <text x="640" y="146" class="lbl" font-size="9" fill="#5C5446" text-anchor="start" font-weight="600">W6 · 2C · 14 AWG — start feed</text>
+            <rect x="640" y="237" width="60" height="24" rx="7" fill="#8A9197" opacity=".28"/>
+            <text x="640" y="273" class="lbl" font-size="9" fill="#5C5446" text-anchor="start" font-weight="600">W7 · 2C · 20–22 AWG — data</text>
+            <rect x="640" y="307" width="300" height="24" rx="7" fill="#8A9197" opacity=".28"/>
+            <text x="640" y="301" class="lbl" font-size="9" fill="#5C5446" text-anchor="start" font-weight="600">W9 · 2C · 14 AWG — end feed</text>
+            <path d="M605,150 H632 V158 H730 V193 H750" fill="none" stroke="#B23A2E" stroke-width="3.2" stroke-linejoin="round"/>
+            <path d="M605,180 H632 V170 H710 V205 H750" fill="none" stroke="#221F18" stroke-width="3.2" stroke-linejoin="round"/>
+            <path d="M605,235 H632 V243 H718 V205" fill="none" stroke="#221F18" stroke-width="3.2" stroke-linejoin="round"/>
+            <path d="M605,235 H632 V243 H718 V205" fill="none" stroke="#F5EFE2" stroke-width="1" stroke-dasharray="5 4" stroke-linejoin="round"/>
+            <path d="M605,265 H632 V255 H726 V217 H750" fill="none" stroke="#2F6B5E" stroke-width="3.2" stroke-linejoin="round"/>
+            <circle cx="718" cy="205" r="4.5" fill="#221F18"/>
+            <path d="M605,315 H632 V313 H990 V205 H975" fill="none" stroke="#221F18" stroke-width="3.2" stroke-linejoin="round"/>
+            <path d="M605,345 H632 V325 H998 V193 H975" fill="none" stroke="#B23A2E" stroke-width="3.2" stroke-linejoin="round"/>
+            <rect x="103" y="66" width="84" height="28" rx="3" fill="#F5EFE2" stroke="#3F6E96" stroke-width="1.4"/>
+            <text x="145" y="78" class="lbl" font-size="9.5" fill="#3F6E96" text-anchor="middle" font-weight="600">W1 · 3C</text>
+            <text x="145" y="90" class="lbl" font-size="8.5" fill="#5C5446" text-anchor="middle">L · N · PE</text>
+            <rect x="367" y="96" width="76" height="28" rx="3" fill="#F5EFE2" stroke="#B23A2E" stroke-width="1.4"/>
+            <text x="405" y="108" class="lbl" font-size="9.5" fill="#B23A2E" text-anchor="middle" font-weight="600">W2 · 2C</text>
+            <text x="405" y="120" class="lbl" font-size="8.5" fill="#5C5446" text-anchor="middle">10 AWG</text>
+            <rect x="194" y="168" width="112" height="28" rx="3" fill="#F5EFE2" stroke="#3A3F43" stroke-width="1.4"/>
+            <text x="250" y="180" class="lbl" font-size="9.5" fill="#3A3F43" text-anchor="middle" font-weight="600">W5 · 2C · 22 AWG</text>
+            <text x="250" y="192" class="lbl" font-size="8.5" fill="#5C5446" text-anchor="middle">REMOTE · +12V-AUX</text>
+            <rect x="331" y="176" width="108" height="28" rx="3" fill="#F5EFE2" stroke="#3A3F43" stroke-width="1.4"/>
+            <text x="385" y="188" class="lbl" font-size="9.5" fill="#3A3F43" text-anchor="middle" font-weight="600">W3 · 2C · 22 AWG</text>
+            <text x="385" y="200" class="lbl" font-size="8.5" fill="#5C5446" text-anchor="middle">+12V-AUX · GND-AUX</text>
+            <rect x="325" y="226" width="100" height="28" rx="3" fill="#F5EFE2" stroke="#3A3F43" stroke-width="1.4"/>
+            <text x="375" y="238" class="lbl" font-size="9.5" fill="#3A3F43" text-anchor="middle" font-weight="600">W4 · 3C · 22 AWG</text>
+            <text x="375" y="250" class="lbl" font-size="8.5" fill="#5C5446" text-anchor="middle">VCC · GND · IN</text>
+            <rect x="822" y="235" width="100" height="28" rx="3" fill="#F5EFE2" stroke="#2F6B5E" stroke-width="1.4"/>
+            <text x="872" y="247" class="lbl" font-size="9.5" fill="#2F6B5E" text-anchor="middle" font-weight="600">W8 · 3C · 20 AWG</text>
+            <text x="872" y="259" class="lbl" font-size="8.5" fill="#5C5446" text-anchor="middle">corner jumper</text>
+            <text x="800" y="283" class="lbl" font-size="9" fill="#221F18" text-anchor="start" font-weight="600">① GND pad: power GND + data GND</text>
+            <path d="M40,405 H62" fill="none" stroke="#B23A2E" stroke-width="3.2" stroke-linejoin="round"/>
+            <text x="68" y="408" class="lbl" font-size="8.5" fill="#221F18" text-anchor="start">+24V / +V conductor</text>
+            <path d="M230,405 H252" fill="none" stroke="#221F18" stroke-width="3.2" stroke-linejoin="round"/>
+            <text x="258" y="408" class="lbl" font-size="8.5" fill="#221F18" text-anchor="start">GND / −V conductor</text>
+            <path d="M420,405 H442" fill="none" stroke="#2F6B5E" stroke-width="3.2" stroke-linejoin="round"/>
+            <text x="448" y="408" class="lbl" font-size="8.5" fill="#221F18" text-anchor="start">DATA conductor</text>
+            <path d="M610,405 H632" fill="none" stroke="#221F18" stroke-width="3.2" stroke-linejoin="round"/>
+            <path d="M610,405 H632" fill="none" stroke="#F5EFE2" stroke-width="1" stroke-dasharray="5 4" stroke-linejoin="round"/>
+            <text x="638" y="408" class="lbl" font-size="8.5" fill="#221F18" text-anchor="start">data-cable GND (white tracer)</text>
+            <path d="M800,405 H822" fill="none" stroke="#3A3F43" stroke-width="3.2" stroke-linejoin="round"/>
+            <text x="828" y="408" class="lbl" font-size="8.5" fill="#221F18" text-anchor="start">control / AC cable (single line)</text>
+        </svg>
+        <table class="wtab" style="margin-top:8px">
+          <tr><th>Cable</th><th>From → To</th><th>Conductors</th><th>Gauge</th><th>Quantity</th></tr>
+          <tr><td>W1</td><td>AC circuit → PSU AC IN</td><td>3 — L, N, PE</td><td>per code (electrician)</td><td>1</td></tr>
+          <tr><td>W2</td><td>PSU +V / −V → Dig-Quad MAIN IN</td><td>2 — +V, −V</td><td>10 AWG</td><td>1</td></tr>
+          <tr><td>W3</td><td>PSU +12V-AUX → Dig-Quad 5vEXT</td><td>2 — +12V-AUX, GND-AUX</td><td>22–24 AWG</td><td>1</td></tr>
+          <tr><td>W4</td><td>Dig-Quad Q1R → relay module</td><td>3 — VCC, GND, IN</td><td>22–24 AWG</td><td>1</td></tr>
+          <tr><td>W5</td><td>Relay contact → PSU REMOTE ON/OFF</td><td>2 — REMOTE, +12V-AUX</td><td>22–24 AWG</td><td>1</td></tr>
+          <tr><td>W6 / W9</td><td>Dig-Quad fused output → strip 24V / GND pads (feeds F1–F5)</td><td>2 — +24V, GND</td><td>14 AWG</td><td>5</td></tr>
+          <tr><td>W7</td><td>Dig-Quad LED1–LED4 → strip DI pad (CH1–CH4)</td><td>2 — DATA, GND</td><td>20–22 AWG</td><td>4</td></tr>
+          <tr><td>W8</td><td>Strip → strip, across a corner cut</td><td>3 — 24V, DATA, GND</td><td>20 AWG</td><td>6</td></tr>
+          <tr><td>—</td><td>Factory pigtail on each reel (JST)</td><td>3 — 24V, DATA, GND</td><td>20 AWG</td><td>7 reels</td></tr>
+        </table>
+        <ol style="margin-top:10px">
+          <li><b>WARNING:</b> Make sure that a qualified electrician installs W1 and the AC connection. AC voltage can kill you.</li>
+          <li>The strip has three pads at each end: +24V, GND and DATA (DI at the start, DO at the end).</li>
+          <li>Power cable (W6, 2C): connect the + conductor to the +24V pad. Connect the − conductor to the GND pad.</li>
+          <li>Data cable (W7, 2C): connect the DATA conductor to the DI pad. Connect the GND conductor of the data cable to the same GND pad as the power GND (①).</li>
+          <li>At the controller, connect the data GND conductor to the GND terminal next to the data output. Connect each power cable to a fused + terminal and a − terminal.</li>
+          <li>The data GND conductor is the return path for the data signal. It is in the same cable as the data conductor, and this decreases noise and signal errors.</li>
+          <li>At the far end, connect only the power cable (W9: + and GND). Do not connect DO.</li>
+          <li>At a corner, cut the strip on the copper pads. Solder a 3-conductor jumper (W8: 24V, GND, DATA). On IP65 strip, seal the joint.</li>
+          <li>Install a fuse for each power feed at the controller. Use 5 A for an end feed and 7.5 A for a middle feed.</li>
+          <li>Connect all grounds together: PSU −V, Dig-Quad GND and strip GND. W2 and the feeds (W6, W9) make this connection.</li>
+          <li>Put a ferrule on each wire end that goes into a screw terminal. Put heat-shrink tube on each soldered joint.</li>
+          <li>Keep each data cable at 10 m or less. Keep data cables away from AC cables.</li>
+          <li>Attach each cable at the soffit for strain relief. Make a drip loop where a cable goes from the attic into the soffit. Seal the hole.</li>
+          <li><b>CAUTION:</b> Keep the PSU output at 24.0 V. Keep the WLED current limit at 20 A.</li>
+          <li>Make sure that the relay module operates with the 5.12 V Q1R trigger, and that its contact is a dry contact (refer to the QuinLED relay guide).</li>
+          <li>Make sure that the terminal names agree with the labels on your Dig-Quad board (refer to the QuinLED pinout guide).</li>
+        </ol>
+      </div>
+    </section>
+
     <footer class="fn">
       <span>Layout study only. The strip lengths are measured on the soffit centerline. They change with the soffit width.
         The power values are calculated from the QuinLED reel data. The drawing shows the rear wall of the house as straight
