@@ -182,7 +182,7 @@
 
     <div class="plannotes">
       <span><b style="color:var(--tbd)">TBD</b> — dimension not known; the plan uses an assumed size.</span>
-      <span><b style="color:var(--teal)">◯ teal ring</b> on a feed — start of a data channel.</span>
+      <span><b style="color:var(--teal)">◯ teal ring</b> on a feed — start of a data channel (one ring for each channel).</span>
       <span><b>Dashed box</b> — controller and PSU, in the attic.</span>
       <span><b>Driveway, walk, porch and beds</b> — approximate, from the aerial photo.</span>
     </div>
@@ -559,7 +559,8 @@
           r: [[bxL + 1.6, byT], [xA + 0.3, yA + 0.3], [F[1][0] + 0.3, yA + 0.3], [F[1][0] + 0.3, F[1][1]]] },
         { name: 'CH2 (LED2)', k: 2, from: 2 * gap, to: gap, toward: 'F2', rev: true,
           r: [[bxL + 0.9, byB], [bxL + 0.9, F[2][1] + 0.3], [F[2][0], F[2][1] + 0.3]] },
-        { name: 'CH3 (LED3)', k: 2, from: 2 * gap, to: 3 * gap, toward: 'F4', rev: false, r: null },
+        { name: 'CH3 (LED3)', k: 2, from: 2 * gap, to: 3 * gap, toward: 'F4', rev: false, with: 'CH2',
+          r: [[bxL + 1.4, byB], [bxL + 1.4, F[2][1] + 0.8], [F[2][0], F[2][1] + 0.8]] },
         { name: 'CH4 (LED4)', k: 4, from: 4 * gap, to: 3 * gap, toward: 'F4', rev: true,
           r: [[bxR, byT], [HW - 0.7, byT], [HW - 0.7, yW + 0.85], [F[4][0], yW + 0.85]] },
       ];
@@ -645,7 +646,7 @@
       group('a5', () => {
         const PWR = 'fill="none" stroke="#883C1E" stroke-width="1.3" stroke-dasharray="7 3" stroke-linejoin="round"';
         for (const r of routes) out += `<path d="M${r.map(q => pt(p(...q))).join('L')}" ${PWR}/>`;
-        for (const c of CH) if (c.r) out += `<path d="M${c.r.map(q => pt(p(...q))).join('L')}" fill="none" stroke="#2F6B5E" stroke-width="2" stroke-linejoin="round"/>`;
+        for (const c of CH) out += `<path d="M${c.r.map(q => pt(p(...q))).join('L')}" fill="none" stroke="#2F6B5E" stroke-width="2" stroke-linejoin="round"/>`;
         // data-direction arrows along the strip: each channel flows away from its start feed
         const starts = CH.map(c => c.from);
         for (let d = 2.5; d < total - 1.5; d += 6.5) {
@@ -659,7 +660,8 @@
           const o = k === 0 || k === NF - 1 ? [0, -1] : OUT[fd.run];
           const c = p(...fd.p), L = p(fd.p[0] + o[0] * 1.35, fd.p[1] + o[1] * 1.35);
           dot(c, 3, '#883C1E');
-          if (CH.some(ch => ch.k === k)) out += `<circle cx="${L[0].toFixed(1)}" cy="${L[1].toFixed(1)}" r="9.5" fill="none" stroke="#2F6B5E" stroke-width="2"/>`;
+          CH.filter(ch => ch.k === k).forEach((ch, i) =>   // one teal ring for each channel that starts here
+            out += `<circle cx="${L[0].toFixed(1)}" cy="${L[1].toFixed(1)}" r="${9.5 + 3.5 * i}" fill="none" stroke="#2F6B5E" stroke-width="2"/>`);
           out += `<circle cx="${L[0].toFixed(1)}" cy="${L[1].toFixed(1)}" r="7" fill="#883C1E" stroke="#F5EFE2" stroke-width="1.2"/>`;
           text([L[0], L[1] + 3], 'F' + (k + 1), 'font-family="IBM Plex Mono, monospace" font-size="8" font-weight="600" fill="#fff" text-anchor="middle"');
         });
@@ -735,9 +737,9 @@
       zc[zc.length - 1] = zones - zc.slice(0, -1).reduce((a, b) => a + b, 0);
       html('data-rows', CH.map((c, i) => [c.name, `F${c.k + 1}`, c.toward, ap + n0(zc[i]),
         c.rev ? `reversed (DI at F${c.k + 1})` : 'normal',
-        c.r ? `${ap}${n0(est(c.r))} ft (${n1(est(c.r) * 0.3048)} m)` : `${ap}${n0(est(CH[1].r))} ft (separate cable, same route as CH2)`]));
+        `${ap}${n0(est(c.r))} ft (${n1(est(c.r) * 0.3048)} m)` + (c.with ? ` · separate cable beside ${c.with}` : '')]));
       // cable take-off
-      const pw = routes.reduce((a, r) => a + est(r), 0), dt = CH.reduce((a, c) => a + est(c.r || CH[1].r), 0);
+      const pw = routes.reduce((a, r) => a + est(r), 0), dt = CH.reduce((a, c) => a + est(c.r), 0);
       const buy = ft => Math.ceil(ft / 25) * 25;
       html('cable-rows', [
         ['W6, W9 — power feeds F1–F5', '14 AWG', '2-conductor, stranded copper, red / black, jacketed; wet-rated at the soffit end', `${ap}${n0(pw)} ft`, `${buy(pw)} ft`],
