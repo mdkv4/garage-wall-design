@@ -167,7 +167,7 @@
     <header class="tb">
       <div>
         <h1>Exterior LED Soffit Lights</h1>
-        <div class="sub">Top-down plan · garage and street side of the house · street at the bottom · NTS · 1 sq = 1'-0"</div>
+        <div class="sub">Isometric view and top-down plan · garage and street side of the house · NTS · plan: 1 sq = 1'-0"</div>
       </div>
       <div class="stamp">
         SHEET &nbsp;A-0.4 &nbsp;/&nbsp; 2026-10-19
@@ -175,6 +175,19 @@
     </header>
 
     <div class="drawing">
+      <svg id="iso" viewBox="0 0 1000 700" role="img"
+        aria-label="Isometric view of the house and the attached garage from the street and driveway corner, showing the roofs, the lit soffits and the COB LED strip">
+        <!-- drawn by script -->
+      </svg>
+    </div>
+
+    <div class="plannotes">
+      <span><b>Isometric view</b> — from the corner of the street and the driveway.</span>
+      <span><b>Heights</b> — plate 8'-0" and garage ridge ≈11'-2" (sheet A-1). The house roofs use the garage pitch (assumed).</span>
+      <span><b>LED strip</b> — shown through the roof. The dashed part on the garage Back is hidden in this view.</span>
+    </div>
+
+    <div class="drawing" style="border-top:1.5px solid var(--ink)">
       <svg id="plan" viewBox="0 0 1080 900" role="img"
         aria-label="Top-down plan of the house and attached garage with the street at the bottom, showing the soffits and proposed LED fixture locations">
         <defs>
@@ -578,6 +591,19 @@
       const dataDir = d => CH.find(c => d >= Math.min(c.from, c.to) && d <= Math.max(c.from, c.to)).to > d ? 1 : -1;
       const plen = r => r.slice(1).reduce((a, q, i) => a + Math.hypot(q[0] - r[i][0], q[1] - r[i][1]), 0);
 
+      // site outlines in plan feet, [cmd, x, y, ...] (shared by the plan and the isometric view)
+      const SITE = {
+        // planting bed between the entry walk and the bedroom wing / garage front
+        bed: [['M', 22.8, yM], ['L', hL, yM], ['L', hL, yW], ['L', gx0, yW], ['L', gx0, yW + 3],
+          ['L', 23, yW + 3], ['Q', 21.2, yW + 3, 21.2, yW + 1.2], ['L', 21.2, yM + 2.9], ['L', 22.8, yM + 2.9]],
+        // straight entry walk, flaring with rounded corners into the driveway
+        walk: [['M', 17.3, yM + 2.9], ['L', 17.3, yW + 1.2], ['Q', 17.3, yW + 3.64, 15.4, yW + 3.64], ['L', 15.4, yW + 4.5],
+          ['L', 23, yW + 4.5], ['L', 23, yW + 3.1], ['Q', 21.2, yW + 3.1, 21.2, yW + 1.2], ['L', 21.2, yM + 2.9]],
+        // driveway (traced from the aerial photo): leaves the garage door, runs left, curves down to the street
+        drive: [['M', gx0, yW + 3], ['L', 28, yW + 3], ['C', 14, yW + 3, 2, yW + 5, -4, yW + 10],
+          ['C', -8, yW + 13, -10, curb - 6, -11, curb], ['L', 5, curb], ['C', 5, yS + 2.5, 14, yS - 1, 33, yS - segS], ['L', gx0, yS - segS]],
+      };
+
       /* ---- SITE: paper grid, lawn, flower bed, driveway, street ---- */
       group('a1', () => {
         const yc = p(0, curb)[1], ys = p(0, curb + 3.6)[1];
@@ -589,17 +615,12 @@
         const BEDF = 'fill="#b7a57c" opacity=".75"';
         rect(gx0, yS, HW, yS + BED, BEDF);                                            // 4'-0" flower bed (Street Side)
         rect(1, yM, 16.6, yM + 3.1, BEDF);                                             // bed along the main front
-        // planting bed between the entry walk and the bedroom wing / garage front
-        out += `<path d="${path([['M', 22.8, yM], ['L', hL, yM], ['L', hL, yW], ['L', gx0, yW], ['L', gx0, yW + 3],
-          ['L', 23, yW + 3], ['Q', 21.2, yW + 3, 21.2, yW + 1.2], ['L', 21.2, yM + 2.9], ['L', 22.8, yM + 2.9]])} Z" ${BEDF}/>`;
+        out += `<path d="${path(SITE.bed)} Z" ${BEDF}/>`;
         const CONC = 'fill="#d9d2c3"';
         // entry porch pad + straight walk, flaring with rounded corners into the driveway (drawn first; driveway overlaps its foot)
         rect(17, yM, 22.8, yM + 2.9, CONC);
-        out += `<path d="${path([['M', 17.3, yM + 2.9], ['L', 17.3, yW + 1.2], ['Q', 17.3, yW + 3.64, 15.4, yW + 3.64], ['L', 15.4, yW + 4.5],
-          ['L', 23, yW + 4.5], ['L', 23, yW + 3.1], ['Q', 21.2, yW + 3.1, 21.2, yW + 1.2], ['L', 21.2, yM + 2.9]])} Z" ${CONC}/>`;
-        // driveway (traced from the aerial photo): leaves the garage door, runs left, curves down to the street
-        out += `<path d="${path([['M', gx0, yW + 3], ['L', 28, yW + 3], ['C', 14, yW + 3, 2, yW + 5, -4, yW + 10],
-          ['C', -8, yW + 13, -10, curb - 6, -11, curb], ['L', 5, curb], ['C', 5, yS + 2.5, 14, yS - 1, 33, yS - segS], ['L', gx0, yS - segS]])} Z" ${CONC}/>`;
+        out += `<path d="${path(SITE.walk)} Z" ${CONC}/>`;
+        out += `<path d="${path(SITE.drive)} Z" ${CONC}/>`;
         out += `<rect x="20" y="${yc.toFixed(1)}" width="1040" height="${(ys - yc).toFixed(1)}" fill="#b9b3a6"/>`;
         line([20, yc], [1060, yc], 'stroke="#5C5446" stroke-width="1.6"');
         text([540, (yc + ys) / 2 + 5], 'STREET', 'class="facetxt" font-size="15" fill="#3A3F43" text-anchor="middle" letter-spacing="6"');
@@ -712,6 +733,119 @@
       });
 
       svg.insertAdjacentHTML('beforeend', out);
+
+      /* ======== ISOMETRIC VIEW — from the street + driveway corner ======== */
+      // plan x (→ garage Back) goes up-right, plan y (→ street) goes down-right, z goes up.
+      // Plate 8'-0" all round; garage ridge ≈11'-2" (sheet A-1); the house roofs use the garage pitch.
+      {
+        const IS = 10, C30 = Math.cos(Math.PI / 6);
+        const q = (x, y, z = 0) => [(x + y) * C30 * IS, ((y - x) / 2 - z) * IS];
+        const r3 = v => +v.toFixed(3);
+        const GM = `matrix(${r3(C30 * IS)} ${r3(-IS / 2)} ${r3(C30 * IS)} ${r3(IS / 2)} 0 0)`;   // ground plane: plan feet → px
+        let o = '';
+        const face = (pts, attr) => o += `<polygon points="${pts.map(a => pt(q(...a))).join(' ')}" ${attr}/>`;
+        const seg = (a, b, attr) => { const A = q(...a), B = q(...b); o += `<line x1="${A[0].toFixed(1)}" y1="${A[1].toFixed(1)}" x2="${B[0].toFixed(1)}" y2="${B[1].toFixed(1)}" ${attr}/>`; };
+        const fpath = segs => segs.map(([c, ...v]) => c + v.join(' ')).join(' ');
+        const skt = (a, ang, t, attr) => o += `<text transform="translate(${pt(q(...a))}) skewY(${ang})" ${attr}>${t}</text>`;
+        const ig = (c, fn) => { o += `<g class="anim ${c}">`; fn(); o += '</g>'; };
+
+        const H = 8, slope = (11 + 2 / 12 - H) / (D.gD.v / 2);          // garage pitch (A-1)
+        const xw = (hL + HW) / 2, xg = (gx0 + HW) / 2, yc = yM / 2;      // ridges: wing · garage · main block
+        const Rw = H + slope * D.wing.v / 2, Rg = H + slope * D.gD.v / 2;
+        const sm = (Rw - H) / yc;                                       // main block: its ridge meets the wing ridge
+        const ez = s => H - eave * s;                                   // roof height at the fascia
+        const xv = Math.max(hL - eave, xw - (yM + eave - yc) * sm / slope);   // valley foot at the main eaves
+        const X0 = -12, X1 = 62, Y0 = -4, Y1 = curb + 3.6, SLAB = 1.2;
+
+        /* ground: lawn, beds, walk, driveway, street, slab edge */
+        ig('a1', () => {
+          face([[X0, Y1, 0], [X1, Y1, 0], [X1, Y1, -SLAB], [X0, Y1, -SLAB]], 'fill="#8f8a7d"');
+          face([[X0, Y0, 0], [X0, Y1, 0], [X0, Y1, -SLAB], [X0, Y0, -SLAB]], 'fill="#a9a393"');
+          const NS = 'vector-effect="non-scaling-stroke"';
+          o += `<g transform="${GM}">`;
+          o += `<rect x="${X0}" y="${Y0}" width="${X1 - X0}" height="${curb - Y0}" fill="#d3d5b7"/>`;
+          const BEDF = 'fill="#b7a57c" opacity=".75"', CONC = 'fill="#d9d2c3"';
+          o += `<rect x="${gx0}" y="${yS}" width="${D.gD.v}" height="${BED}" ${BEDF}/>`;
+          o += `<rect x="1" y="${yM}" width="15.6" height="3.1" ${BEDF}/>`;
+          o += `<path d="${fpath(SITE.bed)} Z" ${BEDF}/>`;
+          o += `<rect x="17" y="${yM}" width="5.8" height="2.9" ${CONC}/>`;
+          o += `<path d="${fpath(SITE.walk)} Z" ${CONC}/><path d="${fpath(SITE.drive)} Z" ${CONC}/>`;
+          o += `<rect x="${X0}" y="${curb}" width="${X1 - X0}" height="3.6" fill="#b9b3a6"/>`;
+          o += `<line x1="${X0}" y1="${curb}" x2="${X1}" y2="${curb}" stroke="#5C5446" stroke-width="1.4" ${NS}/>`;
+          o += `<text x="${(X0 + X1) / 2 + 6}" y="${curb + 2.6}" class="facetxt" font-size="2.3" fill="#3A3F43" text-anchor="middle" letter-spacing=".9">STREET</text>`;
+          o += `<text x="9" y="${yW + 13}" class="lbl" font-size="1.4" fill="#5C5446" text-anchor="middle" letter-spacing=".3">DRIVEWAY</text>`;
+          o += `<rect x="${X0}" y="${Y0}" width="${X1 - X0}" height="${Y1 - Y0}" fill="none" stroke="#5C5446" stroke-width="1" ${NS}/>`;
+          o += '</g>';
+        });
+
+        /* walls (only the faces seen from this corner), doors, light wash under the lit soffits */
+        const WS = 'stroke="#221F18" stroke-width="1" stroke-linejoin="round"';
+        const STREETF = `fill="#F3EFE7" ${WS}`, LEFTF = `fill="#DCD5C7" ${WS}`;
+        const wash = (a, b) => {                   // warm light from the soffit, fading down the wall
+          for (let k = 0; k < 6; k++) {
+            const z1 = H - k * 0.9, z0 = H - (k + 1) * 0.9;
+            face([[...a, z1], [...b, z1], [...b, z0], [...a, z0]], `fill="#ffd98a" opacity="${(0.5 * (1 - k / 6)).toFixed(2)}"`);
+          }
+        };
+        ig('a2', () => {
+          face([[0, 0, 0], [0, yM, 0], [0, yM, H], [0, yc, Rw], [0, 0, H]], LEFTF);              // house left side + gable
+          face([[0, yM, 0], [hL, yM, 0], [hL, yM, H], [0, yM, H]], STREETF);                      // main front
+          face([[17.5, yM, 0], [20.5, yM, 0], [20.5, yM, 80 / 12], [17.5, yM, 80 / 12]], 'fill="#5C5446"');   // entry door
+          face([[hL, yM, 0], [hL, yW, 0], [hL, yW, H], [hL, yM, H]], LEFTF);                     // 9'-10" jog
+          face([[hL, yW, 0], [gx0, yW, 0], [gx0, yW, H], [HW, yW, H], [xw, yW, Rw], [hL, yW, H]], STREETF);   // wing front + gable
+          face([[gx0, yW, 0], [gx0, yS, 0], [gx0, yS, H], [gx0, yW, H]], LEFTF);                 // garage Front
+          const d0 = yW + segH, d1 = d0 + GD, DH = 7;                                            // garage door
+          face([[gx0, d0, 0], [gx0, d1, 0], [gx0, d1, DH], [gx0, d0, DH]], 'fill="#9aa0a5" stroke="#3A3F43" stroke-width="1"');
+          for (const z of [1.75, 3.5, 5.25]) seg([gx0, d0, z], [gx0, d1, z], 'stroke="#6d7378" stroke-width=".8"');
+          face([[gx0, yS, 0], [HW, yS, 0], [HW, yS, H], [xg, yS, Rg], [gx0, yS, H]], STREETF);  // garage Street Side + gable
+          wash([0, yM - M1], [0, yM]); wash([0, yM], [hL, yM]); wash([hL, yM], [hL, yW]);
+          wash([hL, yW], [gx0, yW]); wash([gx0, yW], [gx0, yS]); wash([gx0, yS], [HW, yS]);
+        });
+
+        /* roofs, back to front: wing + garage right slope (one plane), garage left, wing left, main block back, main block front */
+        const RS = 'stroke="#221F18" stroke-width="1.1" stroke-linejoin="round"';
+        ig('a3', () => {
+          face([[xw, -eave, Rw], [HW + eave, -eave, ez(slope)], [HW + eave, yS + rake, ez(slope)], [xg, yS + rake, Rg],
+            [xg, yW + eave, Rg], [xw, yW + eave, Rw]], `fill="#45494d" ${RS}`);
+          face([[gx0 - eave, yW, ez(slope)], [xg, yW, Rg], [xg, yS + rake, Rg], [gx0 - eave, yS + rake, ez(slope)]], `fill="#5a5f63" ${RS}`);
+          face([[hL - eave, -eave, ez(slope)], [xw, -eave, Rw], [xw, yW + eave, Rw], [hL - eave, yW + eave, ez(slope)]], `fill="#5a5f63" ${RS}`);
+          face([[-eave, -eave, ez(sm)], [xv, -eave, ez(sm)], [xw, yc, Rw], [-eave, yc, Rw]], `fill="#414548" ${RS}`);
+          face([[-eave, yc, Rw], [xw, yc, Rw], [xv, yM + eave, ez(sm)], [-eave, yM + eave, ez(sm)]], `fill="#6a6f73" ${RS}`);
+        });
+
+        /* COB strip on the soffit centerline (drawn through the roof), feeds F1–F5 */
+        ig('a4', () => {
+          const zs = H - 0.2, path3 = pts => 'M' + pts.map(a => pt(q(a[0], a[1], zs))).join('L');
+          const seen = strip.slice(0, RUNS.length), hid = strip.slice(RUNS.length - 1);   // the garage-Back run is hidden
+          o += `<path d="${path3(seen)}" fill="none" stroke="#ffd98a" stroke-width="10" stroke-opacity=".55" stroke-linejoin="round" stroke-linecap="round"/>`;
+          o += `<path d="${path3(seen)}" fill="none" stroke="#E9A23B" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>`;
+          o += `<path d="${path3(hid)}" fill="none" stroke="#E9A23B" stroke-width="2" stroke-dasharray="6 4"/>`;
+          feeds.forEach((fd, k) => {
+            const ov = k === NF - 1 ? [1, 0] : OUT[fd.run];
+            const c = q(fd.p[0], fd.p[1], zs), L = q(fd.p[0] + ov[0] * 3.2, fd.p[1] + ov[1] * 3.2, zs - 2.4);
+            o += `<line x1="${c[0].toFixed(1)}" y1="${c[1].toFixed(1)}" x2="${L[0].toFixed(1)}" y2="${L[1].toFixed(1)}" stroke="#883C1E" stroke-width="1.2"/>`;
+            o += `<circle cx="${c[0].toFixed(1)}" cy="${c[1].toFixed(1)}" r="3.4" fill="#883C1E"/>`;
+            CH.filter(ch => ch.k === k).forEach((ch, i) =>
+              o += `<circle cx="${L[0].toFixed(1)}" cy="${L[1].toFixed(1)}" r="${12 + 4 * i}" fill="none" stroke="#2F6B5E" stroke-width="2.2"/>`);
+            o += `<circle cx="${L[0].toFixed(1)}" cy="${L[1].toFixed(1)}" r="9" fill="#883C1E" stroke="#F5EFE2" stroke-width="1.4"/>`;
+            o += `<text x="${L[0].toFixed(1)}" y="${(L[1] + 3.6).toFixed(1)}" font-family="IBM Plex Mono, monospace" font-size="10" font-weight="600" fill="#fff" text-anchor="middle">F${k + 1}</text>`;
+          });
+        });
+
+        /* labels on the walls */
+        ig('a5', () => {
+          skt([3, yM, 2.2], -30, 'HOUSE', 'class="facetxt" font-size="26" fill="#5C5446"');
+          skt([gx0 + 1.4, yS, 1.6], -30, 'GARAGE', 'class="facetxt" font-size="24" fill="#221F18"');
+        });
+
+        // fit the viewBox to the slab and the roofs
+        const ext = [[X0, Y0, -SLAB], [X1, Y0, -SLAB], [X0, Y1, -SLAB], [X1, Y1, -SLAB], [X1, Y0, 0], [xw, -eave, Rw], [HW + eave, -eave, ez(slope)]].map(a => q(...a));
+        const bx = Math.min(...ext.map(a => a[0])) - 12, by = Math.min(...ext.map(a => a[1])) - 14;
+        const bw = Math.max(...ext.map(a => a[0])) + 12 - bx, bh = Math.max(...ext.map(a => a[1])) + 12 - by;
+        const iso = document.getElementById('iso');
+        iso.setAttribute('viewBox', `${bx.toFixed(0)} ${by.toFixed(0)} ${bw.toFixed(0)} ${bh.toFixed(0)}`);
+        iso.insertAdjacentHTML('beforeend', o);
+      }
 
       // strip lengths in the schedule (≈ while the soffit width is TBD)
       const set = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
