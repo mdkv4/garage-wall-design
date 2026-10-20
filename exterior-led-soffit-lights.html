@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Exterior LED Soffit Lights</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Saira+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="shared.css" />
+  <link rel="stylesheet" href="isometric.css" />
+  <style>
+    /* Page-specific color tokens (site, soffit, LED strip) */
+    :root {
+      --lawn: #c9cfae;
+      --paving: #d9d2c3;
+      --street: #b9b3a6;
+      --soffit: #eadcb8;
+      --glow: #ffd98a;
+      --tbd: #AE4F2A;
+    }
+
+    body {
+      background-image:
+        linear-gradient(rgba(199, 187, 163, .20) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(199, 187, 163, .20) 1px, transparent 1px);
+      background-size: 24px 24px;
+      padding: 28px 20px 56px;
+    }
+
+    .sheet {
+      max-width: 1080px;
+      margin: 0 auto;
+      box-shadow: 0 18px 50px rgba(34, 31, 24, .18);
+    }
+
+    .tbdtxt {
+      font-family: "IBM Plex Mono", monospace;
+      font-weight: 600;
+      font-size: 10px;
+      fill: var(--tbd);
+    }
+
+    /* strip schedule + open-items panel below the plan */
+    .spec {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 18px 32px;
+      padding: 16px 26px 20px;
+      border-top: 1.5px solid var(--ink);
+    }
+
+    .spec h3 {
+      font-family: "Saira Condensed", sans-serif;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+      font-size: 16px;
+      color: var(--teal);
+      margin: 0 0 8px;
+    }
+
+    .spec table {
+      width: 100%;
+      border-collapse: collapse;
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 11.5px;
+      color: var(--ink-soft);
+    }
+
+    .spec td {
+      padding: 4px 0;
+      border-bottom: 1px dashed var(--line);
+      vertical-align: top;
+    }
+
+    .spec td:last-child {
+      text-align: right;
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    .spec .tbd {
+      color: var(--tbd);
+    }
+
+    /* feeds & data table (full width, multi-column) */
+    .spec .wide {
+      grid-column: 1 / -1;
+    }
+
+    .spec table.wtab th {
+      text-align: left;
+      font-weight: 600;
+      color: var(--ink);
+      padding: 4px 8px 4px 0;
+      border-bottom: 1.5px solid var(--line);
+    }
+
+    .spec table.wtab td {
+      padding: 4px 8px 4px 0;
+    }
+
+    .spec table.wtab td:last-child {
+      text-align: left;
+    }
+
+    .spec ol {
+      margin: 0;
+      padding-left: 20px;
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 11.5px;
+      line-height: 1.55;
+      color: var(--ink-soft);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="sheet">
+    <header class="tb">
+      <div>
+        <h1>Exterior LED Soffit Lights</h1>
+        <div class="sub">Top-down plan · garage and street side of the house · street at the bottom · NTS · 1 sq = 1'-0"</div>
+      </div>
+      <div class="stamp">
+        GARAGE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>19'-11½" × 17'-6"</b><br />
+        HOUSE FRONT&nbsp; <b>32'-10"</b> + <b>21'-9"</b> wing · jog <b>9'-10"</b><br />
+        RIGHT WALL&nbsp;&nbsp; <b>52'-11½"</b> continuous<br />
+        SOFFIT W&nbsp;&nbsp;&nbsp;&nbsp; <b class="tbd">TBD</b> &nbsp;·&nbsp; COB STRIP <b id="stamp-len"></b><br />
+        SHEET &nbsp;A-0.4 &nbsp;/&nbsp; 2026-10-19
+      </div>
+    </header>
+
+    <div class="drawing">
+      <svg id="plan" viewBox="0 0 1080 900" role="img"
+        aria-label="Top-down plan of the house and attached garage with the street at the bottom, showing the soffits and proposed LED fixture locations">
+        <defs>
+          <pattern id="grid" width="13" height="13" patternUnits="userSpaceOnUse">
+            <path d="M13,0 L0,0 L0,13" fill="none" stroke="#C7BBA3" stroke-width=".5" opacity=".55" />
+          </pattern>
+          <pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+            <rect width="6" height="6" fill="#d8ceb9" />
+            <line x1="0" y1="0" x2="0" y2="6" stroke="#5C5446" stroke-width="1.2" />
+          </pattern>
+        </defs>
+        <!-- drawn by script -->
+      </svg>
+    </div>
+
+    <div class="legend">
+      <div class="it"><span class="sw" style="background:repeating-linear-gradient(45deg,#d8ceb9 0 3px,#5C5446 3px 4px)"></span>Existing house walls</div>
+      <div class="it"><span class="sw" style="background:#3A3F43"></span>Garage walls (2×4)</div>
+      <div class="it"><span class="sw" style="background:#eadcb8;border-style:dashed"></span>Soffit — on all eaves and rakes (dashed line = roof edge above)</div>
+      <div class="it"><span class="sw" style="background:#eadcb8;border:2px solid #AE4F2A"></span>Soffit with strip — street side, driveway side, garage Back and first 1 m of the house left side</div>
+      <div class="it"><span class="sw" style="background:linear-gradient(transparent 5px,#E9A23B 5px,#E9A23B 8px,transparent 8px),#ffe7b0"></span>COB LED strip — one continuous run on the soffit centerline</div>
+      <div class="it"><span class="sw" style="background:#F5EFE2;border-width:1.5px"></span>Controller and PSU (Dig-Quad · HEP-1000-24) in the attic, above the top-left corner of the garage (dashed = above)</div>
+      <div class="it"><span class="sw" style="background:linear-gradient(transparent 5px,#883C1E 5px,#883C1E 7px,transparent 7px)"></span>Power feeds F1–F5 (schematic attic route, with a drop into the soffit)</div>
+      <div class="it"><span class="sw" style="background:linear-gradient(transparent 5px,#2F6B5E 5px,#2F6B5E 8px,transparent 8px)"></span>Data cable and data direction on the strip · teal ring = start of a data channel</div>
+      <div class="it"><span class="sw" style="background:#b7a57c"></span>Planting beds (4'-0" bed on the Street Side)</div>
+      <div class="it"><span class="sw" style="background:#d9d2c3"></span>Concrete — driveway, entry walk and porch (approximate, from the aerial photo)</div>
+      <div class="it"><span class="sw" style="background:transparent;border-color:#AE4F2A;color:#AE4F2A;font-size:9px;line-height:12px;text-align:center;width:auto;padding:0 3px">TBD</span>Dimension TBD — the drawing uses an assumed size</div>
+    </div>
+
+    <section class="spec">
+      <div>
+        <h3>COB LED Strip Schedule</h3>
+        <table>
+          <tr><td>Strip</td><td>QuinLED Dig-COB-RGBW-896-160</td></tr>
+          <tr><td>Voltage / IC</td><td>24V · WS2814</td></tr>
+          <tr><td>Density / zones</td><td>896 LEDs/m · 32 zones/m (3.125 cm)</td></tr>
+          <tr><td>Color</td><td>RGBW · W ≈3000K · CRI ≈93</td></tr>
+          <tr><td>Width / version</td><td>12 mm IP20 · ≈15 mm IP65 — <span class="tbd">TBD</span></td></tr>
+          <tr><td>Channel / diffuser</td><td>Al profile, min. 12 mm clear width (min. 15 mm IP65)</td></tr>
+          <tr><td>Controller</td><td>QuinLED Dig-Quad (pre-assembled) · WLED</td></tr>
+          <tr><td>Power supply</td><td>Mean Well HEP-1000-24 (terminal type) · 24V 42 A (1,008 W)</td></tr>
+          <tr><td>House left side (first 1 m) — length</td><td id="len-left">—</td></tr>
+          <tr><td>House main front — length</td><td id="len-main">—</td></tr>
+          <tr><td>9'-10" jog — length</td><td id="len-jog">—</td></tr>
+          <tr><td>Bedroom-wing front (open part) — length</td><td id="len-wing">—</td></tr>
+          <tr><td>Garage Front (door wall) — length</td><td id="len-gfront">—</td></tr>
+          <tr><td>Garage Street-Side gable — length</td><td id="len-grake">—</td></tr>
+          <tr><td>Garage Back — length</td><td id="len-gback">—</td></tr>
+          <tr><td>Total strip (one continuous run)</td><td id="len-total">—</td></tr>
+        </table>
+      </div>
+      <div>
+        <h3>Open Items</h3>
+        <ol>
+          <li>Soffit width (overhang). The width is the same on all sides.</li>
+          <li>The correct entry-door position on the 32'-10" front. The current value is ≈17'-6" from the left corner (from the aerial photo).</li>
+          <li>Strip version: IP65 (≈15 mm, molded sleeve) or IP20 (12 mm). The soffits have a roof above them, but they are outdoors.</li>
+          <li>The final attic cable routes and lengths. The most important is the CH1 data cable.</li>
+          <li>The aluminum profile and diffuser product.</li>
+          <li>The strip position in the soffit: at the center, near the fascia, or near the wall.</li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="spec">
+      <div>
+        <h3>Power Budget — Dig-COB-160 · Dig-Quad · HEP-1000-24</h3>
+        <table>
+          <tr><td>Total strip</td><td id="pb-len">—</td></tr>
+          <tr><td>Addressable zones (32/m)</td><td id="pb-zones">—</td></tr>
+          <tr><td>5 m reels</td><td id="pb-reels">—</td></tr>
+          <tr><td>Warm white only, 100% (70 W for each 5 m)</td><td id="pb-white">—</td></tr>
+          <tr><td>All channels, maximum (≈200 W for each 5 m)</td><td id="pb-max">—</td></tr>
+          <tr><td>Dig-Quad rating (2 oz)</td><td>30 A continuous (720 W) · 50 A peak</td></tr>
+          <tr><td>Each output terminal / fuse</td><td>10 A continuous (240 W)</td></tr>
+          <tr><td>PSU — HEP-1000-24</td><td>42 A · 1,008 W · IP67 · no fan</td></tr>
+          <tr><td>Design limit — WLED 20 A</td><td id="pb-limit">—</td></tr>
+          <tr><td>PSU load at the design limit</td><td id="pb-psu">—</td></tr>
+          <tr><td>AC input at the design limit (≈95% efficiency)</td><td id="pb-ac">—</td></tr>
+          <tr><td>Limit with no profile (60 W for each 5 m)</td><td>12 W/m — a profile is necessary</td></tr>
+          <tr><td>Data outputs (4, maximum ≈600 zones each)</td><td id="pb-data">—</td></tr>
+          <tr><td>WLED LED type</td><td>SK6812/WS2814 RGBW · BGR + W&amp;G swap</td></tr>
+          <tr><td>WLED current limiter</td><td>50 mA for each zone · maximum 20,000 mA</td></tr>
+        </table>
+      </div>
+      <div>
+        <h3>Installation Notes (QuinLED · Mean Well)</h3>
+        <ol>
+          <li><b>CAUTION:</b> Do not bend the strip. A bend can cause damage to the strip.</li>
+          <li><b>CAUTION:</b> Do not let metal touch the open contacts. Do not let the strip touch itself. It can cause a short circuit.</li>
+          <li>At each of the six corners, cut the strip on the copper pads (3.125 cm marks). Connect a jumper across the cut for 24V, data and GND.</li>
+          <li>Feeds: one feed is sufficient for 5 m. For 10 m at full output, feed the front and the end. For 20 m, use three feeds and a second data output.</li>
+          <li>Dig-Quad power: seven output terminals and five ATO fuses. LED1 and LED2 use one fuse. LED3 and LED4 use one fuse. The board comes with 5 A fuses.</li>
+          <li>The maximum current is 10 A continuous for each terminal and fuse, and 30 A continuous for the board.</li>
+          <li>An end feed supplies approximately half the current of a middle feed. Select each fuse for its feed. Do not use a fuse above 10 A.</li>
+          <li>Use the largest wire possible on the 9.5 mm input terminals (two wires, if possible). The output terminals are 5.08 mm.</li>
+          <li>The four data outputs have level shifters (5.12 V). Each data output is correct for 5–10 m of cable from the controller.</li>
+          <li>Above 60 W for each 5 m, install the strip in an aluminum cooling profile. If you do not, the life of the strip decreases.</li>
+          <li>Use the W channel for white light. Do not use 100% RGB white. Do not operate the strip on its reel.</li>
+          <li>On IP65 strip, seal each cut again. A cut breaks the factory seal.</li>
+          <li><b>CAUTION:</b> Do not set the PSU output above 24.0 V. The adjustment range goes to 30 V. A higher voltage can cause damage to the strip.</li>
+          <li>PSU overload: the PSU limits the current at 105–125%. After 5 s, it stops.</li>
+          <li>The PSU can supply 42 A. This is more than the 30 A rating of the Dig-Quad. Use a PSU-to-Dig-Quad cable that is rated for 30 A. Keep the WLED limit.</li>
+          <li>Standby: the +12V-AUX output (0.5 A) is on when the 24 V output is off. Connect it to the Dig-Quad 5vEXT input. A relay on the Q1R trigger connects Remote ON/OFF to +12V-AUX. This turns on the 24 V output.</li>
+          <li>The data input of the strip is not compatible with 3.3 V. The Dig-Quad outputs have level shifters. The strip warranty is 6 months.</li>
+          <li><b>WARNING:</b> Make sure that a qualified electrician does the AC connection to the PSU. AC voltage can kill you.</li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="spec">
+      <div class="wide">
+        <h3>Wiring — Power Feeds and Data (controller and PSU in the attic, top-left corner of the garage)</h3>
+        <table class="wtab">
+          <tr><th>Feed</th><th>Location on the strip</th><th>Length supplied</th><th>Peak (100% W)</th><th>Fuse</th><th>Cable estimate (route + 2 ft drop + 10%)</th></tr>
+          <tbody id="feed-rows"></tbody>
+        </table>
+        <table class="wtab" style="margin-top:12px">
+          <tr><th>Data</th><th>Starts at</th><th>Goes to</th><th>Zones</th><th>Strip direction</th><th>Data cable estimate</th></tr>
+          <tbody id="data-rows"></tbody>
+        </table>
+        <table class="wtab" style="margin-top:12px">
+          <tr><th>Cable list</th><th>Type</th><th>Estimate</th><th>Quantity to buy</th></tr>
+          <tbody id="cable-rows"></tbody>
+        </table>
+        <ol style="margin-top:10px">
+          <li>Feed rule (QuinLED): the maximum distance between feeds is 10 m. Put one feed at each end. For 10 m, feed both ends. For 20 m, feed the start, the middle and the end.</li>
+          <li>Use one fuse for each feed. LED1 and LED2 use the same fuse. LED3 and LED4 also use the same fuse. Use one terminal from each pair and the three other fused terminals.</li>
+          <li>A middle feed supplies approximately two times the current of an end feed, because the current goes in two directions.</li>
+          <li>Four data channels give the maximum frame rate. Each channel controls one 2-strip section (≈270 zones). The longest channel sets the frame time. In the QuinLED example, ≈640 zones on one output gives ≈30 FPS.</li>
+          <li>Each channel starts at the feed nearest to the controller: CH1 at F2, CH2 and CH3 at F3, CH4 at F5. The CH1, CH2 and CH4 sections are reversed, so the data goes away from the start feed.</li>
+          <li>CH1 to F2 is the longest data cable (≈9 m). The data range of the Dig-Quad is 5–10 m, so this cable is near the limit. There is no attic above the open corner of the L, so the cable cannot go in a straight line. Use the shortest attic route. If the cable length is near 10 m, install a data booster.</li>
+          <li>Attic: the garage attic floor is on 2×4 sleepers (24" o.c., House Side to Street Side). There is a 1½" space above the truss chords for cables.</li>
+          <li>The HEP-1000-24 is IP67. Its temperature range is −40 to +70 °C (refer to the derating curve). At ≈48% load, its margin is large. Install the Dig-Quad in an enclosure with vents.</li>
+          <li>Cables F1, F2 and CH1 go from the garage attic into the house. Seal this hole in the garage-to-house separation with fire-stop material.</li>
+        </ol>
+      </div>
+    </section>
+
+    <footer class="fn">
+      <span>Layout study only. The strip lengths are measured on the soffit centerline. They change with the soffit width.
+        The power values are calculated from the QuinLED reel data. The drawing shows the rear wall of the house as straight
+        (not surveyed). The electrician must approve the soffit framing, the power-supply location and the circuits. Use
+        COB strip, channels and power supplies that are rated for damp or wet locations.</span>
+      <span>Plan · 1 sq = 1'-0"</span>
+    </footer>
+  </div>
+
+  <script>
+    (function () {
+      const svg = document.getElementById('plan');
+      const S = 13;                       // px per foot
+      const O = [170, 42];                // model origin (house rear-left corner) in screen px
+      const p = (x, y) => [O[0] + x * S, O[1] + y * S];   // model feet → screen px (+x right, +y toward the street)
+
+      // ---- dimensions — known:false values are placeholders, drawn to size but labelled TBD ----
+      const D = {
+        gW: { v: 19 + 11.5 / 12, known: true },   // garage Front/Back wall (runs toward the street)  19'-11½"
+        gD: { v: 17.5, known: true },             // garage Street/House Side wall                    17'-6"
+        hL: { v: 32 + 10 / 12, known: true },     // house main front wall                            32'-10"
+        wing: { v: 21.75, known: true },          // bedroom-wing front wall (garage attaches here)   21'-9"
+        step: { v: 9 + 10 / 12, known: true },    // main front set back from the wing front           9'-10"
+        hR: { v: 33, known: true },               // house share of the continuous right wall         33'-0"
+        eave: { v: 1.5, known: false },           // soffit width — same all round (eaves + garage gable rake)
+      };
+      // garage-door layout along the Front wall, from the House-Side corner (Spec Sheet)
+      const segH = 2 + 2.75 / 12, GD = 16 + 2.5 / 12, segS = 1 + 6.25 / 12;
+      const BED = 4;                      // flower bed along the Street Side (Spec Sheet)
+      const YARD = 8;                     // garage Street Side → curb (schematic, not dimensioned)
+      const T = 0.5;                      // wall thickness (plan)
+
+      // ---- formatting ----
+      const FR = { 0: '', 1: '⅛', 2: '¼', 3: '⅜', 4: '½', 5: '⅝', 6: '¾', 7: '⅞' };
+      function ftin(v) {
+        const e = Math.round(v * 96);     // eighths of an inch
+        const ft = Math.floor(e / 96), r = e - ft * 96;
+        return `${ft}'-${Math.floor(r / 8)}${FR[r % 8]}"`;
+      }
+      const lab = k => D[k].known ? ftin(D[k].v) : 'TBD';
+      const cls = k => D[k].known ? 'dimtxt' : 'tbdtxt';
+
+      // ---- derived geometry (feet) ----
+      const eave = D.eave.v, rake = eave;          // one soffit width everywhere
+      const hL = D.hL.v, HW = hL + D.wing.v;       // jog line / continuous right wall
+      const yW = D.hR.v;                           // bedroom-wing front (garage House Side)
+      const yM = yW - D.step.v;                    // house main front
+      const gx0 = HW - D.gD.v;                     // garage Front (door) wall
+      const yS = yW + D.gW.v;                      // garage Street Side
+      const curb = yS + YARD;
+
+      // ---- svg helpers ----
+      let out = '';
+      const pt = a => a.map(n => n.toFixed(1)).join(',');
+      const poly = (pts, attr) => out += `<polygon points="${pts.map(pt).join(' ')}" ${attr}/>`;
+      const rect = (x0, y0, x1, y1, attr) => poly([p(x0, y0), p(x1, y0), p(x1, y1), p(x0, y1)], attr);
+      const line = (a, b, attr) => out += `<line x1="${a[0].toFixed(1)}" y1="${a[1].toFixed(1)}" x2="${b[0].toFixed(1)}" y2="${b[1].toFixed(1)}" ${attr}/>`;
+      const text = (P, t, attr) => out += `<text x="${P[0].toFixed(1)}" y="${P[1].toFixed(1)}" ${attr}>${t}</text>`;
+      const rtext = (P, ang, t, attr) => out += `<text transform="translate(${pt(P)}) rotate(${ang})" ${attr}>${t}</text>`;
+      const dot = (P, r, fill) => out += `<circle cx="${P[0].toFixed(1)}" cy="${P[1].toFixed(1)}" r="${r}" fill="${fill}"/>`;
+      const group = (c, fn) => { out += `<g class="anim ${c}">`; fn(); out += '</g>'; };
+      // wall band between an outer polygon and its inner (inset by T) counterpart
+      const walls = (o, i, attr) =>
+        out += `<path fill-rule="evenodd" d="M${o.map(q => pt(p(...q))).join('L')}Z M${i.map(q => pt(p(...q))).join('L')}Z" ${attr}/>`;
+
+      // dimension: a→b along one model axis, witness lines offset by off (feet) on the other axis
+      const INK = 'stroke="#221F18" stroke-width=".9"';
+      function dim(a, b, off, t, tc, nudge = 0) {   // nudge: px shift of the label along the dim (short runs)
+        const horiz = a[1] === b[1];
+        const A = horiz ? [a[0], a[1] + off] : [a[0] + off, a[1]];
+        const B = horiz ? [b[0], b[1] + off] : [b[0] + off, b[1]];
+        const s = Math.sign(off) * 0.25;
+        line(p(...(horiz ? [a[0], a[1] + s] : [a[0] + s, a[1]])), p(...(horiz ? [A[0], A[1] + s] : [A[0] + s, A[1]])), 'stroke="#5C5446" stroke-width=".6"');
+        line(p(...(horiz ? [b[0], b[1] + s] : [b[0] + s, b[1]])), p(...(horiz ? [B[0], B[1] + s] : [B[0] + s, B[1]])), 'stroke="#5C5446" stroke-width=".6"');
+        line(p(...A), p(...B), INK);
+        for (const q of [A, B]) {             // architectural slash ticks
+          const c = p(...q);
+          line([c[0] - 4, c[1] + 4], [c[0] + 4, c[1] - 4], 'stroke="#221F18" stroke-width="1.4"');
+        }
+        const m = p((A[0] + B[0]) / 2, (A[1] + B[1]) / 2);
+        if (horiz) text([m[0] + nudge, m[1] - 4], t, `class="${tc}" text-anchor="middle"`);
+        else rtext([m[0] - 4, m[1] + nudge], -90, t, `class="${tc}" text-anchor="middle"`);
+      }
+
+      // COB LED strip: one continuous run along the soffit centerline, first 1 m of the house left side → garage Back
+      const c = eave / 2, M1 = 1 / 0.3048;            // 1 m in feet
+      const strip = [[-c, yM - M1], [-c, yM + c], [hL - c, yM + c], [hL - c, yW + c], [gx0 - c, yW + c],
+        [gx0 - c, yS + c], [HW + c, yS + c], [HW + c, yW]];
+      const RUNS = ['left', 'main', 'jog', 'wing', 'gfront', 'grake', 'gback'];   // strip[i] → strip[i+1]
+      const runLen = RUNS.map((_, i) => Math.hypot(strip[i + 1][0] - strip[i][0], strip[i + 1][1] - strip[i][1]));
+      const total = runLen.reduce((a, b) => a + b, 0);
+      const RUN_NAME = { left: 'House left side', main: 'House main front', jog: '9\'-10" jog', wing: 'Bedroom-wing front',
+        gfront: 'Garage Front', grake: 'Garage Street-Side gable', gback: 'Garage Back' };
+      const OUT = { left: [-1, 0], main: [0, 1], jog: [-1, 0], wing: [0, 1], gfront: [-1, 0], grake: [0, 1], gback: [1, 0] };
+
+      // ---- wiring: controller + PSU in the garage's top-left corner (House Side / Front); 5 feeds; 4 data channels ----
+      const ctrl = [gx0 + 6.1, yW + 2.05];
+      const bxL = ctrl[0] - 3.3, bxR = ctrl[0] + 3.3, byT = ctrl[1] - 1.25, byB = ctrl[1] + 1.25;   // controller box edges
+      const cum = [0]; runLen.forEach(l => cum.push(cum[cum.length - 1] + l));
+      const at = d => {                                  // point on the strip at distance d (ft) from its start
+        let i = 0; while (i < RUNS.length - 1 && d > cum[i + 1]) i++;
+        const t = runLen[i] ? (d - cum[i]) / runLen[i] : 0;
+        return { p: [strip[i][0] + (strip[i + 1][0] - strip[i][0]) * t, strip[i][1] + (strip[i + 1][1] - strip[i][1]) * t], run: RUNS[i], off: d - cum[i] };
+      };
+      const NF = 5, gap = total / (NF - 1);
+      const feeds = Array.from({ length: NF }, (_, k) => ({ k, d: gap * k, ...at(gap * k) }));
+      // schematic attic cable routes (plan), controller → feed point. House side: diagonal across the wing attic,
+      // staying inside the roof (x ≥ xA until past the main front), then along inside the main front wall.
+      // Garage side: in the sleeper cavity under the attic deck (sleepers run House ↔ Street).
+      const yA = yM - 1.3, xA = hL + 1.2, F = feeds.map(fd => fd.p);
+      const DROP = 2, SLACK = 1.1;                         // ft of drop into the soffit per run · 10% slack
+      const routes = [
+        [[bxL + 1.0, byT], [xA - 0.3, yA - 0.3], [1.4, yA - 0.3], [1.4, F[0][1]], F[0]],
+        [[bxL + 1.3, byT], [xA, yA], [F[1][0], yA], F[1]],
+        [[bxL + 0.6, byB], [bxL + 0.6, F[2][1]], F[2]],
+        [[ctrl[0] + 1.0, byB], [ctrl[0] + 1.0, yS - 2.6], [F[3][0], yS - 2.6], F[3]],
+        [[bxR, ctrl[1] - 0.4], [HW - 1.0, ctrl[1] - 0.4], [HW - 1.0, yW + 0.55], [F[4][0], yW + 0.55], F[4]],
+      ];
+      // 4 data channels, one per 2-strip section; each starts at the feed nearest the controller
+      const CH = [
+        { name: 'CH1 (LED1)', k: 1, from: gap, to: 0, toward: 'F1 — strip start', rev: true,
+          r: [[bxL + 1.6, byT], [xA + 0.3, yA + 0.3], [F[1][0] + 0.3, yA + 0.3], [F[1][0] + 0.3, F[1][1]]] },
+        { name: 'CH2 (LED2)', k: 2, from: 2 * gap, to: gap, toward: 'F2', rev: true,
+          r: [[bxL + 0.9, byB], [bxL + 0.9, F[2][1] + 0.3], [F[2][0], F[2][1] + 0.3]] },
+        { name: 'CH3 (LED3)', k: 2, from: 2 * gap, to: 3 * gap, toward: 'F4', rev: false, r: null },
+        { name: 'CH4 (LED4)', k: 4, from: 4 * gap, to: 3 * gap, toward: 'F4', rev: true,
+          r: [[bxR, byT], [HW - 0.7, byT], [HW - 0.7, yW + 0.85], [F[4][0], yW + 0.85]] },
+      ];
+      const dataDir = d => CH.find(c => d >= Math.min(c.from, c.to) && d <= Math.max(c.from, c.to)).to > d ? 1 : -1;
+      const plen = r => r.slice(1).reduce((a, q, i) => a + Math.hypot(q[0] - r[i][0], q[1] - r[i][1]), 0);
+
+      /* ---- SITE: paper grid, lawn, flower bed, driveway, street ---- */
+      group('a1', () => {
+        const yc = p(0, curb)[1], ys = p(0, curb + 3.6)[1];
+        // model-feet path: [cmd, x, y, ...] pairs → svg path data
+        const path = segs => segs.map(([c, ...v]) => c + v.reduce((a, n, i) =>
+          i % 2 ? a : a.concat(pt(p(n, v[i + 1]))), []).join(' ')).join(' ');
+        out += `<rect x="0" y="0" width="1080" height="900" fill="url(#grid)"/>`;
+        out += `<rect x="20" y="${p(0, -2.5)[1].toFixed(1)}" width="1040" height="${(yc - p(0, -2.5)[1]).toFixed(1)}" fill="#c9cfae" opacity=".55"/>`;
+        const BEDF = 'fill="#b7a57c" opacity=".75"';
+        rect(gx0, yS, HW, yS + BED, BEDF);                                            // 4'-0" flower bed (Street Side)
+        rect(1, yM, 16.6, yM + 3.1, BEDF);                                             // bed along the main front
+        // planting bed between the entry walk and the bedroom wing / garage front
+        out += `<path d="${path([['M', 22.8, yM], ['L', hL, yM], ['L', hL, yW], ['L', gx0, yW], ['L', gx0, yW + 3],
+          ['L', 23, yW + 3], ['Q', 21.2, yW + 3, 21.2, yW + 1.2], ['L', 21.2, yM + 2.9], ['L', 22.8, yM + 2.9]])} Z" ${BEDF}/>`;
+        const CONC = 'fill="#d9d2c3"';
+        // entry porch pad + straight walk, flaring with rounded corners into the driveway (drawn first; driveway overlaps its foot)
+        rect(17, yM, 22.8, yM + 2.9, CONC);
+        out += `<path d="${path([['M', 17.3, yM + 2.9], ['L', 17.3, yW + 1.2], ['Q', 17.3, yW + 3.64, 15.4, yW + 3.64], ['L', 15.4, yW + 4.5],
+          ['L', 23, yW + 4.5], ['L', 23, yW + 3.1], ['Q', 21.2, yW + 3.1, 21.2, yW + 1.2], ['L', 21.2, yM + 2.9]])} Z" ${CONC}/>`;
+        // driveway (traced from the aerial photo): leaves the garage door, runs left, curves down to the street
+        out += `<path d="${path([['M', gx0, yW + 3], ['L', 28, yW + 3], ['C', 14, yW + 3, 2, yW + 5, -4, yW + 10],
+          ['C', -8, yW + 13, -10, curb - 6, -11, curb], ['L', 5, curb], ['C', 5, yS + 2.5, 14, yS - 1, 33, yS - segS], ['L', gx0, yS - segS]])} Z" ${CONC}/>`;
+        out += `<rect x="20" y="${yc.toFixed(1)}" width="1040" height="${(ys - yc).toFixed(1)}" fill="#b9b3a6"/>`;
+        line([20, yc], [1060, yc], 'stroke="#5C5446" stroke-width="1.6"');
+        text([540, (yc + ys) / 2 + 5], 'STREET', 'class="facetxt" font-size="15" fill="#3A3F43" text-anchor="middle" letter-spacing="6"');
+        text(p(12, yW + 13), 'DRIVEWAY', 'class="lbl" font-size="10" fill="#5C5446" text-anchor="middle" letter-spacing="2"');
+      });
+
+      /* ---- SOFFIT all round (roof edge dashed; buildings drawn over the footprint) + LIT RUNS ---- */
+      group('a2', () => {
+        const roof = [[-eave, -eave], [HW + eave, -eave], [HW + eave, yS + rake], [gx0 - eave, yS + rake],
+          [gx0 - eave, yW + eave], [hL - eave, yW + eave], [hL - eave, yM + eave], [-eave, yM + eave]];
+        poly(roof.map(q => p(...q)), 'fill="#eadcb8" stroke="#5C5446" stroke-width="1" stroke-dasharray="6 4"');
+        const SOF = 'fill="#eadcb8" stroke="#AE4F2A" stroke-width="1.3"';   // lit runs: rust outline
+        rect(-eave, yM - M1, 0, yM, SOF);                          // house left side, first 1 m
+        rect(-eave, yM, hL - eave, yM + eave, SOF);                 // house main front
+        rect(hL - eave, yW, gx0 - eave, yW + eave, SOF);           // bedroom-wing front (exposed part)
+        rect(gx0 - eave, yS, HW + eave, yS + rake, SOF);           // garage Street-Side gable
+        rect(hL - eave, yM + eave, hL, yW, SOF);                   // 9'-10" jog
+        rect(gx0 - eave, yW + eave, gx0, yS, SOF);                 // garage door wall
+        rect(HW, yW, HW + eave, yS, SOF);                          // garage back wall
+      });
+
+      /* ---- BUILDINGS ---- */
+      group('a3', () => {
+        // house: main block + bedroom wing that steps 9'-10" toward the street
+        const ho = [[0, 0], [HW, 0], [HW, yW], [hL, yW], [hL, yM], [0, yM]];
+        const hi = [[T, T], [HW - T, T], [HW - T, yW - T], [hL + T, yW - T], [hL + T, yM - T], [T, yM - T]];
+        poly(ho.map(q => p(...q)), 'fill="#F5EFE2"');
+        walls(ho, hi, 'fill="url(#hatch)" stroke="#221F18" stroke-width="1"');
+        // garage
+        const go = [[gx0, yW], [HW, yW], [HW, yS], [gx0, yS]];
+        const gi = [[gx0 + T, yW + T], [HW - T, yW + T], [HW - T, yS - T], [gx0 + T, yS - T]];
+        poly(go.map(q => p(...q)), 'fill="#F5EFE2"');
+        walls(go, gi, 'fill="#3A3F43" stroke="#221F18" stroke-width="1"');
+        // garage-door opening in the Front wall (faces the driveway)
+        rect(gx0 - 0.05, yW + segH, gx0 + T + 0.05, yW + segH + GD, 'fill="#F5EFE2"');
+        line(p(gx0 + T / 2, yW + segH), p(gx0 + T / 2, yW + segH + GD), 'stroke="#221F18" stroke-width="1" stroke-dasharray="8 3"');
+        // front entry door (main front wall, opens onto the porch pad)
+        rect(17.5, yM - T - 0.05, 20.5, yM + 0.05, 'fill="#F5EFE2"');
+        line(p(17.5, yM - T), p(17.5, yM - T - 3), 'stroke="#221F18" stroke-width=".8"');
+        out += `<path d="M${pt(p(17.5, yM - T - 3))} A${3 * S},${3 * S} 0 0 1 ${pt(p(20.5, yM - T))}" fill="none" stroke="#5C5446" stroke-width=".7" stroke-dasharray="3 2"/>`;
+        // back man-door (1'-0" off House Side, 3'-0") in the continuous right wall
+        rect(HW - T - 0.05, yW + 1, HW + 0.05, yW + 4, 'fill="#F5EFE2"');
+        line(p(HW - T, yW + 1), p(HW - T - 3, yW + 1), 'stroke="#221F18" stroke-width=".8"');
+        out += `<path d="M${pt(p(HW - T - 3, yW + 1))} A${3 * S},${3 * S} 0 0 0 ${pt(p(HW - T, yW + 4))}" fill="none" stroke="#5C5446" stroke-width=".7" stroke-dasharray="3 2"/>`;
+      });
+
+      /* ---- COB LED STRIP (glow + core line) ---- */
+      group('a4', () => {
+        const d = 'M' + strip.map(q => pt(p(...q))).join('L');
+        out += `<path d="${d}" fill="none" stroke="#ffd98a" stroke-width="${(1.1 * S).toFixed(1)}" stroke-opacity=".5" stroke-linejoin="round"/>`;
+        out += `<path d="${d}" fill="none" stroke="#E9A23B" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>`;
+      });
+
+      /* ---- WIRING: feed cables, data cable, data direction, feed points, controller ---- */
+      group('a5', () => {
+        const PWR = 'fill="none" stroke="#883C1E" stroke-width="1.3" stroke-dasharray="7 3" stroke-linejoin="round"';
+        for (const r of routes) out += `<path d="M${r.map(q => pt(p(...q))).join('L')}" ${PWR}/>`;
+        for (const c of CH) if (c.r) out += `<path d="M${c.r.map(q => pt(p(...q))).join('L')}" fill="none" stroke="#2F6B5E" stroke-width="2" stroke-linejoin="round"/>`;
+        // data-direction arrows along the strip: each channel flows away from its start feed
+        const starts = CH.map(c => c.from);
+        for (let d = 2.5; d < total - 1.5; d += 6.5) {
+          if (starts.some(d0 => Math.abs(d - d0) < 2)) continue;
+          const a = at(d), b = at(d + 0.5 * dataDir(d));
+          const c0 = p(...a.p), c1 = p(...b.p), ang = Math.atan2(c1[1] - c0[1], c1[0] - c0[0]) * 180 / Math.PI;
+          out += `<path transform="translate(${pt(c0)}) rotate(${ang.toFixed(1)})" d="M-4,-3.6 L4,0 L-4,3.6 Z" fill="#2F6B5E"/>`;
+        }
+        // feed points
+        feeds.forEach((fd, k) => {
+          const o = k === 0 || k === NF - 1 ? [0, -1] : OUT[fd.run];
+          const c = p(...fd.p), L = p(fd.p[0] + o[0] * 1.35, fd.p[1] + o[1] * 1.35);
+          dot(c, 3, '#883C1E');
+          if (CH.some(ch => ch.k === k)) out += `<circle cx="${L[0].toFixed(1)}" cy="${L[1].toFixed(1)}" r="9.5" fill="none" stroke="#2F6B5E" stroke-width="2"/>`;
+          out += `<circle cx="${L[0].toFixed(1)}" cy="${L[1].toFixed(1)}" r="7" fill="#883C1E" stroke="#F5EFE2" stroke-width="1.2"/>`;
+          text([L[0], L[1] + 3], 'F' + (k + 1), 'font-family="IBM Plex Mono, monospace" font-size="8" font-weight="600" fill="#fff" text-anchor="middle"');
+        });
+        // controller + PSU
+        rect(bxL, byT, bxR, byB, 'fill="#F5EFE2" stroke="#221F18" stroke-width="1.4" stroke-dasharray="5 2.5"');
+        text(p(ctrl[0], ctrl[1] - 0.1), 'DIG-QUAD + PSU', 'class="facetxt" font-size="10.5" fill="#221F18" text-anchor="middle"');
+        text(p(ctrl[0], ctrl[1] + 0.85), 'IN ATTIC', 'class="lbl" font-size="8" fill="#5C5446" text-anchor="middle"');
+      });
+
+      /* ---- LABELS ---- */
+      group('a5', () => {
+        const hc = p(hL / 2, yM / 2 + 1);
+        text([hc[0], hc[1]], 'EXISTING HOUSE', 'class="facetxt" font-size="26" fill="#5C5446" text-anchor="middle"');
+        text(p(hL + D.wing.v / 2, (yM + yW) / 2 - 0.6), 'BEDROOM WING', 'class="facetxt" font-size="16" fill="#5C5446" text-anchor="middle"');
+        const gc = p(gx0 + D.gD.v / 2, yW + D.gW.v / 2);
+        text([gc[0], gc[1] + 8], 'GARAGE', 'class="facetxt" font-size="24" fill="#221F18" text-anchor="middle" stroke="#F5EFE2" stroke-width="7" paint-order="stroke"');
+        text(p(19, yM - 3.9), 'ENTRY', 'class="lbl" font-size="9" fill="#5C5446" text-anchor="middle" letter-spacing="1"');
+      });
+
+      /* ---- DIMENSIONS ---- */
+      group('a6', () => {
+        // house front: main wall (toward street), wing (read inside the wing), jog
+        dim([0, yM], [hL, yM], eave + 3.6, ftin(hL), 'dimtxt', -60);
+        dim([hL, yW], [HW, yW], -1.8, ftin(D.wing.v), 'dimtxt');
+        dim([hL, yM], [hL, yW], -2.6, ftin(D.step.v), 'dimtxt');
+        // lit length of the house left side (1 m back from the front corner)
+        dim([0, yM - M1], [0, yM], -(eave + 1.4), '1 m · ' + ftin(M1), 'dimsm');
+        // continuous right wall (witness lines toward +x)
+        dim([HW, 0], [HW, yW], eave + 2.4, ftin(D.hR.v), 'dimtxt');
+        dim([HW, yW], [HW, yS], eave + 2.4, ftin(D.gW.v), 'dimtxt');
+        dim([HW, 0], [HW, yS], eave + 4.6, ftin(yS), 'dimtxt');
+        // garage Street Side, past the flower bed
+        dim([gx0, yS], [HW, yS], rake + 5.6, ftin(D.gD.v), 'dimtxt');
+        // soffit width, across the wing soffit
+        const ex = gx0 - eave - 0.6;
+        dim([ex, yW], [ex, yW + eave], 0, '', 'dimsm');
+        text(p(ex + 0.3, yW + eave + 1.3), 'SOFFIT ' + lab('eave'), `class="${cls('eave')}" font-size="9" text-anchor="end"`);
+      });
+
+      svg.insertAdjacentHTML('beforeend', out);
+
+      // strip lengths in the schedule (≈ while the soffit width is TBD)
+      const set = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
+      const ap = D.eave.known ? '' : '≈';
+      RUNS.forEach((k, i) => set('len-' + k, ap + ftin(runLen[i])));
+      set('len-total', ap + ftin(total)); set('stamp-len', ap + ftin(total));
+
+      // power budget — QuinLED Dig-COB-RGBW-896-160 (24V) on a Dig-Quad, Mean Well HEP-1000-24 PSU
+      const V = 24, Lm = total * 0.3048, zones = Math.floor(Lm / 0.03125), reels = Math.ceil(Lm / 5);
+      const Wwhite = Lm * 70 / 5, Wmax = Lm * 200 / 5, Wlim = 20 * V;   // W only 100% · all channels · 20 A cap
+      const n0 = s => Math.round(s).toLocaleString('en-US'), n1 = s => s.toFixed(1);
+      set('pb-len', `${ap}${n1(Lm)} m (${ap}${ftin(total)})`);
+      set('pb-zones', ap + n0(zones));
+      set('pb-reels', `${reels} (${reels * 5} m · ${ap}${n1(reels * 5 - Lm)} m spare)`);
+      set('pb-white', `${ap}${n0(Wwhite)} W · ${n1(Wwhite / V)} A`);
+      set('pb-max', `${ap}${n0(Wmax)} W · ${n1(Wmax / V)} A`);
+      set('pb-limit', `${n0(Wlim)} W · ${n1(Wlim / Lm)} W/m · ${Math.min(100, Math.round(100 * Wlim / Wwhite))}% of full W`);
+      set('pb-data', `4 × ${ap}${n0(Math.round(zones / 4))} zones`);
+      // feeds & data tables
+      const RUN_FROM = { left: 'strip start', main: 'left-front corner', jog: 'main-front corner', wing: 'jog corner',
+        gfront: 'wing corner', grake: 'garage-Front corner', gback: 'gable corner' };   // run start (strip direction)
+      const Apm = 70 / 5 / V;
+      const est = r => (plen(r) + DROP) * SLACK;                         // cable to buy for one run (ft)                                            // A per metre at 100% warm white
+      const fuse = a => a <= 4 ? '5 A (standard)' : a <= 6 ? '7.5 A' : '10 A';
+      const loc = fd => fd.k === 0 ? 'Strip start — house left side, 1 m from the corner'
+        : fd.k === NF - 1 ? 'Strip end — garage Back, at the house'
+        : `${RUN_NAME[fd.run]}, ${ap}${ftin(fd.off)} from the ${RUN_FROM[fd.run]}`;
+      const html = (id, rows) => { const el = document.getElementById(id); if (el) el.innerHTML = rows.map(r => '<tr>' + r.map(c => `<td>${c}</td>`).join('') + '</tr>').join(''); };
+      html('feed-rows', feeds.map((fd, k) => {
+        const serves = (k === 0 || k === NF - 1 ? gap / 2 : gap) * 0.3048, amps = serves * Apm, cab = est(routes[k]);
+        const din = CH.filter(c => c.k === k).map(c => c.name.split(' ')[0]).join(' + ');
+        return [`F${k + 1}${din ? ' · data in ' + din : ''}`, loc(fd), `${ap}${n1(serves)} m`, `${ap}${n1(amps)} A`, fuse(amps),
+          `${ap}${n0(cab)} ft (${n1(cab * 0.3048)} m)`];
+      }));
+      const zc = CH.map(c => Math.round(Math.abs(c.to - c.from) * 0.3048 / 0.03125));
+      zc[zc.length - 1] = zones - zc.slice(0, -1).reduce((a, b) => a + b, 0);
+      html('data-rows', CH.map((c, i) => [c.name, `F${c.k + 1}`, c.toward, ap + n0(zc[i]),
+        c.rev ? `reversed (DI at F${c.k + 1})` : 'normal',
+        c.r ? `${ap}${n0(est(c.r))} ft (${n1(est(c.r) * 0.3048)} m)` : `${ap}${n0(est(CH[1].r))} ft (separate cable, same route as CH2)`]));
+      // cable take-off
+      const pw = routes.reduce((a, r) => a + est(r), 0), dt = CH.reduce((a, c) => a + est(c.r || CH[1].r), 0);
+      const buy = ft => Math.ceil(ft / 25) * 25;
+      html('cable-rows', [
+        ['Power feeds F1–F5', '14 AWG, 2-conductor (red/black)', `${ap}${n0(pw)} ft`, `${buy(pw)} ft`],
+        ['Data CH1–CH4', '20–22 AWG, 2-conductor (data + GND), one cable for each channel', `${ap}${n0(dt)} ft`, `${buy(dt)} ft`],
+        ['Corner jumpers (6)', '20 AWG, 3-conductor (24V / data / GND), 6–12 in each', '≈6 ft', '10 ft'],
+        ['PSU → Dig-Quad', '10 AWG, 2-conductor, rated for the 30 A of the board', 'distance between the units', '≈2 × 3 ft'],
+      ]);
+
+      const PSU_W = 1008, EFF = 0.95, VAC = 120;                        // Mean Well HEP-1000-24
+      const Wuse = Wlim;                                                 // worst case: draw held at the WLED cap
+      set('pb-psu', `${Math.round(100 * Wuse / PSU_W)}% (${n0(Wuse)} of ${n0(PSU_W)} W)`);
+      set('pb-ac', `${ap}${n0(Wuse / EFF)} W · ${n1(Wuse / EFF / VAC)} A @ ${VAC} V`);
+    })();
+  </script>
+</body>
+
+</html>
