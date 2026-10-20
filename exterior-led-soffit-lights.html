@@ -87,16 +87,31 @@
       color: var(--tbd);
     }
 
+    /* plan notes (below the top-down plan) */
+    .plannotes {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px 26px;
+      padding: 10px 26px 14px;
+      border-top: 1.5px solid var(--ink);
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 11.5px;
+      color: var(--ink-soft);
+    }
+
+    .plannotes b {
+      color: var(--ink);
+      font-weight: 600;
+    }
+
     /* datasheet links */
-    .spec a,
-    .legend a {
+    .spec a {
       color: var(--rust-deep);
       text-decoration: underline dotted;
       text-underline-offset: 2px;
     }
 
-    .spec a:hover,
-    .legend a:hover {
+    .spec a:hover {
       text-decoration-style: solid;
     }
 
@@ -164,18 +179,12 @@
       </svg>
     </div>
 
-    <div class="legend">
-      <div class="it"><span class="sw" style="background:repeating-linear-gradient(45deg,#d8ceb9 0 3px,#5C5446 3px 4px)"></span>Existing house walls</div>
-      <div class="it"><span class="sw" style="background:#3A3F43"></span>Garage walls (2×4)</div>
-      <div class="it"><span class="sw" style="background:#eadcb8;border-style:dashed"></span>Soffit — on all eaves and rakes (dashed line = roof edge above)</div>
-      <div class="it"><span class="sw" style="background:#eadcb8;border:2px solid #AE4F2A"></span>Soffit with strip — street side, driveway side, garage Back and first 1 m of the house left side</div>
-      <div class="it"><span class="sw" style="background:linear-gradient(transparent 5px,#E9A23B 5px,#E9A23B 8px,transparent 8px),#ffe7b0"></span>COB LED strip — one continuous run on the soffit centerline</div>
-      <div class="it"><span class="sw" style="background:#F5EFE2;border-width:1.5px"></span><span>Controller and PSU (<a href="https://quinled.info/quinled-dig-quad-pre-assembled-v3-1-specifications/" target="_blank" rel="noopener">Dig-Quad</a> · <a href="https://www.meanwell.com/Upload/PDF/HEP-1000/HEP-1000-SPEC.PDF" target="_blank" rel="noopener">HEP-1000-24</a>) in the attic, above the top-left corner of the garage (dashed = above)</span></div>
-      <div class="it"><span class="sw" style="background:linear-gradient(transparent 5px,#883C1E 5px,#883C1E 7px,transparent 7px)"></span>Power feeds F1–F5 (schematic attic route, with a drop into the soffit)</div>
-      <div class="it"><span class="sw" style="background:linear-gradient(transparent 5px,#2F6B5E 5px,#2F6B5E 8px,transparent 8px)"></span>Data cable and data direction on the strip · teal ring = start of a data channel</div>
-      <div class="it"><span class="sw" style="background:#b7a57c"></span>Planting beds (4'-0" bed on the Street Side)</div>
-      <div class="it"><span class="sw" style="background:#d9d2c3"></span>Concrete — driveway, entry walk and porch (approximate, from the aerial photo)</div>
-      <div class="it"><span class="sw" style="background:transparent;border-color:#AE4F2A;color:#AE4F2A;font-size:9px;line-height:12px;text-align:center;width:auto;padding:0 3px">TBD</span>Dimension TBD — the drawing uses an assumed size</div>
+
+    <div class="plannotes">
+      <span><b style="color:var(--tbd)">TBD</b> — dimension not known; the plan uses an assumed size.</span>
+      <span><b style="color:var(--teal)">◯ teal ring</b> on a feed — start of a data channel.</span>
+      <span><b>Dashed box</b> — controller and PSU, in the attic.</span>
+      <span><b>Driveway, walk, porch and beds</b> — approximate, from the aerial photo.</span>
     </div>
 
     <section class="spec">
@@ -662,9 +671,8 @@
 
       /* ---- LABELS ---- */
       group('a5', () => {
-        const hc = p(hL / 2, yM / 2 + 1);
-        text([hc[0], hc[1]], 'EXISTING HOUSE', 'class="facetxt" font-size="26" fill="#5C5446" text-anchor="middle"');
-        text(p(hL + D.wing.v / 2, (yM + yW) / 2 - 0.6), 'BEDROOM WING', 'class="facetxt" font-size="16" fill="#5C5446" text-anchor="middle"');
+        const hc = p(HW / 2, yW / 2 + 0.6);         // center of the whole house outline
+        text([hc[0], hc[1]], 'HOUSE', 'class="facetxt" font-size="26" fill="#5C5446" text-anchor="middle"');
         const gc = p(gx0 + D.gD.v / 2, yW + D.gW.v / 2);
         text([gc[0], gc[1] + 8], 'GARAGE', 'class="facetxt" font-size="24" fill="#221F18" text-anchor="middle" stroke="#F5EFE2" stroke-width="7" paint-order="stroke"');
         text(p(19, yM - 3.9), 'ENTRY', 'class="lbl" font-size="9" fill="#5C5446" text-anchor="middle" letter-spacing="1"');
