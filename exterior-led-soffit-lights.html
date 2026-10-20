@@ -488,7 +488,7 @@
       // garage-door layout along the Front wall, from the House-Side corner (Spec Sheet)
       const segH = 2 + 2.75 / 12, GD = 16 + 2.5 / 12, segS = 1 + 6.25 / 12;
       const BED = 4;                      // flower bed along the Street Side (Spec Sheet)
-      const YARD = 8;                     // garage Street Side → curb (schematic, not dimensioned)
+      const YARD = 25;                    // garage Street Side → street (owner: about 25 ft)
       const T = 0.5;                      // wall thickness (plan)
 
       // ---- formatting ----
@@ -610,7 +610,7 @@
         // model-feet path: [cmd, x, y, ...] pairs → svg path data
         const path = segs => segs.map(([c, ...v]) => c + v.reduce((a, n, i) =>
           i % 2 ? a : a.concat(pt(p(n, v[i + 1]))), []).join(' ')).join(' ');
-        out += `<rect x="0" y="0" width="1080" height="900" fill="url(#grid)"/>`;
+        out += `<rect x="0" y="0" width="1080" height="${(ys + 24).toFixed(0)}" fill="url(#grid)"/>`;
         out += `<rect x="20" y="${p(0, -2.5)[1].toFixed(1)}" width="1040" height="${(yc - p(0, -2.5)[1]).toFixed(1)}" fill="#c9cfae" opacity=".55"/>`;
         const BEDF = 'fill="#b7a57c" opacity=".75"';
         rect(gx0, yS, HW, yS + BED, BEDF);                                            // 4'-0" flower bed (Street Side)
@@ -726,6 +726,8 @@
         dim([HW, 0], [HW, yS], eave + 4.6, ftin(yS), 'dimtxt');
         // garage Street Side, past the flower bed
         dim([gx0, yS], [HW, yS], rake + 5.6, ftin(D.gD.v), 'dimtxt');
+        // garage Street Side → street (approximate)
+        dim([HW, yS], [HW, curb], eave + 2.4, '≈' + ftin(YARD), 'dimtxt');
         // soffit width, across the wing soffit
         const ex = gx0 - eave - 0.6;
         dim([ex, yW], [ex, yW + eave], 0, '', 'dimsm');
@@ -733,6 +735,7 @@
       });
 
       svg.insertAdjacentHTML('beforeend', out);
+      svg.setAttribute('viewBox', `0 0 1080 ${(p(0, curb + 3.6)[1] + 24).toFixed(0)}`);   // plan height follows the street
 
       /* ======== ISOMETRIC VIEW — from the street + driveway corner ======== */
       // plan x (→ garage Back) goes up-right, plan y (→ street) goes down-right, z goes up.
