@@ -741,15 +741,22 @@
       // plan x (→ garage Back) goes up-right, plan y (→ street) goes down-right, z goes up.
       // Plate 8'-0" all round; garage ridge ≈11'-2" (sheet A-1); the house roofs use the garage pitch.
       {
-        const IS = 10, C30 = Math.cos(Math.PI / 6);
-        const q = (x, y, z = 0) => [(x + y) * C30 * IS, ((y - x) / 2 - z) * IS];
+        // projection (CLAUDE.md iso guides): S = 16 → 10 here, A = 30°; the viewBox is fitted below, so O = [0, 0].
+        // +X (ux, down-right) = plan y → street · +Y (uy, up-right) = plan x → garage Back · +Z (uz) = up.
+        // p() takes plan coordinates (x, y) + height z.
+        const S = 10, A = Math.PI / 6, O = [0, 0];
+        const ux = [Math.cos(A) * S, Math.sin(A) * S], uy = [Math.cos(A) * S, -Math.sin(A) * S], uz = [0, -S];
+        const p = (x, y, z = 0) => [O[0] + y * ux[0] + x * uy[0] + z * uz[0], O[1] + y * ux[1] + x * uy[1] + z * uz[1]];
+        const angX = Math.atan2(ux[1], ux[0]) * 180 / Math.PI;   // +30°  text along X (garage Front, jog, house left side)
+        const angY = Math.atan2(uy[1], uy[0]) * 180 / Math.PI;   // −30°  text along Y (street-facing walls)
         const r3 = v => +v.toFixed(3);
-        const GM = `matrix(${r3(C30 * IS)} ${r3(-IS / 2)} ${r3(C30 * IS)} ${r3(IS / 2)} 0 0)`;   // ground plane: plan feet → px
+        const GM = `matrix(${uy.map(r3).join(' ')} ${ux.map(r3).join(' ')} ${O.join(' ')})`;   // ground plane (z = 0): plan feet → px
         let o = '';
-        const face = (pts, attr) => o += `<polygon points="${pts.map(a => pt(q(...a))).join(' ')}" ${attr}/>`;
-        const seg = (a, b, attr) => { const A = q(...a), B = q(...b); o += `<line x1="${A[0].toFixed(1)}" y1="${A[1].toFixed(1)}" x2="${B[0].toFixed(1)}" y2="${B[1].toFixed(1)}" ${attr}/>`; };
+        const face = (pts, attr) => o += `<polygon points="${pts.map(a => pt(p(...a))).join(' ')}" ${attr}/>`;
+        const seg = (a, b, attr) => { const P = p(...a), Q = p(...b); o += `<line x1="${P[0].toFixed(1)}" y1="${P[1].toFixed(1)}" x2="${Q[0].toFixed(1)}" y2="${Q[1].toFixed(1)}" ${attr}/>`; };
         const fpath = segs => segs.map(([c, ...v]) => c + v.join(' ')).join(' ');
-        const skt = (a, ang, t, attr) => o += `<text transform="translate(${pt(q(...a))}) skewY(${ang})" ${attr}>${t}</text>`;
+        // surface label: skewY keeps the baseline on the face's axis, glyph verticals upright
+        const vtext = (P, ang, t, attr) => o += `<text transform="translate(${pt(P)}) skewY(${r3(ang)})" ${attr}>${t}</text>`;
         const ig = (c, fn) => { o += `<g class="anim ${c}">`; fn(); o += '</g>'; };
 
         const H = 8, slope = (11 + 2 / 12 - H) / (D.gD.v / 2);          // garage pitch (A-1)
@@ -818,14 +825,14 @@
 
         /* COB strip on the soffit centerline (drawn through the roof), feeds F1–F5 */
         ig('a4', () => {
-          const zs = H - 0.2, path3 = pts => 'M' + pts.map(a => pt(q(a[0], a[1], zs))).join('L');
+          const zs = H - 0.2, path3 = pts => 'M' + pts.map(a => pt(p(a[0], a[1], zs))).join('L');
           const seen = strip.slice(0, RUNS.length), hid = strip.slice(RUNS.length - 1);   // the garage-Back run is hidden
           o += `<path d="${path3(seen)}" fill="none" stroke="#ffd98a" stroke-width="10" stroke-opacity=".55" stroke-linejoin="round" stroke-linecap="round"/>`;
           o += `<path d="${path3(seen)}" fill="none" stroke="#E9A23B" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>`;
           o += `<path d="${path3(hid)}" fill="none" stroke="#E9A23B" stroke-width="2" stroke-dasharray="6 4"/>`;
           feeds.forEach((fd, k) => {
             const ov = k === NF - 1 ? [1, 0] : OUT[fd.run];
-            const c = q(fd.p[0], fd.p[1], zs), L = q(fd.p[0] + ov[0] * 3.2, fd.p[1] + ov[1] * 3.2, zs - 2.4);
+            const c = p(fd.p[0], fd.p[1], zs), L = p(fd.p[0] + ov[0] * 3.2, fd.p[1] + ov[1] * 3.2, zs - 2.4);
             o += `<line x1="${c[0].toFixed(1)}" y1="${c[1].toFixed(1)}" x2="${L[0].toFixed(1)}" y2="${L[1].toFixed(1)}" stroke="#883C1E" stroke-width="1.2"/>`;
             o += `<circle cx="${c[0].toFixed(1)}" cy="${c[1].toFixed(1)}" r="3.4" fill="#883C1E"/>`;
             CH.filter(ch => ch.k === k).forEach((ch, i) =>
@@ -837,12 +844,12 @@
 
         /* labels on the walls */
         ig('a5', () => {
-          skt([3, yM, 2.2], -30, 'HOUSE', 'class="facetxt" font-size="26" fill="#5C5446"');
-          skt([gx0 + 1.4, yS, 1.6], -30, 'GARAGE', 'class="facetxt" font-size="24" fill="#221F18"');
+          vtext(p(3, yM, 2.2), angY, 'HOUSE', 'class="facetxt" font-size="26" fill="#5C5446"');
+          vtext(p(gx0 + 1.4, yS, 1.6), angY, 'GARAGE', 'class="facetxt" font-size="24" fill="#221F18"');
         });
 
         // fit the viewBox to the slab and the roofs
-        const ext = [[X0, Y0, -SLAB], [X1, Y0, -SLAB], [X0, Y1, -SLAB], [X1, Y1, -SLAB], [X1, Y0, 0], [xw, -eave, Rw], [HW + eave, -eave, ez(slope)]].map(a => q(...a));
+        const ext = [[X0, Y0, -SLAB], [X1, Y0, -SLAB], [X0, Y1, -SLAB], [X1, Y1, -SLAB], [X1, Y0, 0], [xw, -eave, Rw], [HW + eave, -eave, ez(slope)]].map(a => p(...a));
         const bx = Math.min(...ext.map(a => a[0])) - 12, by = Math.min(...ext.map(a => a[1])) - 14;
         const bw = Math.max(...ext.map(a => a[0])) + 12 - bx, bh = Math.max(...ext.map(a => a[1])) + 12 - by;
         const iso = document.getElementById('iso');
