@@ -20,6 +20,7 @@
         repeating-linear-gradient(90deg, transparent 0 31px, rgba(199, 187, 163, .35) 31px 32px),
         var(--paper);
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
       padding: 40px 20px;
@@ -130,6 +131,17 @@
 </head>
 
 <body>
+<nav class="drawnav" aria-label="Drawing set">
+  <div class="drawnav-bar">
+    <a class="home" href="index.html" aria-current="page">Drawing Set</a>
+    <div class="sheets">
+      <a href="garage-isometric.html"><span class="no">A-1</span>Garage Massing</a>
+      <a href="wall-assembly-diagram.html"><span class="no">A-2</span>Wall Assembly</a>
+      <a href="basement-rooms-isometric.html"><span class="no">A-3</span>Basement Rooms</a>
+      <a href="exterior-led-soffit-lights.html"><span class="no">A-4</span>Soffit Lights</a>
+    </div>
+  </div>
+</nav>
   <main class="sheet">
     <p class="eyebrow">Drawing Set · Sheet Index</p>
     <h1>Carport → Garage Conversion</h1>
