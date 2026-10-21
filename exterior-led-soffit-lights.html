@@ -818,7 +818,6 @@
 
         /* walls (only the faces seen from this corner), doors, light wash under the lit soffits */
         const WS = 'stroke="#221F18" stroke-width="1" stroke-linejoin="round"';
-        const STREETF = `fill="#F3EFE7" ${WS}`, LEFTF = `fill="#DCD5C7" ${WS}`;
         // garage finishes (sheet A-1): red-brown 6" wood siding, white ledgestone wainscot on the Street Side, near-black gable
         const STONE = 4.5, SD = 0.5;               // wainscot height 4'-6" · 6" proud of the siding
         // warm light from the strip, fading down the wall; ta/tb: strip height at a/b; st: wall has the wainscot (stone 6" proud)
@@ -839,15 +838,24 @@
         };
         // chimney: drawn whole after the walls, then again after the roofs without the part behind the front overhang
         // (the strip of its street face between the rake and the roof surface, x ≥ EL.left, z < zr)
+        // white ledgestone (same as the garage wainscot): ≈5" courses, staggered joints; span(z) → [t0, t1] along a→b
+        const ledge = (a, b, zt, span) => {
+          const L = Math.hypot(b[0] - a[0], b[1] - a[1]), u = [(b[0] - a[0]) / L, (b[1] - a[1]) / L];
+          const at = (t, z) => [a[0] + u[0] * t, a[1] + u[1] * t, z], J = 'stroke="#a39c8e" stroke-width=".6" opacity=".7"';
+          for (let z = 0.42, i = 1; z < zt - 0.02; z += 0.42, i++) {
+            const [t0, t1] = span ? span(z) : [0, L];
+            if (t1 <= t0) continue;
+            seg(at(t0, z), at(t1, z), J);
+            for (let t = i % 2 ? 0.95 : 0.25; t < t1; t += 1.7) if (t > t0) seg(at(t, z - 0.42), at(t, z), J);
+          }
+        };
         const chimney = zr => {
           const { x0, x1, y0, y1, top } = chim, BR = 'stroke="#221F18" stroke-width="1" stroke-linejoin="round"';
           const xr = zr === undefined ? x1 : EL.left, z1 = zr === undefined ? 0 : zr;
-          face([[x0, y0, 0], [x0, y1, 0], [x0, y1, top], [x0, y0, top]], `fill="#DCD5C7" ${BR}`);   // faces the driveway side
-          face([[x0, y1, 0], [xr, y1, 0], [xr, y1, z1], [x1, y1, z1], [x1, y1, top], [x0, y1, top]], `fill="#F3EFE7" ${BR}`);   // faces the street
-          for (let z = 1.5; z < top - 0.5; z += 1.5) {                                             // brick courses
-            seg([x0, y0, z], [x0, y1, z], 'stroke="#9b8e74" stroke-width=".5" opacity=".6"');
-            seg([x0, y1, z], [z < z1 ? xr : x1, y1, z], 'stroke="#9b8e74" stroke-width=".5" opacity=".6"');
-          }
+          face([[x0, y0, 0], [x0, y1, 0], [x0, y1, top], [x0, y0, top]], `fill="#d9d3c6" ${BR}`);   // faces the driveway side
+          face([[x0, y1, 0], [xr, y1, 0], [xr, y1, z1], [x1, y1, z1], [x1, y1, top], [x0, y1, top]], `fill="#eee9de" ${BR}`);   // faces the street
+          ledge([x0, y0], [x0, y1], top);
+          ledge([x0, y1], [x1, y1], top, z => [0, (z < z1 ? xr : x1) - x0]);
           face([[x0, y0, top], [x0, y1, top], [x1, y1, top], [x1, y0, top]], `fill="#ECE3D2" ${BR}`);
           const cx = (x0 + x1) / 2, cy = (y0 + y1) / 2, a = 0.7, b = 1.1, h = 0.9;               // black flue cap
           face([[cx - a, cy - b, top + h], [cx - a, cy + b, top + h], [cx + a, cy + b, top + h], [cx + a, cy - b, top + h]], 'fill="#3A3F43" stroke="#221F18" stroke-width=".8"');
@@ -855,8 +863,10 @@
           face([[cx - a, cy + b, top], [cx + a, cy + b, top], [cx + a, cy + b, top + h], [cx - a, cy + b, top + h]], 'fill="#2b2f31"');
         };
         ig('a2', () => {
-          face([[0, 0, 0], [0, yM, 0], [0, yM, PL], [0, yR, Z], [0, 0, PL]], LEFTF);             // house left side + gable
-          face([[0, yM, 0], [hL, yM, 0], [hL, yM, PL], [0, yM, PL]], STREETF);                    // main front
+          face([[0, 0, 0], [0, yM, 0], [0, yM, PL], [0, yR, Z], [0, 0, PL]], `fill="#d9d3c6" ${WS}`);   // house left side + gable
+          ledge([0, 0], [0, yM], Z, z => z <= PL ? [0, yM] : [Math.max(0, yR - (Z - z) / sm), Math.min(yM, yR + (Z - z) / sm)]);
+          face([[0, yM, 0], [hL, yM, 0], [hL, yM, PL], [0, yM, PL]], `fill="#eee9de" ${WS}`);         // main front
+          ledge([0, yM], [hL, yM], PL);
           face([[DOOR, yM, 0], [DOOR + 3, yM, 0], [DOOR + 3, yM, 0.7 + 80 / 12], [DOOR, yM, 0.7 + 80 / 12]], 'fill="#5C5446"');   // entry door
           // jog + wing-front return (45 cm): dark charcoal-blue lap siding, horizontal courses only (owner photo)
           const shakes = (pts, a, b, z1) => {
