@@ -15,7 +15,7 @@
   <style>
     /* Page-specific color tokens (site, soffit, LED strip) */
     :root {
-      --lawn: #c9cfae;
+      --lawn: #8fbf6a;
       --paving: #d9d2c3;
       --street: #b9b3a6;
       --soffit: #eadcb8;
@@ -623,7 +623,7 @@
         const path = segs => segs.map(([c, ...v]) => c + v.reduce((a, n, i) =>
           i % 2 ? a : a.concat(pt(p(n, v[i + 1]))), []).join(' ')).join(' ');
         out += `<rect x="0" y="0" width="1080" height="${(ys + 24).toFixed(0)}" fill="url(#grid)"/>`;
-        out += `<rect x="20" y="${p(0, -4.5)[1].toFixed(1)}" width="1040" height="${(yc - p(0, -4.5)[1]).toFixed(1)}" fill="#c9cfae" opacity=".55"/>`;
+        out += `<rect x="20" y="${p(0, -4.5)[1].toFixed(1)}" width="1040" height="${(yc - p(0, -4.5)[1]).toFixed(1)}" fill="#8fbf6a" opacity=".85"/>`;
         const BEDF = 'fill="#b7a57c" opacity=".75"';
         rect(gx0, yS, HW, yS + BED, BEDF);                                            // 4'-0" flower bed (Street Side)
         rect(1, yM, 16.6, yM + 3.1, BEDF);                                             // bed along the main front
@@ -787,7 +787,7 @@
           face([[X0, Y0, 0], [X0, Y1, 0], [X0, Y1, -SLAB], [X0, Y0, -SLAB]], 'fill="#a9a393"');
           const NS = 'vector-effect="non-scaling-stroke"';
           o += `<g transform="${GM}">`;
-          o += `<rect x="${X0}" y="${Y0}" width="${X1 - X0}" height="${curb - Y0}" fill="#d3d5b7"/>`;
+          o += `<rect x="${X0}" y="${Y0}" width="${X1 - X0}" height="${curb - Y0}" fill="#8fbf6a"/>`;
           const BEDF = 'fill="#b7a57c" opacity=".75"', CONC = 'fill="#d9d2c3"';
           o += `<rect x="${gx0}" y="${yS}" width="${D.gD.v}" height="${BED}" ${BEDF}/>`;
           o += `<rect x="1" y="${yM}" width="15.6" height="3.1" ${BEDF}/>`;
