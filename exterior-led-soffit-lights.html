@@ -227,6 +227,7 @@
           <tr><td>House left side (first 1 m) — length</td><td id="len-left">—</td></tr>
           <tr><td>House main front — length</td><td id="len-main">—</td></tr>
           <tr><td>9'-10" jog — length</td><td id="len-jog">—</td></tr>
+          <tr><td>Bedroom-wing front (open part) — length</td><td id="len-wing">—</td></tr>
           <tr><td>Garage Front (door wall) — length</td><td id="len-gfront">—</td></tr>
           <tr><td>Garage Street-Side gable — length</td><td id="len-grake">—</td></tr>
           <tr><td>Garage Back — length</td><td id="len-gback">—</td></tr>
@@ -236,7 +237,7 @@
       <div>
         <h3>Open Items</h3>
         <ol>
-          <li>The correct entry-door position on the 34'-4" front. The current value is ≈17'-6" from the left corner (from the aerial photo). The walk on the survey is ≈14'-8" to ≈20'-1" from the left corner.</li>
+          <li>The correct entry-door position on the 32'-10" front. The current value is ≈17'-6" from the left corner (from the aerial photo). The walk on the survey is ≈14'-8" to ≈20'-1" from the left corner.</li>
           <li>The final attic cable routes and lengths.</li>
           <li>The aluminum profile and diffuser product.</li>
           <li>The strip position in the soffit: at the center, near the fascia, or near the wall.</li>
@@ -436,7 +437,7 @@
           <tr><td>W5</td><td>Relay contact → PSU CN71 pin 5 (REMOTE ON/OFF), pin 8 (+12V-AUX)</td><td>2 — REMOTE, +12V-AUX</td><td>1</td></tr>
           <tr><td>W6 / W9</td><td>Dig-Quad fused output → strip 24V / GND pads (feeds F1–F5)</td><td>2 — +24V, GND</td><td>5</td></tr>
           <tr><td>W7</td><td>Dig-Quad LED1–LED4 → strip DI pad (CH1–CH4)</td><td>2 — DATA, GND</td><td>4</td></tr>
-          <tr><td>W8</td><td>Strip → strip, across a corner cut</td><td>3 — 24V, DATA, GND</td><td>4</td></tr>
+          <tr><td>W8</td><td>Strip → strip, across a corner cut</td><td>3 — 24V, DATA, GND</td><td>6</td></tr>
           <tr><td>—</td><td>Factory pigtail on each reel (JST)</td><td>3 — 24V, DATA, GND</td><td>7 reels</td></tr>
         </table>
         <ol style="margin-top:10px">
@@ -477,9 +478,9 @@
       // ---- dimensions — known:false values are placeholders, drawn to size but labelled TBD ----
       const D = {
         gW: { v: 19 + 11.5 / 12, known: true },   // garage Front/Back wall (runs toward the street)  19'-11½"
-        gD: { v: 20.25, known: true },            // garage Street/House Side wall = wing (survey)    20'-3"
-        hL: { v: 34 + 4 / 12, known: true },      // house main front wall (survey)                   34'-4"
-        wing: { v: 20.25, known: true },          // bedroom-wing front wall (survey)                 20'-3"
+        gD: { v: 20.25, known: true },            // garage Street/House Side wall (survey)           20'-3"
+        hL: { v: 32 + 10 / 12, known: true },     // house main front wall (sketch)                   32'-10"
+        wing: { v: 21.75, known: true },          // bedroom-wing front wall (sketch)                 21'-9"
         step: { v: 9 + 10 / 12, known: true },    // main front set back from the wing front           9'-10"
         hR: { v: 33, known: true },               // house share of the continuous right wall         33'-0"
         eave: { v: 0.8 / 0.3048, known: true },   // soffit width 80 cm — same all round (eaves + gable rakes)
@@ -504,7 +505,7 @@
       const hL = D.hL.v, HW = hL + D.wing.v;       // jog line / continuous right wall
       const yW = D.hR.v;                           // bedroom-wing front (garage House Side)
       const yM = yW - D.step.v;                    // house main front
-      const gx0 = HW - D.gD.v;                     // garage Front (door) wall — in line with the jog
+      const gx0 = HW - D.gD.v;                     // garage Front (door) wall — 1'-6" (≈45 cm, laser) behind the jog
       const yS = yW + D.gW.v;                      // garage Street Side
       // site from the 2025 survey, fitted to the house front walls (the site is rotated ≈18° to the house)
       const CURB = [[-40.21, 61.13], [64.3, 95.18]];   // flow line of the vertical curb
@@ -563,14 +564,14 @@
         { a: [HW + eave, -eave], b: [HW + eave, yS + rake], n: [1, 0], r: 'w' },       // continuous right wall
       ];
       const gq = (g, t) => [[...g.a], [...g.b], [g.b[0] + g.n[0] * t, g.b[1] + g.n[1] * t], [g.a[0] + g.n[0] * t, g.a[1] + g.n[1] * t]];
-      const strip = [[-c, yM - M1], [-c, yM + c], [hL - c, yM + c], [hL - c, yW + c],
+      const strip = [[-c, yM - M1], [-c, yM + c], [hL - c, yM + c], [hL - c, yW + c], [gx0 - c, yW + c],
         [gx0 - c, yS + c], [HW + c, yS + c], [HW + c, yW]];
-      const RUNS = ['left', 'main', 'jog', 'gfront', 'grake', 'gback'];   // strip[i] → strip[i+1]; jog → garage Front is straight
+      const RUNS = ['left', 'main', 'jog', 'wing', 'gfront', 'grake', 'gback'];   // strip[i] → strip[i+1]
       const runLen = RUNS.map((_, i) => Math.hypot(strip[i + 1][0] - strip[i][0], strip[i + 1][1] - strip[i][1]));
       const total = runLen.reduce((a, b) => a + b, 0);
-      const RUN_NAME = { left: 'House left side', main: 'House main front', jog: '9\'-10" jog',
+      const RUN_NAME = { left: 'House left side', main: 'House main front', jog: '9\'-10" jog', wing: 'Bedroom-wing front',
         gfront: 'Garage Front', grake: 'Garage Street-Side gable', gback: 'Garage Back' };
-      const OUT = { left: [-1, 0], main: [0, 1], jog: [-1, 0], gfront: [-1, 0], grake: [0, 1], gback: [1, 0] };
+      const OUT = { left: [-1, 0], main: [0, 1], jog: [-1, 0], wing: [0, 1], gfront: [-1, 0], grake: [0, 1], gback: [1, 0] };
 
       // ---- wiring: controller + PSU in the garage's top-left corner (House Side / Front); 5 feeds; 4 data channels ----
       const ctrl = [gx0 + 6.1, yW + 2.05];
@@ -623,11 +624,11 @@
         // concrete driveway + entry walk (one slab on the survey): curb → street side of the garage → garage door wall →
         // planting bed → main front at the walk → walk → driveway edge on the house side → curb
         conc: smooth([[-2.63, 73.25, 1], [-3.51, 68.72], [-2, 62.79], [-0.48, 60.72], [1.7, 57.99], [4.71, 55.99], [7.67, 54.8],
-          [10.1, 53.89], [13.7, 53.58], [23.6, 52.72], [gx0, yS, 1], [hL, yW, 1], [22.08, 35.53], [20.63, 34.84], [19.61, 32.58],
+          [10.1, 53.89], [13.7, 53.58], [23.6, 52.72], [gx0, yS, 1], [gx0, yW, 1], [hL, yW, 1], [22.08, 35.53], [20.63, 34.84], [19.61, 32.58],
           [20.06, yM, 1], [14.66, yM, 1], [14.33, 33], [14.1, 35.06], [12.82, 36.36], [11.4, 36.75], [9.41, 36.96], [4.11, 38.45],
           [-2.36, 41.16], [-4.4, 41.88], [-7.35, 44.35], [-11.31, 47.33], [-14.9, 50.46], [-17.45, 53.04], [-19.81, 56.35],
           [-21.91, 60.16], [-24.32, 64.29], [-25.31, 65.86, 1]]),
-        // planting bed in the corner between the walk, the jog and the garage door wall
+        // planting bed in the corner between the walk and the jog
         bed: smooth([[hL, yM, 1], [hL, yW, 1], [22.08, 35.53], [20.63, 34.84], [19.61, 32.58], [20.06, yM, 1]]),
       };
 
@@ -664,6 +665,7 @@
         rect(-eave, yM, hL - eave, yM + eave, SOF);                 // house main front
         rect(gx0 - eave, yS, HW + eave, yS + rake, SOF);           // garage Street-Side gable
         rect(hL - eave, yM + eave, hL, yW, SOF);                   // 9'-10" jog
+        rect(hL - eave, yW, gx0 - eave, yW + eave, SOF);           // bedroom-wing front (open part, 1'-6")
         rect(gx0 - eave, yW + eave, gx0, yS, SOF);                 // garage door wall
         rect(HW, yW, HW + eave, yS, SOF);                          // garage back wall
         for (const g of GUTTERS) poly(gq(g, GUT).map(q => p(...q)), 'fill="#c9cdd0" stroke="#8A9197" stroke-width=".8"');
@@ -877,7 +879,7 @@
           }
           face([[gx0, yS, STONE], [HW, yS, STONE], [HW, yo, STONE], [gx0, yo, STONE]], `fill="#f6f2ea" ${WS}`);   // top ledge
           wash([0, yM - M1], [0, yM]); wash([0, yM], [hL, yM]); wash([hL, yM], [hL, yW]);
-          wash([gx0, yW], [gx0, yS]); wash([gx0, yS], [HW, yS], true);
+          wash([hL, yW], [gx0, yW]); wash([gx0, yW], [gx0, yS]); wash([gx0, yS], [HW, yS], true);
           chimney();
         });
 
@@ -949,8 +951,8 @@
       set('pb-max', `${ap}${n0(Wmax)} W · ${n1(Wmax / V)} A`);
       set('pb-limit', `${n0(Wlim)} W · ${n1(Wlim / Lm)} W/m · ${Math.min(100, +(100 * Wlim / Wwhite).toFixed(1))}% of full W`);
       // feeds & data tables
-      const RUN_FROM = { left: 'strip start', main: 'left-front corner', jog: 'main-front corner',
-        gfront: 'House-Side corner', grake: 'garage-Front corner', gback: 'gable corner' };   // run start (strip direction)
+      const RUN_FROM = { left: 'strip start', main: 'left-front corner', jog: 'main-front corner', wing: 'jog corner',
+        gfront: 'wing corner', grake: 'garage-Front corner', gback: 'gable corner' };   // run start (strip direction)
       const Apm = 70 / 5 / V;
       const est = r => (plen(r) + DROP) * SLACK;                         // cable to buy for one run (ft)                                            // A per metre at 100% warm white
       const fuse = a => a <= 4 ? '5 A (standard)' : a <= 6 ? '7.5 A' : '10 A';
@@ -975,7 +977,7 @@
       html('cable-rows', [
         ['W6, W9 — power feeds F1–F5', '14 AWG', '2-conductor, stranded copper, red / black, jacketed; wet-rated at the soffit end', `${ap}${n0(pw)} ft`, `${buy(pw)} ft`],
         ['W7 — data CH1–CH4', '20 AWG', '2-conductor (DATA + GND), stranded copper, twisted pair, jacketed; one cable for each channel', `${ap}${n0(dt)} ft`, `${buy(dt)} ft`],
-        ['W8 — corner jumpers (4 × 6–12 in)', '20 AWG', '3-conductor, silicone-insulated stranded copper; adhesive-lined heat-shrink on each joint', '≈4 ft', '5 ft'],
+        ['W8 — corner jumpers (6 × 6–12 in)', '20 AWG', '3-conductor, silicone-insulated stranded copper; adhesive-lined heat-shrink on each joint', '≈6 ft', '10 ft'],
         ['W2 — PSU → Dig-Quad', '10 AWG', '2-conductor, fine-stranded copper, with ferrules', 'distance between the units', '≈2 × 3 ft'],
         ['W3, W5 — PSU CN71 control harness', '≈26 AWG (harness)', '<a href="https://www.aliexpress.us/item/3256807786878164.html?gatewayAdapt=glo2usa4itemAdapt" target="_blank" rel="noopener">JST PHD PHDR-14VS pre-crimped harness</a>, 14 positions, single end (Conbeone CB030485)', '1 harness', '1 × 300 mm'],
         ['W4 — Q1R → relay', '22 AWG', '3-conductor stranded hookup wire', '≈3 ft', '5 ft'],
