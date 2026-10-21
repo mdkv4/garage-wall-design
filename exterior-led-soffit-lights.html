@@ -238,7 +238,6 @@
       <div>
         <h3>Open Items</h3>
         <ol>
-          <li>The correct entry-door position on the 34'-0¼" front. The drawing centers it on the surveyed walk (≈14'-6" to ≈19'-11" from the left corner).</li>
           <li>The final attic cable routes and lengths.</li>
           <li>The aluminum profile and diffuser product.</li>
           <li>The strip position in the soffit: at the center, near the fascia, or near the wall.</li>
@@ -489,7 +488,8 @@
       // garage-door layout along the Front wall, from the House-Side corner (Spec Sheet)
       const segH = 2 + 2.75 / 12, GD = 16 + 2.5 / 12, segS = 1 + 6.25 / 12;
       const BED = 4;                      // flower bed along the Street Side (Spec Sheet)
-      const DOOR = 15.7;                  // entry door, 3'-0", centered on the surveyed walk (assumed)
+      const DOOR = 17.3;                  // entry door, 3'-0" (owner photo)
+      const GLZ = [20.5, 29.6];           // full-height frosted glass, 4 panels, right of the entry door (owner photo)
       const T = 0.5;                      // wall thickness (plan)
 
       // ---- formatting ----
@@ -504,6 +504,7 @@
       const hL = D.hL.v, HW = hL + D.wing.v;       // jog line / continuous right wall
       const yW = D.hR.v;                           // bedroom-wing front (garage House Side)
       const yM = yW - D.step.v;                    // house main front
+      const JWIN = [yM + 2.2, yM + 6.8];           // sliding window in the jog wall, left of the garage door (owner photo)
       const gx0 = hL + RECESS;                     // garage Front (door) wall
       const yS = yW + D.gW.v;                      // garage Street Side
       // eave line (survey): the outer edge of the soffit on each side
@@ -692,6 +693,12 @@
         rect(DOOR, yM - T - 0.05, DOOR + 3, yM + 0.05, 'fill="#F5EFE2"');
         line(p(DOOR, yM - T), p(DOOR, yM - T - 3), 'stroke="#221F18" stroke-width=".8"');
         out += `<path d="M${pt(p(DOOR, yM - T - 3))} A${3 * S},${3 * S} 0 0 1 ${pt(p(DOOR + 3, yM - T))}" fill="none" stroke="#5C5446" stroke-width=".7" stroke-dasharray="3 2"/>`;
+        // full-height frosted glass (main front) and the jog-wall window: glazing in the wall band
+        const GL = 'fill="#e4ecec" stroke="#221F18" stroke-width=".7"';
+        rect(GLZ[0], yM - T, GLZ[1], yM, GL);
+        line(p(GLZ[0], yM - T / 2), p(GLZ[1], yM - T / 2), 'stroke="#221F18" stroke-width=".6"');
+        rect(hL, JWIN[0], hL + T, JWIN[1], GL);
+        line(p(hL + T / 2, JWIN[0]), p(hL + T / 2, JWIN[1]), 'stroke="#221F18" stroke-width=".6"');
         // back man-door (1'-0" off House Side, 3'-0") in the continuous right wall
         rect(HW - T - 0.05, yW + 1, HW + 0.05, yW + 4, 'fill="#F5EFE2"');
         line(p(HW - T, yW + 1), p(HW - T - 3, yW + 1), 'stroke="#221F18" stroke-width=".8"');
@@ -870,13 +877,30 @@
           ledge([0, 0], [0, yM], Z, z => z <= PL ? [0, yM] : [Math.max(0, yR - (Z - z) / sm), Math.min(yM, yR + (Z - z) / sm)]);
           face([[0, yM, 0], [hL, yM, 0], [hL, yM, PL], [0, yM, PL]], `fill="#eee9de" ${WS}`);         // main front
           ledge([0, yM], [hL, yM], PL);
-          face([[DOOR, yM, 0], [DOOR + 3, yM, 0], [DOOR + 3, yM, 0.7 + 80 / 12], [DOOR, yM, 0.7 + 80 / 12]], 'fill="#5C5446"');   // entry door
+          // entry door + full-height frosted glass in one dark frame (owner photo)
+          const FF = 0.7, mf = (x0, x1, z0, z1, fill) => face([[x0, yM, z0], [x1, yM, z0], [x1, yM, z1], [x0, yM, z1]], fill);
+          mf(DOOR - 0.7, GLZ[1] + 0.1, FF, PL - 0.4, 'fill="#2a2420" stroke="#1a1614" stroke-width=".8"');          // dark frame / side panel
+          mf(DOOR, DOOR + 3, FF + 0.05, FF + 80 / 12, 'fill="#5b3326" stroke="#1a1614" stroke-width=".8"');         // red-brown wood door
+          for (let i = 0; i < 5; i++) {                                                                           // 5 stacked frosted lites
+            const z0 = FF + 0.55 + i * 1.2;
+            mf(DOOR + 0.3, DOOR + 2.7, z0, z0 + 0.85, 'fill="#d3dbd8" stroke="#1a1614" stroke-width=".5"');
+          }
+          const gw = (GLZ[1] - GLZ[0] - 3 * 0.25) / 4;                                                           // 4 frosted panels, dark mullions
+          for (let i = 0; i < 4; i++) {
+            const x0 = GLZ[0] + i * (gw + 0.25);
+            mf(x0, x0 + gw, FF + 0.2, PL - 0.6, 'fill="#b9c7c5" stroke="#1a1614" stroke-width=".5"');
+          }
           // jog + wing-front return (45 cm): dark charcoal-blue lap siding, horizontal courses only (owner photo)
           const shakes = (pts, a, b, z1) => {
             face(pts, `fill="#3b4450" ${WS}`);
             for (let z = 0.65; z < z1 - 0.02; z += 0.65) seg([...a, z], [...b, z], 'stroke="#252b33" stroke-width=".6" opacity=".7"');
           };
           shakes([[hL, yM, 0], [hL, yW, 0], [hL, yW, PL], [hL, yM, PL]], [hL, yM], [hL, yW], PL);                   // jog
+          const jw = (y0, y1, z0, z1, fill) => face([[hL, y0, z0], [hL, y1, z0], [hL, y1, z1], [hL, y0, z1]], fill);
+          jw(JWIN[0], JWIN[1], 3.2, 7.0, 'fill="#2a2420" stroke="#1a1614" stroke-width=".8"');                      // jog window: dark frame
+          const jm = (JWIN[0] + JWIN[1]) / 2;
+          jw(JWIN[0] + 0.15, jm - 0.06, 3.35, 6.85, 'fill="#c9ccc4" stroke="#1a1614" stroke-width=".5"');          // two sliding sashes
+          jw(jm + 0.06, JWIN[1] - 0.15, 3.35, 6.85, 'fill="#d9d4c6" stroke="#1a1614" stroke-width=".5"');
           shakes([[hL, yW, 0], [gx0, yW, 0], [gx0, yW, zw(gx0)], [hL, yW, PL]], [hL, yW], [gx0, yW], PL);          // wing front, open part (45 cm)
           const zf = zw(gx0), zb = zw(HW);                                                     // garage wall tops at the roof
           siding([[gx0, yW, 0], [gx0, yS, 0], [gx0, yS, zf], [gx0, yW, zf]], '#8f5233', [gx0, yW], [gx0, yS], 0, zf);   // garage Front
