@@ -491,7 +491,7 @@
       const DOOR = 14.52;                 // entry door, 3'-0"; left edge in line with the surveyed walk (owner photo)
       const GLZ = [DOOR + 3.2, DOOR + 12.3];   // full-height frosted glass, 4 panels, right of the entry door (owner photo)
       const GR = [0.6, 1, 1, 1], GU = (GLZ[1] - GLZ[0] - 3 * 0.25) / 3.6;   // panel widths: the first is narrower (× GU)
-      const STEP = { x0: DOOR - 0.2, x1: GLZ[0] + GR[0] * GU + 0.2, d: 3, h: 0.35 };   // raised concrete step, door + first panel
+      const STEP = { x0: DOOR - 0.2, x1: GLZ[0] + GR[0] * GU + 0.2, d: 3, h: 0.7 };    // raised concrete step, door + first panel; top at the main floor (FF 341.70)
       const T = 0.5;                      // wall thickness (plan)
 
       // ---- formatting ----
@@ -884,7 +884,7 @@
           // entry door + full-height frosted glass in one dark frame (owner photo)
           const FF = 0.7, mf = (x0, x1, z0, z1, fill) => face([[x0, yM, z0], [x1, yM, z0], [x1, yM, z1], [x0, yM, z1]], fill);
           mf(DOOR - 0.7, GLZ[1] + 0.1, FF, PL - 0.4, 'fill="#2a2420" stroke="#1a1614" stroke-width=".8"');          // dark frame / side panel
-          mf(DOOR, DOOR + 3, FF + 0.05, FF + 80 / 12, 'fill="#5b3326" stroke="#1a1614" stroke-width=".8"');         // red-brown wood door
+          mf(DOOR, DOOR + 3, FF, FF + 80 / 12, 'fill="#5b3326" stroke="#1a1614" stroke-width=".8"');         // red-brown wood door
           for (let i = 0; i < 5; i++) {                                                                           // 5 stacked frosted lites
             const z0 = FF + 0.55 + i * 1.2;
             mf(DOOR + 0.3, DOOR + 2.7, z0, z0 + 0.85, 'fill="#d3dbd8" stroke="#1a1614" stroke-width=".5"');
