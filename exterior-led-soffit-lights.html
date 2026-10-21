@@ -883,7 +883,7 @@
           ledge([0, yM], [hL, yM], PL);
           // entry door + full-height frosted glass in one dark frame (owner photo)
           const FF = 0.7, mf = (x0, x1, z0, z1, fill) => face([[x0, yM, z0], [x1, yM, z0], [x1, yM, z1], [x0, yM, z1]], fill);
-          mf(DOOR - 0.7, GLZ[1] + 0.1, FF, PL - 0.4, 'fill="#2a2420" stroke="#1a1614" stroke-width=".8"');          // dark frame / side panel
+          mf(DOOR - 0.1, GLZ[1] + 0.1, FF, PL - 0.4, 'fill="#2a2420" stroke="#1a1614" stroke-width=".8"');          // dark frame
           mf(DOOR, DOOR + 3, FF, FF + 80 / 12, 'fill="#5b3326" stroke="#1a1614" stroke-width=".8"');         // red-brown wood door
           for (let i = 0; i < 5; i++) {                                                                           // 5 stacked frosted lites
             const z0 = FF + 0.55 + i * 1.2;
