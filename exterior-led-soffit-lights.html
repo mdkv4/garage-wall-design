@@ -183,7 +183,7 @@
 
     <div class="plannotes">
       <span><b>Isometric view</b> — from the corner of the street and the driveway.</span>
-      <span><b>Heights</b> — plate 8'-0" and garage ridge ≈11'-2" (sheet A-1). The house roofs use the garage pitch (assumed).</span>
+      <span><b>Heights</b> — all ridges ≈12'-1" above the front grade (2025 survey). Plate ≈8'-0" above the main floor (assumed).</span>
       <span><b>Garage finishes</b> — red-brown wood siding, white stone wainscot (lower 4'-6") on the Street Side, near-black gable (sheet A-1).</span>
       <span><b>LED strip</b> — shown through the roof. The dashed part on the garage Back is hidden in this view.</span>
     </div>
@@ -206,10 +206,11 @@
 
 
     <div class="plannotes">
+      <span><b>Dashed outline</b> — eave line (survey): eaves ≈2'-4" to 3'-9", gable rakes ≈10" to 1'-1".</span>
       <span><b style="color:#8A9197">Gray band</b> — gutter (≈15 cm), on the eaves only.</span>
       <span><b style="color:var(--teal)">◯ teal ring</b> on a feed — start of a data channel (one ring for each channel).</span>
       <span><b>Dashed box</b> — controller and PSU, in the attic.</span>
-      <span><b>Driveway, walk, curb, property lines</b> — from the 2025 site survey. <b>Beds</b> — approximate.</span>
+      <span><b>House, chimney, driveway, walks, curb, property lines</b> — 2025 site survey (DXF). <b>Garage Front</b> — 45 cm behind the jog (laser). <b>Beds</b> — approximate.</span>
     </div>
 
     <section class="spec">
@@ -224,10 +225,9 @@
           <tr><td>Channel / diffuser</td><td><a href="https://quinled.info/aluminium-profile-and-12mm-cob-strips/" target="_blank" rel="noopener">Al profile</a>, min. 15 mm clear width</td></tr>
           <tr><td>Controller</td><td><a href="https://quinled.info/quinled-dig-quad-pre-assembled-v3-1-specifications/" target="_blank" rel="noopener">QuinLED Dig-Quad</a> (pre-assembled) · <a href="https://kno.wled.ge/" target="_blank" rel="noopener">WLED</a></td></tr>
           <tr><td>Power supply</td><td><a href="https://www.meanwell.com/Upload/PDF/HEP-1000/HEP-1000-SPEC.PDF" target="_blank" rel="noopener">Mean Well HEP-1000-24</a> (terminal type) · 24V 42 A (1,008 W) · IP67 · no fan · −40 to +70 °C</td></tr>
-          <tr><td>House left side (first 1 m) — length</td><td id="len-left">—</td></tr>
+          <tr><td>House left side (chimney → corner) — length</td><td id="len-left">—</td></tr>
           <tr><td>House main front — length</td><td id="len-main">—</td></tr>
-          <tr><td>9'-10" jog — length</td><td id="len-jog">—</td></tr>
-          <tr><td>Bedroom-wing front (open part) — length</td><td id="len-wing">—</td></tr>
+          <tr><td>Jog — length</td><td id="len-jog">—</td></tr>
           <tr><td>Garage Front (door wall) — length</td><td id="len-gfront">—</td></tr>
           <tr><td>Garage Street-Side gable — length</td><td id="len-grake">—</td></tr>
           <tr><td>Garage Back — length</td><td id="len-gback">—</td></tr>
@@ -237,10 +237,10 @@
       <div>
         <h3>Open Items</h3>
         <ol>
-          <li>The correct entry-door position on the 32'-10" front. The current value is ≈17'-6" from the left corner (from the aerial photo). The walk on the survey is ≈14'-8" to ≈20'-1" from the left corner.</li>
+          <li>The correct entry-door position on the 34'-0¼" front. The drawing centers it on the surveyed walk (≈14'-6" to ≈19'-11" from the left corner).</li>
           <li>The final attic cable routes and lengths.</li>
           <li>The aluminum profile and diffuser product.</li>
-          <li>The strip position in the soffit: at the center, near the fascia, or near the wall.</li>
+          <li>The strip position in the soffit: at the center, near the fascia, or near the wall. On the driveway side the soffit is one straight piece (≈2'-4" over the jog, ≈3'-9" over the garage Front); the drawing runs the strip straight, centered over the jog.</li>
         </ol>
       </div>
     </section>
@@ -437,7 +437,7 @@
           <tr><td>W5</td><td>Relay contact → PSU CN71 pin 5 (REMOTE ON/OFF), pin 8 (+12V-AUX)</td><td>2 — REMOTE, +12V-AUX</td><td>1</td></tr>
           <tr><td>W6 / W9</td><td>Dig-Quad fused output → strip 24V / GND pads (feeds F1–F5)</td><td>2 — +24V, GND</td><td>5</td></tr>
           <tr><td>W7</td><td>Dig-Quad LED1–LED4 → strip DI pad (CH1–CH4)</td><td>2 — DATA, GND</td><td>4</td></tr>
-          <tr><td>W8</td><td>Strip → strip, across a corner cut</td><td>3 — 24V, DATA, GND</td><td>6</td></tr>
+          <tr><td>W8</td><td>Strip → strip, across a corner cut</td><td>3 — 24V, DATA, GND</td><td>4</td></tr>
           <tr><td>—</td><td>Factory pigtail on each reel (JST)</td><td>3 — 24V, DATA, GND</td><td>7 reels</td></tr>
         </table>
         <ol style="margin-top:10px">
@@ -461,9 +461,9 @@
     </section>
 
     <footer class="fn">
-      <span>Layout study only. The strip lengths are measured on the soffit centerline. They change with the soffit width.
-        The power values are calculated from the QuinLED reel data. The drawing shows the rear wall of the house as straight
-        (not surveyed). The electrician must approve the soffit framing, the power-supply location and the circuits. Use
+      <span>Layout study only. The strip lengths are measured on the soffit centerline. They change with the strip position.
+        The power values are calculated from the QuinLED reel data. The house outline, eave line, ridge heights, chimney and site
+        are from the 2025 site survey; the garage Front position is from an owner laser measurement. The electrician must approve the soffit framing, the power-supply location and the circuits. Use
         COB strip, channels and power supplies that are rated for damp or wet locations.</span>
     </footer>
   </div>
@@ -475,19 +475,20 @@
       const O = [325, 60];                // model origin (house rear-left corner) in screen px
       const p = (x, y) => [O[0] + x * S, O[1] + y * S];   // model feet → screen px (+x right, +y toward the street)
 
-      // ---- dimensions — known:false values are placeholders, drawn to size but labelled TBD ----
+      // ---- dimensions (2025 site survey DXF, except the garage Front recess: owner laser measurement) ----
       const D = {
-        gW: { v: 19 + 11.5 / 12, known: true },   // garage Front/Back wall (runs toward the street)  19'-11½"
-        gD: { v: 20.25, known: true },            // garage Street/House Side wall (survey)           20'-3"
-        hL: { v: 32 + 10 / 12, known: true },     // house main front wall (sketch)                   32'-10"
-        wing: { v: 21.75, known: true },          // bedroom-wing front wall (sketch)                 21'-9"
-        step: { v: 9 + 10 / 12, known: true },    // main front set back from the wing front           9'-10"
-        hR: { v: 33, known: true },               // house share of the continuous right wall         33'-0"
-        eave: { v: 0.8 / 0.3048, known: true },   // soffit width 80 cm — same all round (eaves + gable rakes)
+        gW: { v: 20, known: true },               // garage Front/Back wall (runs toward the street)  20'-0"
+        hL: { v: 34.02, known: true },            // house main front wall                            34'-0¼"
+        wing: { v: 20.66, known: true },          // bedroom-wing front wall                          20'-7⅞"
+        step: { v: 9.81, known: true },           // main front set back from the wing front           9'-9¾"
+        hR: { v: 29.31, known: true },            // house share of the right wall (to the main rear)  29'-3¾"
       };
+      const REAR = 3;                     // rear bump of the wing (upper floor over the lower level), x ≥ 33.17
+      const RECESS = 0.45 / 0.3048;       // garage Front behind the jog — 45 cm (owner, laser)
       // garage-door layout along the Front wall, from the House-Side corner (Spec Sheet)
       const segH = 2 + 2.75 / 12, GD = 16 + 2.5 / 12, segS = 1 + 6.25 / 12;
       const BED = 4;                      // flower bed along the Street Side (Spec Sheet)
+      const DOOR = 15.7;                  // entry door, 3'-0", centered on the surveyed walk (assumed)
       const T = 0.5;                      // wall thickness (plan)
 
       // ---- formatting ----
@@ -497,19 +498,18 @@
         const ft = Math.floor(e / 96), r = e - ft * 96;
         return `${ft}'-${Math.floor(r / 8)}${FR[r % 8]}"`;
       }
-      const lab = k => D[k].known ? ftin(D[k].v) : 'TBD';
-      const cls = k => D[k].known ? 'dimtxt' : 'tbdtxt';
 
       // ---- derived geometry (feet) ----
-      const eave = D.eave.v, rake = eave;          // one soffit width everywhere
       const hL = D.hL.v, HW = hL + D.wing.v;       // jog line / continuous right wall
       const yW = D.hR.v;                           // bedroom-wing front (garage House Side)
       const yM = yW - D.step.v;                    // house main front
-      const gx0 = HW - D.gD.v;                     // garage Front (door) wall — 1'-6" (≈45 cm, laser) behind the jog
+      const gx0 = hL + RECESS;                     // garage Front (door) wall
       const yS = yW + D.gW.v;                      // garage Street Side
-      // site from the 2025 survey, fitted to the house front walls (the site is rotated ≈18° to the house)
-      const CURB = [[-40.21, 61.13], [64.3, 95.18]];   // flow line of the vertical curb
-      const LOT = [[-23.93, 55.31], [52.14, 80.09], [86.16, -24.35], [10.1, -49.14]];   // property lines
+      // eave line (survey): the outer edge of the soffit on each side
+      const EL = { left: -0.82, rear: -3.71, main: 22.28, drive: 31.72, right: 57.57, rake: 50.38 };
+      // site from the 2025 survey DXF (the site is rotated ≈18° to the house)
+      const CURB = [[-34.98, 59.25], [63.18, 91.52]];  // flow line of the vertical curb
+      const LOT = [[-23.94, 51.46], [52.08, 76.39], [86.35, -28.13], [10.33, -53.07]];   // property lines
       const cdx = CURB[1][0] - CURB[0][0], cdy = CURB[1][1] - CURB[0][1], cln = Math.hypot(cdx, cdy);
       const CN = [-cdy / cln, cdx / cln];          // unit normal, curb → street
       const curbAng = Math.atan2(cdy, cdx) * 180 / Math.PI;
@@ -550,28 +550,29 @@
         else rtext([m[0] - 4, m[1] + nudge], -90, t, `class="${tc}" text-anchor="middle"`);
       }
 
-      // COB LED strip: one continuous run along the soffit centerline, first 1 m of the house left side → garage Back
-      const c = eave / 2, M1 = 1 / 0.3048;            // 1 m in feet
-      // exterior brick chimney on the house left side; its front face is where the strip starts (owner; size and height assumed)
-      const chim = { x0: -3.5, x1: 0, y0: yM - M1 - 4.5, y1: yM - M1, top: 14 };
-      // gutters (≈15 cm) beyond the fascia, on the eaves only (not on the gable rakes): edge a→b, outward n, roof m(ain)/w(ing+garage)
+      // exterior brick chimney on the house left side (survey); its front face is where the strip starts (height assumed)
+      const chim = { x0: -1.75, x1: 0, y0: 10.01, y1: 15.77, top: 14 };
+      // gutters (≈15 cm) beyond the fascia, on the eaves only (not on the gable rakes): edge a→b, outward n
       const GUT = 0.15 / 0.3048;
       const GUTTERS = [
-        { a: [-eave, -eave], b: [hL - eave, -eave], n: [0, -1], r: 'm' },              // main block, rear
-        { a: [-eave, yM + eave], b: [hL - eave, yM + eave], n: [0, 1], r: 'm' },       // main front
-        { a: [hL - eave, yM + eave], b: [hL - eave, yW + eave], n: [-1, 0], r: 'w' },  // wing, above the jog
-        { a: [gx0 - eave, yW + eave], b: [gx0 - eave, yS + rake], n: [-1, 0], r: 'w' }, // garage Front
-        { a: [HW + eave, -eave], b: [HW + eave, yS + rake], n: [1, 0], r: 'w' },       // continuous right wall
+        { a: [EL.left, EL.rear], b: [EL.drive, EL.rear], n: [0, -1], k: 'rear' },       // main block, rear
+        { a: [EL.left, EL.main], b: [EL.drive, EL.main], n: [0, 1], k: 'main' },        // main front
+        { a: [EL.drive, EL.main], b: [EL.drive, EL.rake], n: [-1, 0], k: 'drive' },     // jog + garage Front (one straight eave)
+        { a: [EL.right, EL.rear], b: [EL.right, EL.rake], n: [1, 0], k: 'right' },      // continuous right wall
       ];
       const gq = (g, t) => [[...g.a], [...g.b], [g.b[0] + g.n[0] * t, g.b[1] + g.n[1] * t], [g.a[0] + g.n[0] * t, g.a[1] + g.n[1] * t]];
-      const strip = [[-c, yM - M1], [-c, yM + c], [hL - c, yM + c], [hL - c, yW + c], [gx0 - c, yW + c],
-        [gx0 - c, yS + c], [HW + c, yS + c], [HW + c, yW]];
-      const RUNS = ['left', 'main', 'jog', 'wing', 'gfront', 'grake', 'gback'];   // strip[i] → strip[i+1]
+      // COB LED strip: one continuous run on the soffit centerline, chimney → garage Back. The driveway-side soffit is one
+      // straight piece (jog + garage Front), so the strip runs straight there, centered on the soffit over the jog.
+      const sx = { left: EL.left / 2, drive: (hL + EL.drive) / 2, right: (HW + EL.right) / 2 };
+      const sy = { main: (yM + EL.main) / 2, rake: (yS + EL.rake) / 2 };
+      const strip = [[sx.left, chim.y1], [sx.left, sy.main], [sx.drive, sy.main], [sx.drive, yW],
+        [sx.drive, sy.rake], [sx.right, sy.rake], [sx.right, yW]];
+      const RUNS = ['left', 'main', 'jog', 'gfront', 'grake', 'gback'];   // strip[i] → strip[i+1]; jog → garage Front is straight
       const runLen = RUNS.map((_, i) => Math.hypot(strip[i + 1][0] - strip[i][0], strip[i + 1][1] - strip[i][1]));
       const total = runLen.reduce((a, b) => a + b, 0);
-      const RUN_NAME = { left: 'House left side', main: 'House main front', jog: '9\'-10" jog', wing: 'Bedroom-wing front',
+      const RUN_NAME = { left: 'House left side', main: 'House main front', jog: 'Jog',
         gfront: 'Garage Front', grake: 'Garage Street-Side gable', gback: 'Garage Back' };
-      const OUT = { left: [-1, 0], main: [0, 1], jog: [-1, 0], wing: [0, 1], gfront: [-1, 0], grake: [0, 1], gback: [1, 0] };
+      const OUT = { left: [-1, 0], main: [0, 1], jog: [-1, 0], gfront: [-1, 0], grake: [0, 1], gback: [1, 0] };
 
       // ---- wiring: controller + PSU in the garage's top-left corner (House Side / Front); 5 feeds; 4 data channels ----
       const ctrl = [gx0 + 6.1, yW + 2.05];
@@ -610,26 +611,18 @@
       const dataDir = d => CH.find(c => d >= Math.min(c.from, c.to) && d <= Math.max(c.from, c.to)).to > d ? 1 : -1;
       const plen = r => r.slice(1).reduce((a, q, i) => a + Math.hypot(q[0] - r[i][0], q[1] - r[i][1]), 0);
 
-      // site outlines in plan feet, [cmd, x, y, ...] (shared by the plan and the isometric view)
-      // closed outline through survey points: Catmull-Rom curves; a point [x, y, 1] is a sharp corner
-      const smooth = P => {
-        const n = P.length, T = P.map((q, i) => q[2] ? [0, 0]
-          : [(P[(i + 1) % n][0] - P[(i + n - 1) % n][0]) / 2, (P[(i + 1) % n][1] - P[(i + n - 1) % n][1]) / 2]);
-        return [['M', P[0][0], P[0][1]], ...P.map((q, i) => {
-          const j = (i + 1) % n, r = P[j];
-          return ['C', q[0] + T[i][0] / 3, q[1] + T[i][1] / 3, r[0] - T[j][0] / 3, r[1] - T[j][1] / 3, r[0], r[1]];
-        })];
-      };
+      // site outlines from the 2025 survey DXF, in plan feet (arcs flattened); the driveway meets the garage Front at gx0
+      const DRIVE = [[-2.51, 69.41], [-2.96, 67.88], [-3.23, 66.32], [-3.31, 64.76], [-3.2, 63.19], [-2.9, 61.66], [-2.42, 60.16], [-1.75, 58.73], [-0.91, 57.37], [0.14, 56.03], [1.3, 54.8], [3.93, 52.7], [6.91, 51.13], [8.5, 50.56], [10.15, 50.14], [14.19, 49.37], [18.25, 48.71], [22.32, 48.16], [26.41, 47.72], [28.44, 47.57], [30.47, 47.52], [32.5, 47.56], [gx0, 47.69], [gx0, 30.9], [27.47, 31.6], [22.13, 31.76], [21.58, 31.62], [21.07, 31.37], [20.62, 31.01], [20.26, 30.57], [20.0, 30.06], [19.85, 29.51], [19.82, 28.95], [19.9, 28.38], [19.9, 19.5], [14.52, 19.5], [14.51, 29.6], [14.41, 30.55], [14.11, 31.44], [13.62, 32.25], [12.95, 32.93], [9.28, 33.91], [5.81, 34.52], [2.42, 35.43], [-0.87, 36.61], [-4.04, 38.07], [-7.08, 39.79], [-9.96, 41.77], [-12.68, 43.99], [-15.21, 46.46], [-17.17, 48.73], [-18.93, 51.15], [-20.48, 53.72], [-21.82, 56.41], [-22.78, 58.06], [-24.08, 59.44], [-25.64, 60.51], [-27.42, 61.21]];
+      const SIDEWALK = [[66.86, 10.1], [66.75, 11.86], [66.87, 13.61], [67.22, 15.34], [67.81, 17.0], [68.15, 17.91], [68.41, 18.84], [68.59, 19.79], [68.68, 20.75], [68.68, 21.5], [68.61, 22.24], [68.47, 22.97], [68.27, 23.69], [67.95, 24.49], [67.56, 25.25], [67.09, 25.97], [66.56, 26.64], [64.86, 28.63], [62.82, 30.24], [60.51, 31.41], [57.98, 32.11], [57.99, 49.08], [54.68, 49.08], [54.68, 29.08], [57.98, 29.08], [59.82, 28.46], [61.5, 27.52], [62.97, 26.28], [64.19, 24.78], [64.58, 24.32], [64.92, 23.82], [65.2, 23.28], [65.43, 22.72], [65.55, 22.28], [65.64, 21.82], [65.68, 21.36], [65.68, 20.9], [65.62, 20.2], [65.49, 19.51], [65.3, 18.84], [65.05, 18.19], [64.33, 16.14], [63.9, 14.02], [63.75, 11.87], [63.89, 9.7]];   // along the garage Back, to the rear
+      const PATIO = [[13.23, -10.07], [13.23, -8.8], [34.68, -8.8], [34.68, 0.0], [0.67, 0.0], [0.67, -10.07], [13.23, -10.07]];
+      const PAVER = [[-12.99, 12.72], [-11.56, 13.33], [-6.65, 0.12], [-3.59, -13.99], [-1.58, -16.0], [2.91, -21.58], [2.13, -22.21], [-2.32, -16.67], [-6.74, -12.26], [-9.83, -9.4], [-14.5, -8.06], [-14.22, -7.1], [-9.33, -8.5], [-6.05, -11.54], [-5.29, -12.3], [-7.89, -0.28]];   // concrete paver pathway, left side yard
+      const BED_EDGE = [23, 34];   // DRIVE[i0..i1]: driveway edge from the garage Front to the main front (planting bed side)
+      const CURB_BACK = [[-2.51, 69.41], [24.75, 78.38], [63.33, 91.05]];   // back of the vertical curb
+      const ring = P => [['M', ...P[0]], ...P.slice(1).map(q => ['L', ...q])];   // closed outline → path segments
       const SITE = {
-        // concrete driveway + entry walk (one slab on the survey): curb → street side of the garage → garage door wall →
-        // planting bed → main front at the walk → walk → driveway edge on the house side → curb
-        conc: smooth([[-2.63, 73.25, 1], [-3.51, 68.72], [-2, 62.79], [-0.48, 60.72], [1.7, 57.99], [4.71, 55.99], [7.67, 54.8],
-          [10.1, 53.89], [13.7, 53.58], [23.6, 52.72], [gx0, yS, 1], [gx0, yW, 1], [hL, yW, 1], [22.08, 35.53], [20.63, 34.84], [19.61, 32.58],
-          [20.06, yM, 1], [14.66, yM, 1], [14.33, 33], [14.1, 35.06], [12.82, 36.36], [11.4, 36.75], [9.41, 36.96], [4.11, 38.45],
-          [-2.36, 41.16], [-4.4, 41.88], [-7.35, 44.35], [-11.31, 47.33], [-14.9, 50.46], [-17.45, 53.04], [-19.81, 56.35],
-          [-21.91, 60.16], [-24.32, 64.29], [-25.31, 65.86, 1]]),
-        // planting bed in the corner between the walk and the jog
-        bed: smooth([[hL, yM, 1], [hL, yW, 1], [22.08, 35.53], [20.63, 34.84], [19.61, 32.58], [20.06, yM, 1]]),
+        conc: ring(DRIVE), side: ring(SIDEWALK), patio: ring(PATIO), paver: ring(PAVER),
+        // planting bed between the walk and the jog: main front → jog → wing front → garage Front → driveway edge
+        bed: ring([[hL, yM], [hL, yW], [gx0, yW], ...DRIVE.slice(BED_EDGE[0], BED_EDGE[1] + 1)]),
       };
 
       /* ---- SITE: paper grid, lawn, beds, concrete, street, property lines (survey) ---- */
@@ -645,8 +638,10 @@
         rect(gx0, yS, HW, yS + BED, BEDF);                                            // 4'-0" flower bed (Street Side)
         rect(1, yM, 14, yM + 3.1, BEDF);                                               // bed along the main front
         out += `<path d="${path(SITE.bed)} Z" ${BEDF}/>`;
-        out += `<path d="${path(SITE.conc)} Z" fill="#d9d2c3"/>`;
+        for (const k of ['conc', 'side', 'patio']) out += `<path d="${path(SITE[k])} Z" fill="#d9d2c3"/>`;
+        out += `<path d="${path(SITE.paver)} Z" fill="#cfc4ae"/>`;
         poly(STREET.map(q => p(...q)), 'fill="#b9b3a6"');
+        out += `<polyline points="${CURB_BACK.map(q => pt(p(...q))).join(' ')}" fill="none" stroke="#8A9197" stroke-width="1"/>`;
         line(p(...CURB[0]), p(...CURB[1]), 'stroke="#5C5446" stroke-width="1.6"');
         out += `<polygon points="${LOT.map(q => pt(p(...q))).join(' ')}" fill="none" stroke="#5C5446" stroke-width="1" stroke-dasharray="12 4 2 4"/>`;
         out += '</g>';
@@ -655,27 +650,23 @@
         text(p(6, 47), 'DRIVEWAY', 'class="lbl" font-size="10" fill="#5C5446" text-anchor="middle" letter-spacing="2"');
       });
 
-      /* ---- SOFFIT all round (roof edge dashed; buildings drawn over the footprint) + LIT RUNS ---- */
+      /* ---- SOFFIT all round (eave line dashed; buildings drawn over the footprint) + LIT RUNS ---- */
       group('a2', () => {
-        const roof = [[-eave, -eave], [HW + eave, -eave], [HW + eave, yS + rake], [gx0 - eave, yS + rake],
-          [gx0 - eave, yW + eave], [hL - eave, yW + eave], [hL - eave, yM + eave], [-eave, yM + eave]];
+        const roof = [[EL.left, EL.rear], [EL.right, EL.rear], [EL.right, EL.rake], [EL.drive, EL.rake], [EL.drive, EL.main], [EL.left, EL.main]];
         poly(roof.map(q => p(...q)), 'fill="#eadcb8" stroke="#5C5446" stroke-width="1" stroke-dasharray="6 4"');
-        const SOF = 'fill="#eadcb8" stroke="#AE4F2A" stroke-width="1.3"';   // lit runs: rust outline
-        rect(-eave, yM - M1, 0, yM, SOF);                          // house left side, first 1 m
-        rect(-eave, yM, hL - eave, yM + eave, SOF);                 // house main front
-        rect(gx0 - eave, yS, HW + eave, yS + rake, SOF);           // garage Street-Side gable
-        rect(hL - eave, yM + eave, hL, yW, SOF);                   // 9'-10" jog
-        rect(hL - eave, yW, gx0 - eave, yW + eave, SOF);           // bedroom-wing front (open part, 1'-6")
-        rect(gx0 - eave, yW + eave, gx0, yS, SOF);                 // garage door wall
-        rect(HW, yW, HW + eave, yS, SOF);                          // garage back wall
+        // lit soffit (rust outline): chimney → main front → jog + garage Front → Street-Side gable → garage Back
+        const lit = [[EL.left, chim.y1], [0, chim.y1], [0, yM], [hL, yM], [hL, yW], [gx0, yW], [gx0, yS], [HW, yS], [HW, yW],
+          [EL.right, yW], [EL.right, EL.rake], [EL.drive, EL.rake], [EL.drive, EL.main], [EL.left, EL.main]];
+        poly(lit.map(q => p(...q)), 'fill="#eadcb8" stroke="#AE4F2A" stroke-width="1.3"');
         for (const g of GUTTERS) poly(gq(g, GUT).map(q => p(...q)), 'fill="#c9cdd0" stroke="#8A9197" stroke-width=".8"');
       });
 
       /* ---- BUILDINGS ---- */
       group('a3', () => {
-        // house: main block + bedroom wing that steps 9'-10" toward the street
-        const ho = [[0, 0], [HW, 0], [HW, yW], [hL, yW], [hL, yM], [0, yM]];
-        const hi = [[T, T], [HW - T, T], [HW - T, yW - T], [hL + T, yW - T], [hL + T, yM - T], [T, yM - T]];
+        // house: main block + bedroom wing that steps 9'-9¾" toward the street, with a 3'-0" bump at the rear of the wing
+        const xb = 33.17;
+        const ho = [[0, 0], [xb, 0], [xb, -REAR], [HW, -REAR], [HW, yW], [hL, yW], [hL, yM], [0, yM]];
+        const hi = [[T, T], [xb + T, T], [xb + T, T - REAR], [HW - T, T - REAR], [HW - T, yW - T], [hL + T, yW - T], [hL + T, yM - T], [T, yM - T]];
         poly(ho.map(q => p(...q)), 'fill="#F5EFE2"');
         walls(ho, hi, 'fill="url(#hatch)" stroke="#221F18" stroke-width="1"');
         rect(chim.x0, chim.y0, chim.x1, chim.y1, 'fill="url(#hatch)" stroke="#221F18" stroke-width="1"');   // chimney
@@ -688,9 +679,9 @@
         rect(gx0 - 0.05, yW + segH, gx0 + T + 0.05, yW + segH + GD, 'fill="#F5EFE2"');
         line(p(gx0 + T / 2, yW + segH), p(gx0 + T / 2, yW + segH + GD), 'stroke="#221F18" stroke-width="1" stroke-dasharray="8 3"');
         // front entry door (main front wall, opens onto the porch pad)
-        rect(17.5, yM - T - 0.05, 20.5, yM + 0.05, 'fill="#F5EFE2"');
-        line(p(17.5, yM - T), p(17.5, yM - T - 3), 'stroke="#221F18" stroke-width=".8"');
-        out += `<path d="M${pt(p(17.5, yM - T - 3))} A${3 * S},${3 * S} 0 0 1 ${pt(p(20.5, yM - T))}" fill="none" stroke="#5C5446" stroke-width=".7" stroke-dasharray="3 2"/>`;
+        rect(DOOR, yM - T - 0.05, DOOR + 3, yM + 0.05, 'fill="#F5EFE2"');
+        line(p(DOOR, yM - T), p(DOOR, yM - T - 3), 'stroke="#221F18" stroke-width=".8"');
+        out += `<path d="M${pt(p(DOOR, yM - T - 3))} A${3 * S},${3 * S} 0 0 1 ${pt(p(DOOR + 3, yM - T))}" fill="none" stroke="#5C5446" stroke-width=".7" stroke-dasharray="3 2"/>`;
         // back man-door (1'-0" off House Side, 3'-0") in the continuous right wall
         rect(HW - T - 0.05, yW + 1, HW + 0.05, yW + 4, 'fill="#F5EFE2"');
         line(p(HW - T, yW + 1), p(HW - T - 3, yW + 1), 'stroke="#221F18" stroke-width=".8"');
@@ -737,28 +728,28 @@
       group('a5', () => {
         const hc = p(HW / 2, yW / 2 + 0.6);         // center of the whole house outline
         text([hc[0], hc[1]], 'HOUSE', 'class="facetxt" font-size="26" fill="#5C5446" text-anchor="middle"');
-        const gc = p(gx0 + D.gD.v / 2, yW + D.gW.v / 2);
+        const gc = p((gx0 + HW) / 2, yW + D.gW.v / 2);
         text([gc[0], gc[1] + 8], 'GARAGE', 'class="facetxt" font-size="24" fill="#221F18" text-anchor="middle" stroke="#F5EFE2" stroke-width="7" paint-order="stroke"');
-        text(p(19, yM - 3.9), 'ENTRY', 'class="lbl" font-size="9" fill="#5C5446" text-anchor="middle" letter-spacing="1"');
+        text(p(DOOR + 1.5, yM - 3.9), 'ENTRY', 'class="lbl" font-size="9" fill="#5C5446" text-anchor="middle" letter-spacing="1"');
       });
 
       /* ---- DIMENSIONS ---- */
       group('a6', () => {
         // house front: main wall (toward street), wing (read inside the wing), jog
-        dim([0, yM], [hL, yM], eave + 3.6, ftin(hL), 'dimtxt', -60);
+        dim([0, yM], [hL, yM], EL.main - yM + 3.6, ftin(hL), 'dimtxt', -60);
         dim([hL, yW], [HW, yW], -1.8, ftin(D.wing.v), 'dimtxt');
-        dim([hL, yM], [hL, yW], -(eave + 1.8), ftin(D.step.v), 'dimtxt');
-        // lit length of the house left side (1 m back from the front corner)
-        dim([0, yM - M1], [0, yM], -(eave + 1.4), '1 m · ' + ftin(M1), 'dimsm');
-        // continuous right wall (witness lines toward +x)
-        dim([HW, 0], [HW, yW], eave + 2.4, ftin(D.hR.v), 'dimtxt');
-        dim([HW, yW], [HW, yS], eave + 2.4, ftin(D.gW.v), 'dimtxt');
-        dim([HW, 0], [HW, yS], eave + 4.6, ftin(yS), 'dimtxt');
+        dim([hL, yM], [hL, yW], -(hL - EL.drive + 1.8), ftin(D.step.v), 'dimtxt');
+        // lit length of the house left side (chimney front face → front corner)
+        dim([0, chim.y1], [0, yM], -(-chim.x0 + 0.9), ftin(yM - chim.y1), 'dimsm');
+        // continuous right wall incl. the rear bump (witness lines toward +x)
+        dim([HW, -REAR], [HW, yW], EL.right - HW + 2.4, ftin(yW + REAR), 'dimtxt');
+        dim([HW, yW], [HW, yS], EL.right - HW + 2.4, ftin(D.gW.v), 'dimtxt');
+        dim([HW, -REAR], [HW, yS], EL.right - HW + 4.6, ftin(yS + REAR), 'dimtxt');
         // garage Street Side, past the flower bed
-        dim([gx0, yS], [HW, yS], rake + 5.6, ftin(D.gD.v), 'dimtxt');
+        dim([gx0, yS], [HW, yS], EL.rake - yS + 5.6, ftin(HW - gx0), 'dimtxt');
         // soffit width, across the main-front soffit
-        dim([6, yM], [6, yM + eave], 0, '', 'dimsm');
-        text(p(6.5, yM + eave + 1.5), 'SOFFIT ' + lab('eave'), `class="${cls('eave')}" font-size="9" text-anchor="start"`);
+        dim([6, yM], [6, EL.main], 0, '', 'dimsm');
+        text(p(6.5, EL.main + 1.5), 'SOFFIT ' + ftin(EL.main - yM), 'class="dimtxt" font-size="9" text-anchor="start"');
       });
 
       svg.insertAdjacentHTML('beforeend', out);
@@ -766,7 +757,7 @@
 
       /* ======== ISOMETRIC VIEW — from the street + driveway corner ======== */
       // plan x (→ garage Back) goes up-right, plan y (→ street) goes down-right, z goes up.
-      // Plate 8'-0" all round; garage ridge ≈11'-2" (sheet A-1); the house roofs use the garage pitch.
+      // Heights from the survey: ridges EL 353.13 (all roofs), front grade ≈341.0 (z = 0), main floor 341.70.
       {
         // projection (CLAUDE.md iso guides): S = 16 → 10 here, A = 30°; the viewBox is fitted below, so O = [0, 0].
         // +X (ux, down-right) = plan y → street · +Y (uy, up-right) = plan x → garage Back · +Z (uz) = up.
@@ -786,13 +777,13 @@
         const vtext = (P, ang, t, attr) => o += `<text transform="translate(${pt(P)}) skewY(${r3(ang)})" ${attr}>${t}</text>`;
         const ig = (c, fn) => { o += `<g class="anim ${c}">`; fn(); o += '</g>'; };
 
-        const H = 8, slope = (11 + 2 / 12 - H) / (D.gD.v / 2);          // garage pitch (A-1)
-        const xw = (hL + HW) / 2, xg = (gx0 + HW) / 2, yc = yM / 2;      // ridges: wing · garage · main block
-        const Rw = H + slope * D.wing.v / 2, Rg = H + slope * D.gD.v / 2;
-        const sm = (Rw - H) / yc;                                       // main block: its ridge meets the wing ridge
-        const ez = s => H - eave * s;                                   // roof height at the fascia
-        const xv = Math.max(hL - eave, xw - (yM + eave - yc) * sm / slope);   // valley foot at the main eaves
-        const X0 = -28, X1 = 60, Y0 = -4, Y1 = SITE_Y1, SLAB = 1.2;
+        const Z = 353.13 - 341.0, PL = 0.7 + 8;                     // ridge height · plate ≈8'-0" above the main floor (assumed)
+        const yR = yM / 2, xR = (EL.drive + EL.right) / 2;             // main ridge (along x) · wing + garage ridge (along y)
+        const sm = (Z - PL) / (yM - yR), sw = (Z - PL) / (xR - hL);    // main / wing + garage pitch (plate on the main front and jog)
+        const zm = y => Z - sm * Math.abs(y - yR), zw = x => Z - sw * Math.abs(xR - x);   // roof surface height
+        const ZG = { rear: zm(EL.rear), main: zm(EL.main), drive: zw(EL.drive), right: zw(EL.right) };   // fascia heights
+        const zs = Math.min(...Object.values(ZG)) - 0.1;               // soffit / strip level
+        const X0 = -28, X1 = 70, Y0 = -6, Y1 = SITE_Y1, SLAB = 1.2;
 
         /* ground: lawn, beds, walk, driveway, street, slab edge */
         ig('a1', () => {
@@ -803,9 +794,11 @@
           o += `<clipPath id="isoclip"><rect x="${X0}" y="${Y0}" width="${X1 - X0}" height="${Y1 - Y0}"/></clipPath><g clip-path="url(#isoclip)">`;
           o += `<rect x="${X0}" y="${Y0}" width="${X1 - X0}" height="${Y1 - Y0}" fill="#8fbf6a"/>`;
           const BEDF = 'fill="#b7a57c" opacity=".75"';
-          o += `<rect x="${gx0}" y="${yS}" width="${D.gD.v}" height="${BED}" ${BEDF}/>`;
+          o += `<rect x="${gx0}" y="${yS}" width="${HW - gx0}" height="${BED}" ${BEDF}/>`;
           o += `<rect x="1" y="${yM}" width="13" height="3.1" ${BEDF}/>`;
-          o += `<path d="${fpath(SITE.bed)} Z" ${BEDF}/><path d="${fpath(SITE.conc)} Z" fill="#d9d2c3"/>`;
+          o += `<path d="${fpath(SITE.bed)} Z" ${BEDF}/>`;
+          for (const k of ['conc', 'side', 'patio']) o += `<path d="${fpath(SITE[k])} Z" fill="#d9d2c3"/>`;
+          o += `<path d="${fpath(SITE.paver)} Z" fill="#cfc4ae"/>`;
           o += `<polygon points="${STREET.map(q => q.map(r3).join(',')).join(' ')}" fill="#b9b3a6"/>`;
           o += `<line x1="${r3(CURB[0][0])}" y1="${r3(CURB[0][1])}" x2="${r3(CURB[1][0])}" y2="${r3(CURB[1][1])}" stroke="#5C5446" stroke-width="1.4" ${NS}/>`;
           o += `<polygon points="${LOT.map(q => q.join(',')).join(' ')}" fill="none" stroke="#5C5446" stroke-width=".9" stroke-dasharray="8 3 2 3" ${NS}/></g>`;
@@ -823,7 +816,7 @@
         const STONE = 4.5, SD = 0.5;               // wainscot height 4'-6" · 6" proud of the siding
         const wash = (a, b, st) => {               // warm light from the soffit, fading down the wall; st: wall has the wainscot
           for (let k = 0; k < 6; k++) {
-            const z1 = H - k * 0.9, z0 = H - (k + 1) * 0.9, op = `fill="#ffd98a" opacity="${(0.5 * (1 - k / 6)).toFixed(2)}"`;
+            const z1 = zs - k * 0.9, z0 = zs - (k + 1) * 0.9, op = `fill="#ffd98a" opacity="${(0.5 * (1 - k / 6)).toFixed(2)}"`;
             const cuts = st && z0 < STONE && z1 > STONE ? [[STONE, z1], [z0, STONE]] : [[z0, z1]];
             for (const [lo, hi] of cuts) {
               const d = st && hi <= STONE ? SD : 0;   // on the stone face, below the wainscot top
@@ -836,10 +829,10 @@
           for (let z = z0 + 0.55; z < z1 - 0.02; z += 0.55) seg([...a, z], [...b, z], 'stroke="#4a2917" stroke-width=".6" opacity=".45"');
         };
         // chimney: drawn whole after the walls, then again after the roofs without the part behind the front overhang
-        // (the strip of its street face between the rake and the roof surface, x ≥ −eave, z < zr)
+        // (the strip of its street face between the rake and the roof surface, x ≥ EL.left, z < zr)
         const chimney = zr => {
           const { x0, x1, y0, y1, top } = chim, BR = 'stroke="#221F18" stroke-width="1" stroke-linejoin="round"';
-          const xr = zr === undefined ? x1 : -eave, z1 = zr === undefined ? 0 : zr;
+          const xr = zr === undefined ? x1 : EL.left, z1 = zr === undefined ? 0 : zr;
           face([[x0, y0, 0], [x0, y1, 0], [x0, y1, top], [x0, y0, top]], `fill="#DCD5C7" ${BR}`);   // faces the driveway side
           face([[x0, y1, 0], [xr, y1, 0], [xr, y1, z1], [x1, y1, z1], [x1, y1, top], [x0, y1, top]], `fill="#F3EFE7" ${BR}`);   // faces the street
           for (let z = 1.5; z < top - 0.5; z += 1.5) {                                             // brick courses
@@ -853,21 +846,22 @@
           face([[cx - a, cy + b, top], [cx + a, cy + b, top], [cx + a, cy + b, top + h], [cx - a, cy + b, top + h]], 'fill="#2b2f31"');
         };
         ig('a2', () => {
-          face([[0, 0, 0], [0, yM, 0], [0, yM, H], [0, yc, Rw], [0, 0, H]], LEFTF);              // house left side + gable
-          face([[0, yM, 0], [hL, yM, 0], [hL, yM, H], [0, yM, H]], STREETF);                      // main front
-          face([[17.5, yM, 0], [20.5, yM, 0], [20.5, yM, 80 / 12], [17.5, yM, 80 / 12]], 'fill="#5C5446"');   // entry door
-          face([[hL, yM, 0], [hL, yW, 0], [hL, yW, H], [hL, yM, H]], LEFTF);                     // 9'-10" jog
-          face([[hL, yW, 0], [gx0, yW, 0], [gx0, yW, H], [HW, yW, H], [xw, yW, Rw], [hL, yW, H]], STREETF);   // wing front + gable
-          siding([[gx0, yW, 0], [gx0, yS, 0], [gx0, yS, H], [gx0, yW, H]], '#8f5233', [gx0, yW], [gx0, yS], 0, H);   // garage Front
+          face([[0, 0, 0], [0, yM, 0], [0, yM, PL], [0, yR, Z], [0, 0, PL]], LEFTF);             // house left side + gable
+          face([[0, yM, 0], [hL, yM, 0], [hL, yM, PL], [0, yM, PL]], STREETF);                    // main front
+          face([[DOOR, yM, 0], [DOOR + 3, yM, 0], [DOOR + 3, yM, 0.7 + 80 / 12], [DOOR, yM, 0.7 + 80 / 12]], 'fill="#5C5446"');   // entry door
+          face([[hL, yM, 0], [hL, yW, 0], [hL, yW, PL], [hL, yM, PL]], LEFTF);                   // jog
+          face([[hL, yW, 0], [gx0, yW, 0], [gx0, yW, zw(gx0)], [hL, yW, PL]], STREETF);         // wing front, open part (45 cm)
+          const zf = zw(gx0), zb = zw(HW);                                                     // garage wall tops at the roof
+          siding([[gx0, yW, 0], [gx0, yS, 0], [gx0, yS, zf], [gx0, yW, zf]], '#8f5233', [gx0, yW], [gx0, yS], 0, zf);   // garage Front
           const d0 = yW + segH, d1 = d0 + GD, DH = 7;                                            // dark flush sectional door
           face([[gx0, d0, 0], [gx0, d1, 0], [gx0, d1, DH], [gx0, d0, DH]], 'fill="#34373b" stroke="#0f1011" stroke-width="1.2"');
           for (let z = 1.4; z < DH - 0.05; z += 1.4) seg([gx0, d0, z], [gx0, d1, z], 'stroke="#1b1d1f" stroke-width="1.2"');
           // garage Street Side: siding band above the wainscot, near-black gable, then the stone (6" proud)
-          siding([[gx0, yS, STONE], [HW, yS, STONE], [HW, yS, H], [gx0, yS, H]], '#9c5a38', [gx0, yS], [HW, yS], STONE, H);
-          face([[gx0, yS, H], [HW, yS, H], [xg, yS, Rg]], 'fill="#1f2224" stroke="#0d0e0f" stroke-width="1.2"');
-          for (let z = H + 0.55; z < Rg - 0.05; z += 0.55) {
-            const hw = (xg - gx0) * (1 - (z - H) / (Rg - H));
-            seg([xg - hw, yS, z], [xg + hw, yS, z], 'stroke="#3d4244" stroke-width=".6" opacity=".6"');
+          siding([[gx0, yS, STONE], [HW, yS, STONE], [HW, yS, zb], [gx0, yS, zf]], '#9c5a38', [gx0, yS], [HW, yS], STONE, Math.min(zf, zb));
+          face([[gx0, yS, zf], [HW, yS, zb], [xR, yS, Z]], 'fill="#1f2224" stroke="#0d0e0f" stroke-width="1.2"');
+          for (let z = zf + 0.55; z < Z - 0.05; z += 0.55) {
+            const xl = gx0 + (xR - gx0) * (z - zf) / (Z - zf), xr = HW - (HW - xR) * (z - zb) / (Z - zb);
+            seg([xl, yS, z], [xr, yS, z], 'stroke="#3d4244" stroke-width=".6" opacity=".6"');
           }
           const yo = yS + SD, JT = 'stroke="#a39c8e" stroke-width=".6" opacity=".7"';
           face([[gx0, yS, 0], [gx0, yo, 0], [gx0, yo, STONE], [gx0, yS, STONE]], `fill="#d9d3c6" ${WS}`);   // return at the Front corner
@@ -878,23 +872,22 @@
             for (let x = gx0 + (i % 2 ? 0.95 : 0.25); x < HW; x += 1.7) seg([x, yo, z - 0.42], [x, yo, z], JT);
           }
           face([[gx0, yS, STONE], [HW, yS, STONE], [HW, yo, STONE], [gx0, yo, STONE]], `fill="#f6f2ea" ${WS}`);   // top ledge
-          wash([0, yM - M1], [0, yM]); wash([0, yM], [hL, yM]); wash([hL, yM], [hL, yW]);
+          wash([0, chim.y1], [0, yM]); wash([0, yM], [hL, yM]); wash([hL, yM], [hL, yW]);
           wash([hL, yW], [gx0, yW]); wash([gx0, yW], [gx0, yS]); wash([gx0, yS], [HW, yS], true);
           chimney();
         });
 
-        /* roofs, back to front: wing + garage right slope (one plane), garage left, wing left, main block back, main block front */
+        /* roofs, back to front: wing + garage right slope, wing + garage left slope (one straight eave over the jog and
+           the garage Front), main block back, main block front; the main ridge meets the wing ridge at the same height */
         const RS = 'stroke="#221F18" stroke-width="1.1" stroke-linejoin="round"';
         ig('a3', () => {
-          face([[xw, -eave, Rw], [HW + eave, -eave, ez(slope)], [HW + eave, yS + rake, ez(slope)], [xg, yS + rake, Rg],
-            [xg, yW + eave, Rg], [xw, yW + eave, Rw]], `fill="#45494d" ${RS}`);
-          face([[gx0 - eave, yW, ez(slope)], [xg, yW, Rg], [xg, yS + rake, Rg], [gx0 - eave, yS + rake, ez(slope)]], `fill="#5a5f63" ${RS}`);
-          face([[hL - eave, -eave, ez(slope)], [xw, -eave, Rw], [xw, yW + eave, Rw], [hL - eave, yW + eave, ez(slope)]], `fill="#5a5f63" ${RS}`);
-          face([[-eave, -eave, ez(sm)], [xv, -eave, ez(sm)], [xw, yc, Rw], [-eave, yc, Rw]], `fill="#414548" ${RS}`);
-          face([[-eave, yc, Rw], [xw, yc, Rw], [xv, yM + eave, ez(sm)], [-eave, yM + eave, ez(sm)]], `fill="#6a6f73" ${RS}`);
-          chimney(Rw - (chim.y1 - yc) * sm);                                                      // main front slope at the chimney face
+          face([[xR, EL.rear, Z], [EL.right, EL.rear, ZG.right], [EL.right, EL.rake, ZG.right], [xR, EL.rake, Z]], `fill="#45494d" ${RS}`);
+          face([[EL.drive, EL.rear, ZG.drive], [xR, EL.rear, Z], [xR, EL.rake, Z], [EL.drive, EL.rake, ZG.drive]], `fill="#5a5f63" ${RS}`);
+          face([[EL.left, EL.rear, ZG.rear], [EL.drive, EL.rear, ZG.rear], [xR, yR, Z], [EL.left, yR, Z]], `fill="#414548" ${RS}`);
+          face([[EL.left, yR, Z], [xR, yR, Z], [EL.drive, EL.main, ZG.main], [EL.left, EL.main, ZG.main]], `fill="#6a6f73" ${RS}`);
+          chimney(zm(chim.y1));                                                                    // main front slope at the chimney face
           for (const g of GUTTERS) {                                                              // gutters: top + outer face
-            const z = ez(g.r === 'm' ? sm : slope), Q = gq(g, GUT);
+            const z = ZG[g.k], Q = gq(g, GUT);
             face(Q.map(q => [...q, z]), 'fill="#8A9197" stroke="#3A3F43" stroke-width=".6"');
             face([[...Q[3], z], [...Q[2], z], [...Q[2], z - 0.45], [...Q[3], z - 0.45]], 'fill="#6d7378" stroke="#3A3F43" stroke-width=".6"');
           }
@@ -902,7 +895,7 @@
 
         /* COB strip on the soffit centerline (drawn through the roof), feeds F1–F5 */
         ig('a4', () => {
-          const zs = H - 0.2, path3 = pts => 'M' + pts.map(a => pt(p(a[0], a[1], zs))).join('L');
+          const path3 = pts => 'M' + pts.map(a => pt(p(a[0], a[1], zs))).join('L');
           const seen = strip.slice(0, RUNS.length), hid = strip.slice(RUNS.length - 1);   // the garage-Back run is hidden
           o += `<path d="${path3(seen)}" fill="none" stroke="#ffd98a" stroke-width="10" stroke-opacity=".55" stroke-linejoin="round" stroke-linecap="round"/>`;
           o += `<path d="${path3(seen)}" fill="none" stroke="#E9A23B" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>`;
@@ -927,7 +920,7 @@
         });
 
         // fit the viewBox to the slab and the roofs
-        const ext = [[X0, Y0, -SLAB], [X1, Y0, -SLAB], [X0, Y1, -SLAB], [X1, Y1, -SLAB], [X1, Y0, 0], [xw, -eave, Rw], [HW + eave, -eave, ez(slope)]].map(a => p(...a));
+        const ext = [[X0, Y0, -SLAB], [X1, Y0, -SLAB], [X0, Y1, -SLAB], [X1, Y1, -SLAB], [X1, Y0, 0], [xR, EL.rear, Z], [EL.right, EL.rear, ZG.right]].map(a => p(...a));
         const bx = Math.min(...ext.map(a => a[0])) - 12, by = Math.min(...ext.map(a => a[1])) - 14;
         const bw = Math.max(...ext.map(a => a[0])) + 12 - bx, bh = Math.max(...ext.map(a => a[1])) + 12 - by;
         const iso = document.getElementById('iso');
@@ -937,7 +930,7 @@
 
       // strip lengths in the schedule (≈ while the soffit width is TBD)
       const set = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
-      const ap = D.eave.known ? '' : '≈';
+      const ap = '';                                // all dimensions known (survey)
       RUNS.forEach((k, i) => set('len-' + k, ap + ftin(runLen[i])));
       set('len-total', `${ap}${ftin(total)} (${ap}${(total * 0.3048).toFixed(1)} m)`);
 
@@ -951,12 +944,12 @@
       set('pb-max', `${ap}${n0(Wmax)} W · ${n1(Wmax / V)} A`);
       set('pb-limit', `${n0(Wlim)} W · ${n1(Wlim / Lm)} W/m · ${Math.min(100, +(100 * Wlim / Wwhite).toFixed(1))}% of full W`);
       // feeds & data tables
-      const RUN_FROM = { left: 'strip start', main: 'left-front corner', jog: 'main-front corner', wing: 'jog corner',
-        gfront: 'wing corner', grake: 'garage-Front corner', gback: 'gable corner' };   // run start (strip direction)
+      const RUN_FROM = { left: 'strip start', main: 'left-front corner', jog: 'main-front corner',
+        gfront: 'House-Side corner', grake: 'garage-Front corner', gback: 'gable corner' };   // run start (strip direction)
       const Apm = 70 / 5 / V;
       const est = r => (plen(r) + DROP) * SLACK;                         // cable to buy for one run (ft)                                            // A per metre at 100% warm white
       const fuse = a => a <= 4 ? '5 A (standard)' : a <= 6 ? '7.5 A' : '10 A';
-      const loc = fd => fd.k === 0 ? 'Strip start — house left side, 1 m from the corner'
+      const loc = fd => fd.k === 0 ? `Strip start — house left side, at the chimney (${ftin(yM - chim.y1)} from the corner)`
         : fd.k === NF - 1 ? 'Strip end — garage Back, at the house'
         : `${RUN_NAME[fd.run]}, ${ap}${ftin(fd.off)} from the ${RUN_FROM[fd.run]}`;
       const html = (id, rows) => { const el = document.getElementById(id); if (el) el.innerHTML = rows.map(r => '<tr>' + r.map(c => `<td>${c}</td>`).join('') + '</tr>').join(''); };
@@ -977,7 +970,7 @@
       html('cable-rows', [
         ['W6, W9 — power feeds F1–F5', '14 AWG', '2-conductor, stranded copper, red / black, jacketed; wet-rated at the soffit end', `${ap}${n0(pw)} ft`, `${buy(pw)} ft`],
         ['W7 — data CH1–CH4', '20 AWG', '2-conductor (DATA + GND), stranded copper, twisted pair, jacketed; one cable for each channel', `${ap}${n0(dt)} ft`, `${buy(dt)} ft`],
-        ['W8 — corner jumpers (6 × 6–12 in)', '20 AWG', '3-conductor, silicone-insulated stranded copper; adhesive-lined heat-shrink on each joint', '≈6 ft', '10 ft'],
+        ['W8 — corner jumpers (4 × 6–12 in)', '20 AWG', '3-conductor, silicone-insulated stranded copper; adhesive-lined heat-shrink on each joint', '≈4 ft', '5 ft'],
         ['W2 — PSU → Dig-Quad', '10 AWG', '2-conductor, fine-stranded copper, with ferrules', 'distance between the units', '≈2 × 3 ft'],
         ['W3, W5 — PSU CN71 control harness', '≈26 AWG (harness)', '<a href="https://www.aliexpress.us/item/3256807786878164.html?gatewayAdapt=glo2usa4itemAdapt" target="_blank" rel="noopener">JST PHD PHDR-14VS pre-crimped harness</a>, 14 positions, single end (Conbeone CB030485)', '1 harness', '1 × 300 mm'],
         ['W4 — Q1R → relay', '22 AWG', '3-conductor stranded hookup wire', '≈3 ft', '5 ft'],
