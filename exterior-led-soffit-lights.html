@@ -185,7 +185,7 @@
       <span><b>Isometric view</b> — from the corner of the street and the driveway.</span>
       <span><b>Heights</b> — all ridges ≈12'-1" above the front grade (2025 survey). Plate ≈8'-0" above the main floor (assumed).</span>
       <span><b>Garage finishes</b> — red-brown wood siding, white stone wainscot (lower 4'-6") on the Street Side, near-black gable (sheet A-1).</span>
-      <span><b>LED strip</b> — shown through the roof. The dashed part on the garage Back is hidden in this view.</span>
+      <span><b>LED strip</b> — shown through the roof. On the gable ends (house left side, garage Street Side) it is on the rake soffit and follows the roof slope. The dashed part on the garage Back is hidden in this view.</span>
     </div>
 
     <div class="drawing" style="border-top:1.5px solid var(--ink)">
@@ -568,7 +568,14 @@
       const strip = [[sx.left, chim.y1], [sx.left, sy.main], [sx.drive, sy.main], [sx.drive, yW],
         [sx.drive, sy.rake], [sx.right, sy.rake], [sx.right, yW]];
       const RUNS = ['left', 'main', 'jog', 'gfront', 'grake', 'gback'];   // strip[i] → strip[i+1]; jog → garage Front is straight
-      const runLen = RUNS.map((_, i) => Math.hypot(strip[i + 1][0] - strip[i][0], strip[i + 1][1] - strip[i][1]));
+      // roof (survey): ridges EL 353.13, front grade ≈341.0 (z = 0), main floor 341.70
+      const Z = 353.13 - 341.0, PL = 0.7 + 8;                     // ridge height · plate ≈8'-0" above the main floor (assumed)
+      const yR = yM / 2, xR = (EL.drive + EL.right) / 2;             // main ridge (along x) · wing + garage ridge (along y)
+      const sm = (Z - PL) / (yM - yR), sw = (Z - PL) / (xR - hL);    // main / wing + garage pitch (plate on the main front and jog)
+      const zm = y => Z - sm * Math.abs(y - yR), zw = x => Z - sw * Math.abs(xR - x);   // roof surface height
+      // on the gable ends the strip is on the rake soffit, so it follows the roof slope: true length = plan length × slope factor
+      const RISE = { left: sm, grake: sw };
+      const runLen = RUNS.map((k, i) => Math.hypot(strip[i + 1][0] - strip[i][0], strip[i + 1][1] - strip[i][1]) * Math.hypot(1, RISE[k] || 0));
       const total = runLen.reduce((a, b) => a + b, 0);
       const RUN_NAME = { left: 'House left side', main: 'House main front', jog: 'Jog',
         gfront: 'Garage Front', grake: 'Garage Street-Side gable', gback: 'Garage Back' };
@@ -777,12 +784,12 @@
         const vtext = (P, ang, t, attr) => o += `<text transform="translate(${pt(P)}) skewY(${r3(ang)})" ${attr}>${t}</text>`;
         const ig = (c, fn) => { o += `<g class="anim ${c}">`; fn(); o += '</g>'; };
 
-        const Z = 353.13 - 341.0, PL = 0.7 + 8;                     // ridge height · plate ≈8'-0" above the main floor (assumed)
-        const yR = yM / 2, xR = (EL.drive + EL.right) / 2;             // main ridge (along x) · wing + garage ridge (along y)
-        const sm = (Z - PL) / (yM - yR), sw = (Z - PL) / (xR - hL);    // main / wing + garage pitch (plate on the main front and jog)
-        const zm = y => Z - sm * Math.abs(y - yR), zw = x => Z - sw * Math.abs(xR - x);   // roof surface height
         const ZG = { rear: zm(EL.rear), main: zm(EL.main), drive: zw(EL.drive), right: zw(EL.right) };   // fascia heights
-        const zs = Math.min(...Object.values(ZG)) - 0.1;               // soffit / strip level
+        const zs = Math.min(...Object.values(ZG)) - 0.1;               // eave soffit / strip level
+        // rake soffits rise with the roof: house left side (toward the ridge, i.e. the chimney) and the garage Street-Side gable (a tent)
+        const xpk = (sx.drive + sx.right) / 2;
+        const zL = y => zs + sm * Math.max(0, sy.main - y), zT = x => zs + sw * Math.max(0, Math.min(x - sx.drive, sx.right - x));
+        const sz = (q, run) => run === 'left' ? zL(q[1]) : run === 'grake' ? zT(q[0]) : zs;
         const X0 = -28, X1 = 70, Y0 = -6, Y1 = SITE_Y1, SLAB = 1.2;
 
         /* ground: lawn, beds, walk, driveway, street, slab edge */
@@ -814,14 +821,16 @@
         const STREETF = `fill="#F3EFE7" ${WS}`, LEFTF = `fill="#DCD5C7" ${WS}`;
         // garage finishes (sheet A-1): red-brown 6" wood siding, white ledgestone wainscot on the Street Side, near-black gable
         const STONE = 4.5, SD = 0.5;               // wainscot height 4'-6" · 6" proud of the siding
-        const wash = (a, b, st) => {               // warm light from the soffit, fading down the wall; st: wall has the wainscot
+        // warm light from the strip, fading down the wall; ta/tb: strip height at a/b; st: wall has the wainscot (stone 6" proud)
+        const wash = (a, b, st, ta = zs, tb = zs) => {
           for (let k = 0; k < 6; k++) {
-            const z1 = zs - k * 0.9, z0 = zs - (k + 1) * 0.9, op = `fill="#ffd98a" opacity="${(0.5 * (1 - k / 6)).toFixed(2)}"`;
-            const cuts = st && z0 < STONE && z1 > STONE ? [[STONE, z1], [z0, STONE]] : [[z0, z1]];
-            for (const [lo, hi] of cuts) {
-              const d = st && hi <= STONE ? SD : 0;   // on the stone face, below the wainscot top
-              face([[a[0], a[1] + d, hi], [b[0], b[1] + d, hi], [b[0], b[1] + d, lo], [a[0], a[1] + d, lo]], op);
-            }
+            const op = `fill="#ffd98a" opacity="${(0.5 * (1 - k / 6)).toFixed(2)}"`;
+            const hi = [ta - k * 0.9, tb - k * 0.9], lo = [ta - (k + 1) * 0.9, tb - (k + 1) * 0.9];
+            const band = (h, l, d) => face([[a[0], a[1] + d, h[0]], [b[0], b[1] + d, h[1]], [b[0], b[1] + d, l[1]], [a[0], a[1] + d, l[0]]], op);
+            if (!st) { band(hi, lo, 0); continue; }
+            const up = v => v.map(z => Math.max(z, STONE)), dn = v => v.map(z => Math.min(z, STONE));
+            if (Math.max(...hi) > STONE) band(up(hi), up(lo), 0);
+            if (Math.min(...lo) < STONE) band(dn(hi), dn(lo), SD);
           }
         };
         const siding = (pts, fill, a, b, z0, z1) => {   // wall band + 6" siding courses (a→b at each course height)
@@ -872,8 +881,9 @@
             for (let x = gx0 + (i % 2 ? 0.95 : 0.25); x < HW; x += 1.7) seg([x, yo, z - 0.42], [x, yo, z], JT);
           }
           face([[gx0, yS, STONE], [HW, yS, STONE], [HW, yo, STONE], [gx0, yo, STONE]], `fill="#f6f2ea" ${WS}`);   // top ledge
-          wash([0, chim.y1], [0, yM]); wash([0, yM], [hL, yM]); wash([hL, yM], [hL, yW]);
-          wash([hL, yW], [gx0, yW]); wash([gx0, yW], [gx0, yS]); wash([gx0, yS], [HW, yS], true);
+          wash([0, chim.y1], [0, yM], false, zL(chim.y1), zL(yM)); wash([0, yM], [hL, yM]); wash([hL, yM], [hL, yW]);
+          wash([hL, yW], [gx0, yW]); wash([gx0, yW], [gx0, yS]);
+          wash([gx0, yS], [xpk, yS], true, zT(gx0), zT(xpk)); wash([xpk, yS], [HW, yS], true, zT(xpk), zT(HW));
           chimney();
         });
 
@@ -895,15 +905,17 @@
 
         /* COB strip on the soffit centerline (drawn through the roof), feeds F1–F5 */
         ig('a4', () => {
-          const path3 = pts => 'M' + pts.map(a => pt(p(a[0], a[1], zs))).join('L');
-          const seen = strip.slice(0, RUNS.length), hid = strip.slice(RUNS.length - 1);   // the garage-Back run is hidden
+          const s3 = strip.map((q, i) => [...q, sz(q, RUNS[Math.min(i, RUNS.length - 1)])]);
+          s3.splice(RUNS.indexOf('grake') + 1, 0, [xpk, sy.rake, zT(xpk)]);                 // peak of the Street-Side gable
+          const path3 = pts => 'M' + pts.map(a => pt(p(...a))).join('L');
+          const seen = s3.slice(0, RUNS.length + 1), hid = s3.slice(RUNS.length);            // the garage-Back run is hidden
           o += `<path d="${path3(seen)}" fill="none" stroke="#ffd98a" stroke-width="10" stroke-opacity=".55" stroke-linejoin="round" stroke-linecap="round"/>`;
           o += `<path d="${path3(seen)}" fill="none" stroke="#E9A23B" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>`;
           o += `<path d="${path3(hid)}" fill="none" stroke="#E9A23B" stroke-width="2" stroke-dasharray="6 4"/>`;
           feeds.forEach((fd, k) => {
             // tag offset (plan ft + drop): F1 goes toward the street, clear of the chimney; F5 goes past the garage Back
             const [ox, oy, dz] = k === 0 ? [0, 4.4, 5.6] : k === NF - 1 ? [3.2, 0, 2.4] : [...OUT[fd.run].map(v => v * 3.2), 2.4];
-            const c = p(fd.p[0], fd.p[1], zs), L = p(fd.p[0] + ox, fd.p[1] + oy, zs - dz);
+            const zf = sz(fd.p, fd.run), c = p(fd.p[0], fd.p[1], zf), L = p(fd.p[0] + ox, fd.p[1] + oy, zf - dz);
             o += `<line x1="${c[0].toFixed(1)}" y1="${c[1].toFixed(1)}" x2="${L[0].toFixed(1)}" y2="${L[1].toFixed(1)}" stroke="#883C1E" stroke-width="1.2"/>`;
             o += `<circle cx="${c[0].toFixed(1)}" cy="${c[1].toFixed(1)}" r="3.4" fill="#883C1E"/>`;
             CH.filter(ch => ch.k === k).forEach((ch, i) =>
