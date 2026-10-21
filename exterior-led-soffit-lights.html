@@ -206,7 +206,7 @@
 
 
     <div class="plannotes">
-      <span><b>Dashed outline</b> — eave line (survey): eaves ≈2'-4" to 3'-9", gable rakes ≈10" to 1'-1".</span>
+      <span><b>Dashed outline</b> — eave line (survey): eaves ≈2'-4" to 3'-8½", gable rakes ≈10" to 1'-1". The garage Front eave steps in 45 cm with the wall (drone photo).</span>
       <span><b style="color:#8A9197">Gray band</b> — gutter (≈15 cm), on the eaves only.</span>
       <span><b style="color:var(--teal)">◯ teal ring</b> on a feed — start of a data channel (one ring for each channel).</span>
       <span><b>Dashed box</b> — controller and PSU, in the attic.</span>
@@ -228,6 +228,7 @@
           <tr><td>House left side (chimney → corner) — length</td><td id="len-left">—</td></tr>
           <tr><td>House main front — length</td><td id="len-main">—</td></tr>
           <tr><td>Jog — length</td><td id="len-jog">—</td></tr>
+          <tr><td>Wing-front step — length</td><td id="len-wing">—</td></tr>
           <tr><td>Garage Front (door wall) — length</td><td id="len-gfront">—</td></tr>
           <tr><td>Garage Street-Side gable — length</td><td id="len-grake">—</td></tr>
           <tr><td>Garage Back — length</td><td id="len-gback">—</td></tr>
@@ -240,7 +241,7 @@
           <li>The correct entry-door position on the 34'-0¼" front. The drawing centers it on the surveyed walk (≈14'-6" to ≈19'-11" from the left corner).</li>
           <li>The final attic cable routes and lengths.</li>
           <li>The aluminum profile and diffuser product.</li>
-          <li>The strip position in the soffit: at the center, near the fascia, or near the wall. On the driveway side the soffit is one straight piece (≈2'-4" over the jog, ≈3'-9" over the garage Front); the drawing runs the strip straight, centered over the jog.</li>
+          <li>The strip position in the soffit: at the center, near the fascia, or near the wall.</li>
         </ol>
       </div>
     </section>
@@ -437,7 +438,7 @@
           <tr><td>W5</td><td>Relay contact → PSU CN71 pin 5 (REMOTE ON/OFF), pin 8 (+12V-AUX)</td><td>2 — REMOTE, +12V-AUX</td><td>1</td></tr>
           <tr><td>W6 / W9</td><td>Dig-Quad fused output → strip 24V / GND pads (feeds F1–F5)</td><td>2 — +24V, GND</td><td>5</td></tr>
           <tr><td>W7</td><td>Dig-Quad LED1–LED4 → strip DI pad (CH1–CH4)</td><td>2 — DATA, GND</td><td>4</td></tr>
-          <tr><td>W8</td><td>Strip → strip, across a corner cut</td><td>3 — 24V, DATA, GND</td><td>4</td></tr>
+          <tr><td>W8</td><td>Strip → strip, across a corner cut</td><td>3 — 24V, DATA, GND</td><td>6</td></tr>
           <tr><td>—</td><td>Factory pigtail on each reel (JST)</td><td>3 — 24V, DATA, GND</td><td>7 reels</td></tr>
         </table>
         <ol style="margin-top:10px">
@@ -507,6 +508,7 @@
       const yS = yW + D.gW.v;                      // garage Street Side
       // eave line (survey): the outer edge of the soffit on each side
       const EL = { left: -0.82, rear: -3.71, main: 22.28, drive: 31.72, right: 57.57, rake: 50.38 };
+      EL.gdrive = EL.drive + RECESS;               // garage Front eave: steps in with the wall, same overhang as the jog (drone photo)
       // site from the 2025 survey DXF (the site is rotated ≈18° to the house)
       const CURB = [[-34.98, 59.25], [63.18, 91.52]];  // flow line of the vertical curb
       const LOT = [[-23.94, 51.46], [52.08, 76.39], [86.35, -28.13], [10.33, -53.07]];   // property lines
@@ -557,17 +559,17 @@
       const GUTTERS = [
         { a: [EL.left, EL.rear], b: [EL.drive, EL.rear], n: [0, -1], k: 'rear' },       // main block, rear
         { a: [EL.left, EL.main], b: [EL.drive, EL.main], n: [0, 1], k: 'main' },        // main front
-        { a: [EL.drive, EL.main], b: [EL.drive, EL.rake], n: [-1, 0], k: 'drive' },     // jog + garage Front (one straight eave)
+        { a: [EL.drive, EL.main], b: [EL.drive, yW], n: [-1, 0], k: 'drive' },          // jog
+        { a: [EL.gdrive, yW], b: [EL.gdrive, EL.rake], n: [-1, 0], k: 'gdrive' },        // garage Front (45 cm in from the jog eave)
         { a: [EL.right, EL.rear], b: [EL.right, EL.rake], n: [1, 0], k: 'right' },      // continuous right wall
       ];
       const gq = (g, t) => [[...g.a], [...g.b], [g.b[0] + g.n[0] * t, g.b[1] + g.n[1] * t], [g.a[0] + g.n[0] * t, g.a[1] + g.n[1] * t]];
-      // COB LED strip: one continuous run on the soffit centerline, chimney → garage Back. The driveway-side soffit is one
-      // straight piece (jog + garage Front), so the strip runs straight there, centered on the soffit over the jog.
-      const sx = { left: EL.left / 2, drive: (hL + EL.drive) / 2, right: (HW + EL.right) / 2 };
+      // COB LED strip: one continuous run on the soffit centerline, chimney → garage Back
+      const sx = { left: EL.left / 2, drive: (hL + EL.drive) / 2, gfront: (gx0 + EL.gdrive) / 2, right: (HW + EL.right) / 2 };
       const sy = { main: (yM + EL.main) / 2, rake: (yS + EL.rake) / 2 };
-      const strip = [[sx.left, chim.y1], [sx.left, sy.main], [sx.drive, sy.main], [sx.drive, yW],
-        [sx.drive, sy.rake], [sx.right, sy.rake], [sx.right, yW]];
-      const RUNS = ['left', 'main', 'jog', 'gfront', 'grake', 'gback'];   // strip[i] → strip[i+1]; jog → garage Front is straight
+      const strip = [[sx.left, chim.y1], [sx.left, sy.main], [sx.drive, sy.main], [sx.drive, yW], [sx.gfront, yW],
+        [sx.gfront, sy.rake], [sx.right, sy.rake], [sx.right, yW]];
+      const RUNS = ['left', 'main', 'jog', 'wing', 'gfront', 'grake', 'gback'];   // strip[i] → strip[i+1]
       // roof (survey): ridges EL 353.13, front grade ≈341.0 (z = 0), main floor 341.70
       const Z = 353.13 - 341.0, PL = 0.7 + 8;                     // ridge height · plate ≈8'-0" above the main floor (assumed)
       const yR = yM / 2, xR = (EL.drive + EL.right) / 2;             // main ridge (along x) · wing + garage ridge (along y)
@@ -577,9 +579,9 @@
       const RISE = { left: sm, grake: sw };
       const runLen = RUNS.map((k, i) => Math.hypot(strip[i + 1][0] - strip[i][0], strip[i + 1][1] - strip[i][1]) * Math.hypot(1, RISE[k] || 0));
       const total = runLen.reduce((a, b) => a + b, 0);
-      const RUN_NAME = { left: 'House left side', main: 'House main front', jog: 'Jog',
+      const RUN_NAME = { left: 'House left side', main: 'House main front', jog: 'Jog', wing: 'Wing-front step',
         gfront: 'Garage Front', grake: 'Garage Street-Side gable', gback: 'Garage Back' };
-      const OUT = { left: [-1, 0], main: [0, 1], jog: [-1, 0], gfront: [-1, 0], grake: [0, 1], gback: [1, 0] };
+      const OUT = { left: [-1, 0], main: [0, 1], jog: [-1, 0], wing: [0, 1], gfront: [-1, 0], grake: [0, 1], gback: [1, 0] };
 
       // ---- wiring: controller + PSU in the garage's top-left corner (House Side / Front); 5 feeds; 4 data channels ----
       const ctrl = [gx0 + 6.1, yW + 2.05];
@@ -659,11 +661,12 @@
 
       /* ---- SOFFIT all round (eave line dashed; buildings drawn over the footprint) + LIT RUNS ---- */
       group('a2', () => {
-        const roof = [[EL.left, EL.rear], [EL.right, EL.rear], [EL.right, EL.rake], [EL.drive, EL.rake], [EL.drive, EL.main], [EL.left, EL.main]];
+        const roof = [[EL.left, EL.rear], [EL.right, EL.rear], [EL.right, EL.rake], [EL.gdrive, EL.rake], [EL.gdrive, yW], [EL.drive, yW],
+          [EL.drive, EL.main], [EL.left, EL.main]];
         poly(roof.map(q => p(...q)), 'fill="#eadcb8" stroke="#5C5446" stroke-width="1" stroke-dasharray="6 4"');
         // lit soffit (rust outline): chimney → main front → jog + garage Front → Street-Side gable → garage Back
         const lit = [[EL.left, chim.y1], [0, chim.y1], [0, yM], [hL, yM], [hL, yW], [gx0, yW], [gx0, yS], [HW, yS], [HW, yW],
-          [EL.right, yW], [EL.right, EL.rake], [EL.drive, EL.rake], [EL.drive, EL.main], [EL.left, EL.main]];
+          [EL.right, yW], [EL.right, EL.rake], [EL.gdrive, EL.rake], [EL.gdrive, yW], [EL.drive, yW], [EL.drive, EL.main], [EL.left, EL.main]];
         poly(lit.map(q => p(...q)), 'fill="#eadcb8" stroke="#AE4F2A" stroke-width="1.3"');
         for (const g of GUTTERS) poly(gq(g, GUT).map(q => p(...q)), 'fill="#c9cdd0" stroke="#8A9197" stroke-width=".8"');
       });
@@ -784,11 +787,11 @@
         const vtext = (P, ang, t, attr) => o += `<text transform="translate(${pt(P)}) skewY(${r3(ang)})" ${attr}>${t}</text>`;
         const ig = (c, fn) => { o += `<g class="anim ${c}">`; fn(); o += '</g>'; };
 
-        const ZG = { rear: zm(EL.rear), main: zm(EL.main), drive: zw(EL.drive), right: zw(EL.right) };   // fascia heights
+        const ZG = { rear: zm(EL.rear), main: zm(EL.main), drive: zw(EL.drive), gdrive: zw(EL.gdrive), right: zw(EL.right) };   // fascia heights
         const zs = Math.min(...Object.values(ZG)) - 0.1;               // eave soffit / strip level
         // rake soffits rise with the roof: house left side (toward the ridge, i.e. the chimney) and the garage Street-Side gable (a tent)
-        const xpk = (sx.drive + sx.right) / 2;
-        const zL = y => zs + sm * Math.max(0, sy.main - y), zT = x => zs + sw * Math.max(0, Math.min(x - sx.drive, sx.right - x));
+        const xpk = (sx.gfront + sx.right) / 2;
+        const zL = y => zs + sm * Math.max(0, sy.main - y), zT = x => zs + sw * Math.max(0, Math.min(x - sx.gfront, sx.right - x));
         const sz = (q, run) => run === 'left' ? zL(q[1]) : run === 'grake' ? zT(q[0]) : zs;
         const X0 = -28, X1 = 70, Y0 = -6, Y1 = SITE_Y1, SLAB = 1.2;
 
@@ -902,12 +905,13 @@
           chimney();
         });
 
-        /* roofs, back to front: wing + garage right slope, wing + garage left slope (one straight eave over the jog and
-           the garage Front), main block back, main block front; the main ridge meets the wing ridge at the same height */
+        /* roofs, back to front: wing + garage right slope (one plane), wing left slope, garage left slope (its eave 45 cm in,
+           so a step line where the garage meets the house), main block back, main block front; one ridge height */
         const RS = 'stroke="#221F18" stroke-width="1.1" stroke-linejoin="round"';
         ig('a3', () => {
           face([[xR, EL.rear, Z], [EL.right, EL.rear, ZG.right], [EL.right, EL.rake, ZG.right], [xR, EL.rake, Z]], `fill="#45494d" ${RS}`);
-          face([[EL.drive, EL.rear, ZG.drive], [xR, EL.rear, Z], [xR, EL.rake, Z], [EL.drive, EL.rake, ZG.drive]], `fill="#5a5f63" ${RS}`);
+          face([[EL.drive, EL.rear, ZG.drive], [xR, EL.rear, Z], [xR, yW, Z], [EL.drive, yW, ZG.drive]], `fill="#5a5f63" ${RS}`);
+          face([[EL.gdrive, yW, ZG.gdrive], [xR, yW, Z], [xR, EL.rake, Z], [EL.gdrive, EL.rake, ZG.gdrive]], `fill="#5a5f63" ${RS}`);
           face([[EL.left, EL.rear, ZG.rear], [EL.drive, EL.rear, ZG.rear], [xR, yR, Z], [EL.left, yR, Z]], `fill="#414548" ${RS}`);
           face([[EL.left, yR, Z], [xR, yR, Z], [EL.drive, EL.main, ZG.main], [EL.left, EL.main, ZG.main]], `fill="#6a6f73" ${RS}`);
           chimney(zm(chim.y1));                                                                    // main front slope at the chimney face
@@ -965,7 +969,7 @@
       set('pb-max', `${ap}${n0(Wmax)} W · ${n1(Wmax / V)} A`);
       set('pb-limit', `${n0(Wlim)} W · ${n1(Wlim / Lm)} W/m · ${Math.min(100, +(100 * Wlim / Wwhite).toFixed(1))}% of full W`);
       // feeds & data tables
-      const RUN_FROM = { left: 'strip start', main: 'left-front corner', jog: 'main-front corner',
+      const RUN_FROM = { left: 'strip start', main: 'left-front corner', jog: 'main-front corner', wing: 'jog corner',
         gfront: 'House-Side corner', grake: 'garage-Front corner', gback: 'gable corner' };   // run start (strip direction)
       const Apm = 70 / 5 / V;
       const est = r => (plen(r) + DROP) * SLACK;                         // cable to buy for one run (ft)                                            // A per metre at 100% warm white
@@ -991,7 +995,7 @@
       html('cable-rows', [
         ['W6, W9 — power feeds F1–F5', '14 AWG', '2-conductor, stranded copper, red / black, jacketed; wet-rated at the soffit end', `${ap}${n0(pw)} ft`, `${buy(pw)} ft`],
         ['W7 — data CH1–CH4', '20 AWG', '2-conductor (DATA + GND), stranded copper, twisted pair, jacketed; one cable for each channel', `${ap}${n0(dt)} ft`, `${buy(dt)} ft`],
-        ['W8 — corner jumpers (4 × 6–12 in)', '20 AWG', '3-conductor, silicone-insulated stranded copper; adhesive-lined heat-shrink on each joint', '≈4 ft', '5 ft'],
+        ['W8 — corner jumpers (6 × 6–12 in)', '20 AWG', '3-conductor, silicone-insulated stranded copper; adhesive-lined heat-shrink on each joint', '≈6 ft', '10 ft'],
         ['W2 — PSU → Dig-Quad', '10 AWG', '2-conductor, fine-stranded copper, with ferrules', 'distance between the units', '≈2 × 3 ft'],
         ['W3, W5 — PSU CN71 control harness', '≈26 AWG (harness)', '<a href="https://www.aliexpress.us/item/3256807786878164.html?gatewayAdapt=glo2usa4itemAdapt" target="_blank" rel="noopener">JST PHD PHDR-14VS pre-crimped harness</a>, 14 positions, single end (Conbeone CB030485)', '1 harness', '1 × 300 mm'],
         ['W4 — Q1R → relay', '22 AWG', '3-conductor stranded hookup wire', '≈3 ft', '5 ft'],
