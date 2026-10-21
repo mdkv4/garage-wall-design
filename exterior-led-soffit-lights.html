@@ -963,7 +963,8 @@
           face([[xR, EL.rear, Z], [EL.right, EL.rear, ZG.right], [EL.right, EL.rake, ZG.right], [xR, EL.rake, Z]], `fill="#45494d" ${RS}`);
           face([[EL.drive, EL.rear, ZG.drive], [xR, EL.rear, Z], [xR, yW, Z], [EL.drive, yW, ZG.drive]], `fill="#5a5f63" ${RS}`);
           face([[EL.gdrive, yW, ZG.gdrive], [xR, yW, Z], [xR, EL.rake, Z], [EL.gdrive, EL.rake, ZG.gdrive]], `fill="#5a5f63" ${RS}`);
-          face([[EL.left, EL.rear, ZG.rear], [EL.drive, EL.rear, ZG.rear], [xR, yR, Z], [EL.left, yR, Z]], `fill="#414548" ${RS}`);
+          // main rear slope; its rear eave is lower than the wing eave, so close the valley up to the wing roof's corner
+          face([[EL.left, EL.rear, ZG.rear], [EL.drive, EL.rear, ZG.rear], [EL.drive, EL.rear, ZG.drive], [xR, yR, Z], [EL.left, yR, Z]], `fill="#414548" ${RS}`);
           face([[EL.left, yR, Z], [xR, yR, Z], [EL.drive, EL.main, ZG.main], [EL.left, EL.main, ZG.main]], `fill="#6a6f73" ${RS}`);
           chimney(zm(chim.y1));                                                                    // main front slope at the chimney face
           for (const g of GUTTERS) {                                                              // gutters: top + outer face
