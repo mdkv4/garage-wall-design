@@ -561,12 +561,17 @@
       const GUT = 0.15 / 0.3048;
       const GUTTERS = [
         { a: [EL.left, EL.rear], b: [EL.drive, EL.rear], n: [0, -1], k: 'rear' },       // main block, rear
-        { a: [EL.left, EL.main], b: [EL.drive, EL.main], n: [0, 1], k: 'main' },        // main front
-        { a: [EL.drive, EL.main], b: [EL.drive, yW], n: [-1, 0], k: 'drive' },          // jog
+        { a: [EL.left, EL.main], b: [EL.drive, EL.main], n: [0, 1], k: 'main', mb: [-1, 0] },   // main front } mitered inside
+        { a: [EL.drive, EL.main], b: [EL.drive, yW], n: [-1, 0], k: 'drive', ma: [0, 1] },      // jog        } corner (photo)
         { a: [EL.gdrive, yW], b: [EL.gdrive, EL.rake], n: [-1, 0], k: 'gdrive' },        // garage Front (45 cm in from the jog eave)
         { a: [EL.right, EL.rear], b: [EL.right, EL.rake], n: [1, 0], k: 'right' },      // continuous right wall
       ];
-      const gq = (g, t) => [[...g.a], [...g.b], [g.b[0] + g.n[0] * t, g.b[1] + g.n[1] * t], [g.a[0] + g.n[0] * t, g.a[1] + g.n[1] * t]];
+      // gutter outline [a, b, b outer, a outer]; ma/mb shift an outer end along the other gutter (45° inside-corner miter)
+      const gq = (g, t) => {
+        const ma = g.ma || [0, 0], mb = g.mb || [0, 0];
+        return [[...g.a], [...g.b], [g.b[0] + (g.n[0] + mb[0]) * t, g.b[1] + (g.n[1] + mb[1]) * t],
+          [g.a[0] + (g.n[0] + ma[0]) * t, g.a[1] + (g.n[1] + ma[1]) * t]];
+      };
       // COB LED strip: one continuous run on the soffit centerline, chimney → garage Back
       const sx = { left: EL.left / 2, drive: (hL + EL.drive) / 2, gfront: (gx0 + EL.gdrive) / 2, right: (HW + EL.right) / 2 };
       const sy = { main: (yM + EL.main) / 2, rake: (yS + EL.rake) / 2 };
@@ -576,7 +581,9 @@
       // roof (survey): ridges EL 353.13, front grade ≈341.0 (z = 0), main floor 341.70
       const Z = 353.13 - 341.0, PL = 0.7 + 8;                     // ridge height · plate ≈8'-0" above the main floor (assumed)
       const yR = yM / 2, xR = (EL.drive + EL.right) / 2;             // main ridge (along x) · wing + garage ridge (along y)
-      const sm = (Z - PL) / (yM - yR), sw = (Z - PL) / (xR - hL);    // main / wing + garage pitch (plate on the main front and jog)
+      // main pitch: plate on the main front; wing + garage pitch: its eave meets the main-front eave at the inside corner
+      // at the same height (one mitered gutter there, owner photo)
+      const sm = (Z - PL) / (yM - yR), sw = sm * (EL.main - yR) / (xR - EL.drive);
       const zm = y => Z - sm * Math.abs(y - yR), zw = x => Z - sw * Math.abs(xR - x);   // roof surface height
       // on the gable ends the strip is on the rake soffit, so it follows the roof slope: true length = plan length × slope factor
       const RISE = { left: sm, grake: sw };
@@ -902,13 +909,13 @@
             face(pts, `fill="#3b4450" ${WS}`);
             for (let z = 0.65; z < z1 - 0.02; z += 0.65) seg([...a, z], [...b, z], 'stroke="#252b33" stroke-width=".6" opacity=".7"');
           };
-          shakes([[hL, yM, 0], [hL, yW, 0], [hL, yW, PL], [hL, yM, PL]], [hL, yM], [hL, yW], PL);                   // jog
+          shakes([[hL, yM, 0], [hL, yW, 0], [hL, yW, zw(hL)], [hL, yM, zw(hL)]], [hL, yM], [hL, yW], zw(hL));       // jog
           const jw = (y0, y1, z0, z1, fill) => face([[hL, y0, z0], [hL, y1, z0], [hL, y1, z1], [hL, y0, z1]], fill);
           jw(JWIN[0], JWIN[1], 3.2, 7.0, 'fill="#2a2420" stroke="#1a1614" stroke-width=".8"');                      // jog window: dark frame
           const jm = (JWIN[0] + JWIN[1]) / 2;
           jw(JWIN[0] + 0.15, jm - 0.06, 3.35, 6.85, 'fill="#c9ccc4" stroke="#1a1614" stroke-width=".5"');          // two sliding sashes
           jw(jm + 0.06, JWIN[1] - 0.15, 3.35, 6.85, 'fill="#d9d4c6" stroke="#1a1614" stroke-width=".5"');
-          shakes([[hL, yW, 0], [gx0, yW, 0], [gx0, yW, zw(gx0)], [hL, yW, PL]], [hL, yW], [gx0, yW], PL);          // wing front, open part (45 cm)
+          shakes([[hL, yW, 0], [gx0, yW, 0], [gx0, yW, zw(gx0)], [hL, yW, zw(hL)]], [hL, yW], [gx0, yW], zw(hL));  // wing front, open part (45 cm)
           const zf = zw(gx0), zb = zw(HW);                                                     // garage wall tops at the roof
           siding([[gx0, yW, 0], [gx0, yS, 0], [gx0, yS, zf], [gx0, yW, zf]], '#8f5233', [gx0, yW], [gx0, yS], 0, zf);   // garage Front
           const d0 = yW + segH, d1 = d0 + GD, DH = 7;                                            // dark flush sectional door
