@@ -184,6 +184,7 @@
     <div class="plannotes">
       <span><b>Isometric view</b> — from the corner of the street and the driveway.</span>
       <span><b>Heights</b> — plate 8'-0" and garage ridge ≈11'-2" (sheet A-1). The house roofs use the garage pitch (assumed).</span>
+      <span><b>Garage finishes</b> — red-brown wood siding, white stone wainscot (lower 4'-6") on the Street Side, near-black gable (sheet A-1).</span>
       <span><b>LED strip</b> — shown through the roof. The dashed part on the garage Back is hidden in this view.</span>
     </div>
 
@@ -804,11 +805,21 @@
         /* walls (only the faces seen from this corner), doors, light wash under the lit soffits */
         const WS = 'stroke="#221F18" stroke-width="1" stroke-linejoin="round"';
         const STREETF = `fill="#F3EFE7" ${WS}`, LEFTF = `fill="#DCD5C7" ${WS}`;
-        const wash = (a, b) => {                   // warm light from the soffit, fading down the wall
+        // garage finishes (sheet A-1): red-brown 6" wood siding, white ledgestone wainscot on the Street Side, near-black gable
+        const STONE = 4.5, SD = 0.5;               // wainscot height 4'-6" · 6" proud of the siding
+        const wash = (a, b, st) => {               // warm light from the soffit, fading down the wall; st: wall has the wainscot
           for (let k = 0; k < 6; k++) {
-            const z1 = H - k * 0.9, z0 = H - (k + 1) * 0.9;
-            face([[...a, z1], [...b, z1], [...b, z0], [...a, z0]], `fill="#ffd98a" opacity="${(0.5 * (1 - k / 6)).toFixed(2)}"`);
+            const z1 = H - k * 0.9, z0 = H - (k + 1) * 0.9, op = `fill="#ffd98a" opacity="${(0.5 * (1 - k / 6)).toFixed(2)}"`;
+            const cuts = st && z0 < STONE && z1 > STONE ? [[STONE, z1], [z0, STONE]] : [[z0, z1]];
+            for (const [lo, hi] of cuts) {
+              const d = st && hi <= STONE ? SD : 0;   // on the stone face, below the wainscot top
+              face([[a[0], a[1] + d, hi], [b[0], b[1] + d, hi], [b[0], b[1] + d, lo], [a[0], a[1] + d, lo]], op);
+            }
           }
+        };
+        const siding = (pts, fill, a, b, z0, z1) => {   // wall band + 6" siding courses (a→b at each course height)
+          face(pts, `fill="${fill}" ${WS}`);
+          for (let z = z0 + 0.55; z < z1 - 0.02; z += 0.55) seg([...a, z], [...b, z], 'stroke="#4a2917" stroke-width=".6" opacity=".45"');
         };
         // chimney: drawn whole after the walls, then again after the roofs without the part behind the front overhang
         // (the strip of its street face between the rake and the roof surface, x ≥ −eave, z < zr)
@@ -833,13 +844,28 @@
           face([[17.5, yM, 0], [20.5, yM, 0], [20.5, yM, 80 / 12], [17.5, yM, 80 / 12]], 'fill="#5C5446"');   // entry door
           face([[hL, yM, 0], [hL, yW, 0], [hL, yW, H], [hL, yM, H]], LEFTF);                     // 9'-10" jog
           face([[hL, yW, 0], [gx0, yW, 0], [gx0, yW, H], [HW, yW, H], [xw, yW, Rw], [hL, yW, H]], STREETF);   // wing front + gable
-          face([[gx0, yW, 0], [gx0, yS, 0], [gx0, yS, H], [gx0, yW, H]], LEFTF);                 // garage Front
-          const d0 = yW + segH, d1 = d0 + GD, DH = 7;                                            // garage door
-          face([[gx0, d0, 0], [gx0, d1, 0], [gx0, d1, DH], [gx0, d0, DH]], 'fill="#9aa0a5" stroke="#3A3F43" stroke-width="1"');
-          for (const z of [1.75, 3.5, 5.25]) seg([gx0, d0, z], [gx0, d1, z], 'stroke="#6d7378" stroke-width=".8"');
-          face([[gx0, yS, 0], [HW, yS, 0], [HW, yS, H], [xg, yS, Rg], [gx0, yS, H]], STREETF);  // garage Street Side + gable
+          siding([[gx0, yW, 0], [gx0, yS, 0], [gx0, yS, H], [gx0, yW, H]], '#8f5233', [gx0, yW], [gx0, yS], 0, H);   // garage Front
+          const d0 = yW + segH, d1 = d0 + GD, DH = 7;                                            // dark flush sectional door
+          face([[gx0, d0, 0], [gx0, d1, 0], [gx0, d1, DH], [gx0, d0, DH]], 'fill="#34373b" stroke="#0f1011" stroke-width="1.2"');
+          for (let z = 1.4; z < DH - 0.05; z += 1.4) seg([gx0, d0, z], [gx0, d1, z], 'stroke="#1b1d1f" stroke-width="1.2"');
+          // garage Street Side: siding band above the wainscot, near-black gable, then the stone (6" proud)
+          siding([[gx0, yS, STONE], [HW, yS, STONE], [HW, yS, H], [gx0, yS, H]], '#9c5a38', [gx0, yS], [HW, yS], STONE, H);
+          face([[gx0, yS, H], [HW, yS, H], [xg, yS, Rg]], 'fill="#1f2224" stroke="#0d0e0f" stroke-width="1.2"');
+          for (let z = H + 0.55; z < Rg - 0.05; z += 0.55) {
+            const hw = (xg - gx0) * (1 - (z - H) / (Rg - H));
+            seg([xg - hw, yS, z], [xg + hw, yS, z], 'stroke="#3d4244" stroke-width=".6" opacity=".6"');
+          }
+          const yo = yS + SD, JT = 'stroke="#a39c8e" stroke-width=".6" opacity=".7"';
+          face([[gx0, yS, 0], [gx0, yo, 0], [gx0, yo, STONE], [gx0, yS, STONE]], `fill="#d9d3c6" ${WS}`);   // return at the Front corner
+          face([[gx0, yo, 0], [HW, yo, 0], [HW, yo, STONE], [gx0, yo, STONE]], `fill="#eee9de" ${WS}`);     // outer face
+          for (let z = 0.42, i = 1; z < STONE - 0.02; z += 0.42, i++) {                            // ledgestone courses + joints
+            seg([gx0, yo, z], [HW, yo, z], JT);
+            seg([gx0, yS, z], [gx0, yo, z], JT);
+            for (let x = gx0 + (i % 2 ? 0.95 : 0.25); x < HW; x += 1.7) seg([x, yo, z - 0.42], [x, yo, z], JT);
+          }
+          face([[gx0, yS, STONE], [HW, yS, STONE], [HW, yo, STONE], [gx0, yo, STONE]], `fill="#f6f2ea" ${WS}`);   // top ledge
           wash([0, yM - M1], [0, yM]); wash([0, yM], [hL, yM]); wash([hL, yM], [hL, yW]);
-          wash([hL, yW], [gx0, yW]); wash([gx0, yW], [gx0, yS]); wash([gx0, yS], [HW, yS]);
+          wash([hL, yW], [gx0, yW]); wash([gx0, yW], [gx0, yS]); wash([gx0, yS], [HW, yS], true);
           chimney();
         });
 
@@ -883,7 +909,7 @@
         /* labels on the walls */
         ig('a5', () => {
           vtext(p(3, yM, 1.0), angY, 'HOUSE', 'class="facetxt" font-size="24" fill="#5C5446"');
-          vtext(p(gx0 + 1.4, yS, 1.6), angY, 'GARAGE', 'class="facetxt" font-size="24" fill="#221F18"');
+          vtext(p(gx0 + 1.4, yS + SD, 1.1), angY, 'GARAGE', 'class="facetxt" font-size="24" fill="#221F18"');
         });
 
         // fit the viewBox to the slab and the roofs
