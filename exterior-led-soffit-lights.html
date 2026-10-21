@@ -205,7 +205,7 @@
 
 
     <div class="plannotes">
-      <span><b style="color:var(--tbd)">TBD</b> — dimension not known; the plan uses an assumed size.</span>
+      <span><b style="color:#8A9197">Gray band</b> — gutter (≈15 cm), on the eaves only.</span>
       <span><b style="color:var(--teal)">◯ teal ring</b> on a feed — start of a data channel (one ring for each channel).</span>
       <span><b>Dashed box</b> — controller and PSU, in the attic.</span>
       <span><b>Driveway, walk, porch and beds</b> — approximate, from the aerial photo.</span>
@@ -236,7 +236,6 @@
       <div>
         <h3>Open Items</h3>
         <ol>
-          <li>Soffit width (overhang). The width is the same on all sides.</li>
           <li>The correct entry-door position on the 32'-10" front. The current value is ≈17'-6" from the left corner (from the aerial photo).</li>
           <li>The final attic cable routes and lengths.</li>
           <li>The aluminum profile and diffuser product.</li>
@@ -296,8 +295,8 @@
         </table>
         <ol style="margin-top:10px">
           <li>Feed rule (QuinLED): the maximum distance between feeds is 10 m. Put one feed at each end. For 10 m, feed both ends. For 20 m, feed the start, the middle and the end.</li>
-          <li>Four data channels give the maximum frame rate. Each channel controls one 2-strip section (≈270 zones). The longest channel sets the frame time. In the QuinLED example, ≈640 zones on one output gives ≈30 FPS.</li>
-          <li>CH1 to F2 is the longest data cable (≈9 m), near the 10 m limit. There is no attic above the open corner of the L, so the cable cannot go in a straight line. Use the shortest attic route. If the cable length is near 10 m, install a <a href="https://quinled.info/quinled-data-booster/" target="_blank" rel="noopener">data booster</a>.</li>
+          <li>Four data channels give the maximum frame rate. Each channel controls one 2-strip section (≈275 zones). The longest channel sets the frame time. In the QuinLED example, ≈640 zones on one output gives ≈30 FPS.</li>
+          <li>CH1 to F2 is the longest data cable (≈10 m), at the 10 m limit. There is no attic above the open corner of the L, so the cable cannot go in a straight line. Use the shortest attic route. Measure the route before you buy the cable. If the cable is near 10 m or longer, install a <a href="https://quinled.info/quinled-data-booster/" target="_blank" rel="noopener">data booster</a>.</li>
           <li>The HEP-1000-24 (1,008 W) is not a Class 2 power supply. The electrician must confirm the cable rating and wiring method for W2, W6 and W9.</li>
           <li>Attic: the garage attic floor is on 2×4 sleepers (24" o.c., House Side to Street Side). There is a 1½" space above the truss chords for cables.</li>
         </ol>
@@ -472,7 +471,7 @@
     (function () {
       const svg = document.getElementById('plan');
       const S = 13;                       // px per foot
-      const O = [170, 42];                // model origin (house rear-left corner) in screen px
+      const O = [170, 66];                // model origin (house rear-left corner) in screen px
       const p = (x, y) => [O[0] + x * S, O[1] + y * S];   // model feet → screen px (+x right, +y toward the street)
 
       // ---- dimensions — known:false values are placeholders, drawn to size but labelled TBD ----
@@ -483,7 +482,7 @@
         wing: { v: 21.75, known: true },          // bedroom-wing front wall (garage attaches here)   21'-9"
         step: { v: 9 + 10 / 12, known: true },    // main front set back from the wing front           9'-10"
         hR: { v: 33, known: true },               // house share of the continuous right wall         33'-0"
-        eave: { v: 1.5, known: false },           // soffit width — same all round (eaves + garage gable rake)
+        eave: { v: 0.8 / 0.3048, known: true },   // soffit width 80 cm — same all round (eaves + gable rakes)
       };
       // garage-door layout along the Front wall, from the House-Side corner (Spec Sheet)
       const segH = 2 + 2.75 / 12, GD = 16 + 2.5 / 12, segS = 1 + 6.25 / 12;
@@ -546,7 +545,17 @@
       // COB LED strip: one continuous run along the soffit centerline, first 1 m of the house left side → garage Back
       const c = eave / 2, M1 = 1 / 0.3048;            // 1 m in feet
       // exterior brick chimney on the house left side; its front face is where the strip starts (owner; size and height assumed)
-      const chim = { x0: -2.5, x1: 0, y0: yM - M1 - 4.5, y1: yM - M1, top: 14 };
+      const chim = { x0: -3.5, x1: 0, y0: yM - M1 - 4.5, y1: yM - M1, top: 14 };
+      // gutters (≈15 cm) beyond the fascia, on the eaves only (not on the gable rakes): edge a→b, outward n, roof m(ain)/w(ing+garage)
+      const GUT = 0.15 / 0.3048;
+      const GUTTERS = [
+        { a: [-eave, -eave], b: [hL - eave, -eave], n: [0, -1], r: 'm' },              // main block, rear
+        { a: [-eave, yM + eave], b: [hL - eave, yM + eave], n: [0, 1], r: 'm' },       // main front
+        { a: [hL - eave, yM + eave], b: [hL - eave, yW + eave], n: [-1, 0], r: 'w' },  // wing, above the jog
+        { a: [gx0 - eave, yW + eave], b: [gx0 - eave, yS + rake], n: [-1, 0], r: 'w' }, // garage Front
+        { a: [HW + eave, -eave], b: [HW + eave, yS + rake], n: [1, 0], r: 'w' },       // continuous right wall
+      ];
+      const gq = (g, t) => [[...g.a], [...g.b], [g.b[0] + g.n[0] * t, g.b[1] + g.n[1] * t], [g.a[0] + g.n[0] * t, g.a[1] + g.n[1] * t]];
       const strip = [[-c, yM - M1], [-c, yM + c], [hL - c, yM + c], [hL - c, yW + c], [gx0 - c, yW + c],
         [gx0 - c, yS + c], [HW + c, yS + c], [HW + c, yW]];
       const RUNS = ['left', 'main', 'jog', 'wing', 'gfront', 'grake', 'gback'];   // strip[i] → strip[i+1]
@@ -613,7 +622,7 @@
         const path = segs => segs.map(([c, ...v]) => c + v.reduce((a, n, i) =>
           i % 2 ? a : a.concat(pt(p(n, v[i + 1]))), []).join(' ')).join(' ');
         out += `<rect x="0" y="0" width="1080" height="${(ys + 24).toFixed(0)}" fill="url(#grid)"/>`;
-        out += `<rect x="20" y="${p(0, -2.5)[1].toFixed(1)}" width="1040" height="${(yc - p(0, -2.5)[1]).toFixed(1)}" fill="#c9cfae" opacity=".55"/>`;
+        out += `<rect x="20" y="${p(0, -4.5)[1].toFixed(1)}" width="1040" height="${(yc - p(0, -4.5)[1]).toFixed(1)}" fill="#c9cfae" opacity=".55"/>`;
         const BEDF = 'fill="#b7a57c" opacity=".75"';
         rect(gx0, yS, HW, yS + BED, BEDF);                                            // 4'-0" flower bed (Street Side)
         rect(1, yM, 16.6, yM + 3.1, BEDF);                                             // bed along the main front
@@ -642,6 +651,7 @@
         rect(hL - eave, yM + eave, hL, yW, SOF);                   // 9'-10" jog
         rect(gx0 - eave, yW + eave, gx0, yS, SOF);                 // garage door wall
         rect(HW, yW, HW + eave, yS, SOF);                          // garage back wall
+        for (const g of GUTTERS) poly(gq(g, GUT).map(q => p(...q)), 'fill="#c9cdd0" stroke="#8A9197" stroke-width=".8"');
       });
 
       /* ---- BUILDINGS ---- */
@@ -843,6 +853,11 @@
           face([[-eave, -eave, ez(sm)], [xv, -eave, ez(sm)], [xw, yc, Rw], [-eave, yc, Rw]], `fill="#414548" ${RS}`);
           face([[-eave, yc, Rw], [xw, yc, Rw], [xv, yM + eave, ez(sm)], [-eave, yM + eave, ez(sm)]], `fill="#6a6f73" ${RS}`);
           chimney(Rw - (chim.y1 - yc) * sm);                                                      // main front slope at the chimney face
+          for (const g of GUTTERS) {                                                              // gutters: top + outer face
+            const z = ez(g.r === 'm' ? sm : slope), Q = gq(g, GUT);
+            face(Q.map(q => [...q, z]), 'fill="#8A9197" stroke="#3A3F43" stroke-width=".6"');
+            face([[...Q[3], z], [...Q[2], z], [...Q[2], z - 0.45], [...Q[3], z - 0.45]], 'fill="#6d7378" stroke="#3A3F43" stroke-width=".6"');
+          }
         });
 
         /* COB strip on the soffit centerline (drawn through the roof), feeds F1–F5 */
@@ -867,7 +882,7 @@
 
         /* labels on the walls */
         ig('a5', () => {
-          vtext(p(3, yM, 2.2), angY, 'HOUSE', 'class="facetxt" font-size="26" fill="#5C5446"');
+          vtext(p(3, yM, 1.0), angY, 'HOUSE', 'class="facetxt" font-size="24" fill="#5C5446"');
           vtext(p(gx0 + 1.4, yS, 1.6), angY, 'GARAGE', 'class="facetxt" font-size="24" fill="#221F18"');
         });
 
@@ -894,7 +909,7 @@
       set('pb-reels', `${reels} (${reels * 5} m · ${ap}${n1(reels * 5 - Lm)} m spare)`);
       set('pb-white', `${ap}${n0(Wwhite)} W · ${n1(Wwhite / V)} A`);
       set('pb-max', `${ap}${n0(Wmax)} W · ${n1(Wmax / V)} A`);
-      set('pb-limit', `${n0(Wlim)} W · ${n1(Wlim / Lm)} W/m · ${Math.min(100, Math.round(100 * Wlim / Wwhite))}% of full W`);
+      set('pb-limit', `${n0(Wlim)} W · ${n1(Wlim / Lm)} W/m · ${Math.min(100, +(100 * Wlim / Wwhite).toFixed(1))}% of full W`);
       // feeds & data tables
       const RUN_FROM = { left: 'strip start', main: 'left-front corner', jog: 'main-front corner', wing: 'jog corner',
         gfront: 'wing corner', grake: 'garage-Front corner', gback: 'gable corner' };   // run start (strip direction)
