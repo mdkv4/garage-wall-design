@@ -885,11 +885,10 @@
             const z0 = FF + 0.55 + i * 1.2;
             mf(DOOR + 0.3, DOOR + 2.7, z0, z0 + 0.85, 'fill="#d3dbd8" stroke="#1a1614" stroke-width=".5"');
           }
-          const gw = (GLZ[1] - GLZ[0] - 3 * 0.25) / 4;                                                           // 4 frosted panels, dark mullions
-          for (let i = 0; i < 4; i++) {
-            const x0 = GLZ[0] + i * (gw + 0.25);
-            mf(x0, x0 + gw, FF + 0.2, PL - 0.6, 'fill="#b9c7c5" stroke="#1a1614" stroke-width=".5"');
-          }
+          // 4 frosted panels, dark mullions; the first (next to the door) is narrower, ≈0.6 of the others (owner photo)
+          const GR = [0.6, 1, 1, 1], gu = (GLZ[1] - GLZ[0] - 3 * 0.25) / GR.reduce((a, b) => a + b, 0);
+          for (let i = 0, x0 = GLZ[0]; i < 4; x0 += GR[i] * gu + 0.25, i++)
+            mf(x0, x0 + GR[i] * gu, FF + 0.2, PL - 0.6, 'fill="#b9c7c5" stroke="#1a1614" stroke-width=".5"');
           // jog + wing-front return (45 cm): dark charcoal-blue lap siding, horizontal courses only (owner photo)
           const shakes = (pts, a, b, z1) => {
             face(pts, `fill="#3b4450" ${WS}`);
