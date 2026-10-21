@@ -925,12 +925,6 @@
           });
         });
 
-        /* labels on the walls */
-        ig('a5', () => {
-          vtext(p(3, yM, 1.0), angY, 'HOUSE', 'class="facetxt" font-size="24" fill="#5C5446"');
-          vtext(p(gx0 + 1.4, yS + SD, 1.1), angY, 'GARAGE', 'class="facetxt" font-size="24" fill="#221F18"');
-        });
-
         // fit the viewBox to the slab and the roofs
         const ext = [[X0, Y0, -SLAB], [X1, Y0, -SLAB], [X0, Y1, -SLAB], [X1, Y1, -SLAB], [X1, Y0, 0], [xR, EL.rear, Z], [EL.right, EL.rear, ZG.right]].map(a => p(...a));
         const bx = Math.min(...ext.map(a => a[0])) - 12, by = Math.min(...ext.map(a => a[1])) - 14;
